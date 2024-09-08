@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -16,10 +17,10 @@ const Navbar = () => {
             {isExpanded ? 'collapse_content' : 'expand_content'}
           </span>
         </button>
-        <div className="navbar-content">
+        <div className="navbar-content ">
           <Link to="/dashboard" className="navbar-item">
             <span className="material-symbols-outlined navbar-logo">dashboard</span>
-            {isExpanded && <span className="navbar-text">Dashboard</span>}
+            {isExpanded && <span className="navbar-text ">Dashboard</span>}
           </Link>
           <Link to="/routines" className="navbar-item">
             <span className="material-symbols-outlined navbar-logo">exercise</span>
