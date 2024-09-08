@@ -1,3 +1,4 @@
+import './index.css';
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Routines from './pages/Routines'; // Import Routines

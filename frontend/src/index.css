@@ -1,4 +1,8 @@
 /* Google Font */
+/* src/tailwind.css */
+@tailwind components;
+@tailwind utilities;
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
 
 /* Root Variables */
@@ -22,7 +26,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 60px;
+  width: 250px;
   height: 100%;
   background-color: var(--navbar-bg);
   display: flex;
