@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import RoutineEditModal from './RoutineEditModal.js';
+import RoutineEditModal from './RoutineEditModal';
 
 const Routine = ({ routine, onDelete }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -30,8 +30,18 @@ const Routine = ({ routine, onDelete }) => {
             <h4>Confirm Delete</h4>
             <p>Are you sure you want to delete this routine? This action cannot be undone.</p>
             <div className="modal-buttons">
-              <button onClick={() => onDelete(routine._id)} className="delete-btn">Delete</button>
-              <button onClick={() => setIsDeleteModalOpen(false)} className="cancel-btn">Cancel</button>
+              <button 
+                onClick={() => {
+                  onDelete(routine._id); // Call onDelete only when confirm is pressed
+                  setIsDeleteModalOpen(false); // Close modal after confirming delete
+                }} 
+                className="delete-btn"
+              >
+                Delete
+              </button>
+              <button onClick={() => setIsDeleteModalOpen(false)} className="cancel-btn">
+                Cancel
+              </button>
             </div>
           </div>
         </div>

@@ -1,81 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import Routine from '../components/Routine';
-import RoutineFormModal from '../components/RoutineFormModal';
-import RoutineEditModal from '../components/RoutineEditModal';
+import RoutineFormModal from '../components/RoutineFormModal'; // Modal for adding routine
 import { useRoutinesContext } from '../hooks/useRoutinesContext';
 
 const Routines = () => {
   const { routines, dispatch } = useRoutinesContext();
   const [showAddModal, setShowAddModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [currentRoutine, setCurrentRoutine] = useState(null);
 
   useEffect(() => {
+    // Fetch routines from the API
     const fetchRoutines = async () => {
-      try {
-        const response = await fetch('/api/routines');
-        const data = await response.json();
+      const response = await fetch('/api/routines');
+      const data = await response.json();
 
-        if (response.ok) {
-          dispatch({ type: 'SET_ROUTINES', payload: data });
-        } else {
-          console.error('Failed to fetch routines');
-        }
-      } catch (error) {
-        console.error('Error fetching routines:', error);
+      if (response.ok) {
+        dispatch({ type: 'SET_ROUTINES', payload: data });
+      } else {
+        console.error('Failed to fetch routines');
       }
     };
 
     fetchRoutines();
   }, [dispatch]);
 
+  // Function to handle deleting a routine
   const handleDeleteRoutine = async (id) => {
-    try {
-      const response = await fetch(`/api/routines/${id}`, { method: 'DELETE' });
-      if (response.ok) {
-        const data = await response.json();
-        dispatch({ type: 'DELETE_ROUTINE', payload: { _id: data } });
-      } else {
-        console.error('Failed to delete routine');
-      }
-    } catch (error) {
-      console.error('Error deleting routine:', error);
-    }
-  };
+    const response = await fetch(`/api/routines/${id}`, { method: 'DELETE' });
 
-  const handleEditRoutine = (routine) => {
-    setCurrentRoutine(routine);
-    setShowEditModal(true);
-  };
-
-  const handleEditRoutineSubmit = async (id, newName) => {
-    try {
-      const response = await fetch(`/api/routines/${id}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name: newName }),
-      });
-
-      if (response.ok) {
-        const updatedRoutine = await response.json();
-        dispatch({ type: 'UPDATE_ROUTINE', payload: updatedRoutine });
-        setShowEditModal(false);
-      } else {
-        console.error('Failed to edit routine');
-      }
-    } catch (error) {
-      console.error('Error editing routine:', error);
+    if (response.ok) {
+      // Update the local state after deletion
+      const deletedRoutine = await response.json();
+      dispatch({ type: 'DELETE_ROUTINE', payload: deletedRoutine });  // Remove routine from state
+    } else {
+      console.error('Failed to delete routine');
     }
   };
 
   return (
     <div className="routine-grid">
       <div className="add-routine-row">
-        <button className="add-routine-btn" onClick={() => setShowAddModal(true)}>
-          Add Routine
-        </button>
+        <button className="add-routine-btn" onClick={() => setShowAddModal(true)}>Add Routine</button>
       </div>
 
       <div className="routine-list">
@@ -83,20 +47,13 @@ const Routines = () => {
           <Routine
             key={routine._id}
             routine={routine}
-            onDelete={handleDeleteRoutine}
-            onEdit={handleEditRoutine}
+            onDelete={handleDeleteRoutine} // Pass the delete function here
           />
         ))}
       </div>
-
+      
+      {/* Add Routine Modal */}
       {showAddModal && <RoutineFormModal onClose={() => setShowAddModal(false)} />}
-      {showEditModal && currentRoutine && (
-        <RoutineEditModal
-          routine={currentRoutine}
-          onClose={() => setShowEditModal(false)}
-          onSubmit={handleEditRoutineSubmit}
-        />
-      )}
     </div>
   );
 };
