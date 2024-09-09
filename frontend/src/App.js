@@ -1,4 +1,6 @@
+import './tailwind.css';
 import './index.css';
+ // we gotta import this after the regular css so the regular css does not get overwriten by the tailwind base class
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Routines from './pages/Routines'; // Import Routines
