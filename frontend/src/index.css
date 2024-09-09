@@ -60,6 +60,7 @@ body {
 }
 
 .navbar-item {
+  white-space: nowrap;
   display: flex;
   align-items: center;
   padding: 15px;
