@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 // Define your API key as a variable
-const API_KEY = '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';
+const API_KEY = '';
 
 function ChatComponent() {
   const [messages, setMessages] = useState([
