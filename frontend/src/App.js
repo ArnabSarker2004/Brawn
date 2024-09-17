@@ -4,7 +4,8 @@ import './index.css';
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Routines from './pages/Routines'; // Import Routines
-import Home from './pages/Home'; // Import Home for displaying workouts for a routine
+import WorkoutPage from './pages/WorkoutPage'; // Import Home for displaying workouts for a routine
+import Brawnify from './pages/Brawnify'; // Import Home for displaying workouts for a routine
 import Navbar from './components/Navbar';
 import Brand from './components/Brand';
 import { WorkoutsContextProvider } from './context/WorkoutsContext';
@@ -26,7 +27,8 @@ function App() {
                   <Routes>
                     {/* Define routes here */}
                     <Route path="/routines" element={<Routines />} /> {/* Routines component renders here */}
-                    <Route path="/routines/:routineId" element={<Home />} /> {/* Home component for specific routine */}
+                    <Route path="/routines/:routineId" element={<WorkoutPage />} /> {/* Home component for specific routine */}
+                    <Route path="/brawnify" element={<Brawnify />} /> {/* Home component for specific routine */}
                     {/* Add more routes as needed */}
                   </Routes>
                 </div>
