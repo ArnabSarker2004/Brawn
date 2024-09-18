@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 // Define your API key as a variable
-const API_KEY = ''; //Add Key
+const API_KEY = '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'; // Add your key
 
 function ChatComponent() {
   const [messages, setMessages] = useState([
@@ -9,6 +9,12 @@ function ChatComponent() {
   ]);
   const [userMessage, setUserMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  const messagesEndRef = useRef(null);
+
+  // Auto-scroll to the latest message when messages update
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   // Handle sending a new message
   const handleSendMessage = async (e) => {
@@ -32,8 +38,8 @@ function ChatComponent() {
     setLoading(false); // Hide loading state
   };
 
-// Fetch GPT response
-const fetchGPTResponse = async (message) => {
+  // Fetch GPT response
+  const fetchGPTResponse = async (message) => {
     try {
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
@@ -42,76 +48,76 @@ const fetchGPTResponse = async (message) => {
           Authorization: `Bearer ${API_KEY}`, // Using API key variable here
         },
         body: JSON.stringify({
-          model: 'gpt-3.5-turbo', // Use gpt-3.5-turbo if quota allows
+          model: 'gpt-3.5-turbo',
           messages: [{ role: 'user', content: message }],
         }),
       });
-  
+
       const responseBody = await response.json();
       console.log('Response Body:', responseBody);
-  
+
       if (!response.ok) {
         console.error('API Error:', responseBody);
         throw new Error(`Error: ${responseBody.error.message}`);
       }
-  
+
       return responseBody.choices[0].message.content;
     } catch (error) {
       console.error('Error fetching GPT response:', error);
       return 'Sorry, there was an error processing your request.';
     }
   };
-  return (
-    <div className="flex flex-col w-full h-screen bg-gray-100 border border-gray-300 rounded-lg shadow-lg">
-      <div className="bg-green-100 py-4 text-center border-b border-gray-300">
-        <h1 className="text-2xl font-semibold text-green-700">Brawnify Chat</h1>
-      </div>
 
-      <div className="flex-1 p-4 overflow-y-auto space-y-4">
+  return (
+    <div className="flex flex-col w-full h-screen bg-white">
+      {/* Message container */}
+      <div className="flex-1 p-4 overflow-y-auto" style={{ height: 'calc(100vh - 100px)' }}>
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={`flex ${msg.user === 'You' ? 'justify-end' : 'justify-start'}`}
+            className={`flex ${msg.user === 'You' ? 'justify-end' : 'justify-start'} my-2`}
           >
             <div
               className={`${
                 msg.user === 'You'
-                  ? 'bg-white text-right'
-                  : 'bg-green-100 text-left border-green-500'
-              } max-w-xs md:max-w-md p-4 rounded-lg border`}
+                  ? 'bg-gray-200 text-black'
+                  : 'bg-green-100 text-green-800'
+              } max-w-md w-full p-3 rounded-lg shadow-sm`}
             >
-              <span className="block font-semibold">{msg.user}:</span>
-              <span>{msg.content}</span>
+              <span className="block font-medium">{msg.content}</span>
             </div>
           </div>
         ))}
         {loading && (
           <div className="flex justify-start">
-            <div className="bg-green-100 text-left border-green-500 max-w-xs md:max-w-md p-4 rounded-lg border">
-              <span className="block font-semibold">Brawnify Bot:</span>
-              <span>Loading...</span>
+            <div className="bg-green-100 text-green-800 max-w-md w-full p-3 rounded-lg shadow-sm">
+              <span className="block font-medium">Loading...</span>
             </div>
           </div>
         )}
+        <div ref={messagesEndRef} />
       </div>
 
+      {/* Input form */}
       <form
-        className="flex items-center p-4 border-t border-gray-300 bg-white"
+        className="flex items-center p-4 border-t border-gray-300 bg-gray-50" /*"flex items-center p-4 border-t border-gray-300 bg-gray-50 fixed bottom-0 left-0 w-full"*/
         onSubmit={handleSendMessage}
       >
-        <input
-          type="text"
-          value={userMessage}
-          onChange={(e) => setUserMessage(e.target.value)}
-          placeholder="Type your message..."
-          className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-green-500"
-        />
+        <div className="flex-1">
+          <input
+            type="text"
+            value={userMessage}
+            onChange={(e) => setUserMessage(e.target.value)}
+            placeholder="Type your message..."
+            className="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none text-black bg-white"
+          />
+        </div>
         <button
           type="submit"
-          className="ml-4 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none"
+          className="ml-4 bg-green-600 w-10 h-10 flex items-center justify-center rounded-full hover:bg-green-700 focus:outline-none"
           disabled={loading} // Disable button while loading
         >
-          Send
+          <span className="material-symbols-outlined text-white">send</span>
         </button>
       </form>
     </div>
