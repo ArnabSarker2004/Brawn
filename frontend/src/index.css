@@ -148,9 +148,9 @@ body {
 
 /* Adjusting the spacing between Navbar and Content */
 .pages {
-  height: 89vh;
+  height: 88vh;
   max-width: 100vw;
-  padding: 10vh 20px 20px 60px;
+  padding: 12vh 20px 0px 60px;
 }
 
 /* Grid Layout */

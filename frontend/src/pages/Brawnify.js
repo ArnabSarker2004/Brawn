@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 // Define your API key as a variable
-const API_KEY = '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'; // Add your key
+const API_KEY = ''; // Add your key
 
 function ChatComponent() {
   const [messages, setMessages] = useState([
@@ -69,9 +69,9 @@ function ChatComponent() {
   };
 
   return (
-    <div className="flex flex-col w-full h-screen bg-white">
-      {/* Message container */}
-      <div className="flex-1 p-4 overflow-y-auto" style={{ height: 'calc(100vh - 100px)' }}>
+    <div className="flex flex-col w-full h-full bg-white">
+      {/* Message container with reduced height */}
+      <div className="flex-1 p-4 overflow-y-auto">
         {messages.map((msg, index) => (
           <div
             key={index}
@@ -98,9 +98,9 @@ function ChatComponent() {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input form */}
+      {/* Input form */} 
       <form
-        className="flex items-center p-4 border-t border-gray-300 bg-gray-50" /*"flex items-center p-4 border-t border-gray-300 bg-gray-50 fixed bottom-0 left-0 w-full"*/
+        className="flex items-center p-4 border-t border-gray-300 bg-gray-50 mb-5"
         onSubmit={handleSendMessage}
       >
         <div className="flex-1">
