@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 // Define your API key as a variable
-const API_KEY = ''; // Add your key
+//const API_KEY = ''; // Add your key
 
 function ChatComponent() {
   const [messages, setMessages] = useState([
