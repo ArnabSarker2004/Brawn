@@ -5,11 +5,12 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Routines from './pages/Routines'; // Import Routines
 import Home from './pages/Home'; // Import Home for displaying workouts for a routine
-import Navbar from './components/Navbar';
-import Brand from './components/Brand';
+import Navbar from './Mcomponents/Navbar';
+import Brand from './Mcomponents/Brand';
 import { WorkoutsContextProvider } from './context/WorkoutsContext';
 import { SetsContextProvider } from './context/SetsContext';
 import { RoutinesContextProvider } from './context/RoutinesContext'; // Import RoutinesContextProvider
+import Dashboard from './pages/dashboard';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
                     {/* Define routes here */}
                     <Route path="/routines" element={<Routines />} /> {/* Routines component renders here */}
                     <Route path="/routines/:routineId" element={<Home />} /> {/* Home component for specific routine */}
+                    <Route path = "/dashboard" element = {<Dashboard/>}/>
                     {/* Add more routes as needed */}
                   </Routes>
                 </div>
