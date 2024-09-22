@@ -1,18 +1,16 @@
 import './tailwind.css';
 import './index.css';
- // we gotta import this after the regular css so the regular css does not get overwriten by the tailwind base class
+// Import this after regular CSS so it does not get overwritten by the Tailwind base class
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Routines from './pages/Routines'; // Import Routines
-import WorkoutPage from './pages/WorkoutPage'; // Import Home for displaying workouts for a routine
-import Brawnify from './pages/Brawnify'; // Import Home for displaying workouts for a routine
+import WorkoutPage from './pages/WorkoutPage'; // Import WorkoutPage for displaying workouts for a routine
+import Brawnify from './pages/Brawnify'; // Import Brawnify
 import Navbar from './Mcomponents/Navbar';
 import Brand from './Mcomponents/Brand';
 import { WorkoutsContextProvider } from './context/WorkoutsContext';
 import { SetsContextProvider } from './context/SetsContext';
 import { RoutinesContextProvider } from './context/RoutinesContext'; // Import RoutinesContextProvider
-import Dashboard from './pages/dashboard';
-import Home from './pages/WorkoutPage';
 
 function App() {
   return (
@@ -29,7 +27,8 @@ function App() {
                   <Routes>
                     {/* Define routes here */}
                     <Route path="/routines" element={<Routines />} /> {/* Routines component renders here */}
-                    <Route path="/routines/:routineId" element={<Home />} /> {/* Home component for specific routine */}
+                    <Route path="/routines/:routineId" element={<WorkoutPage />} /> {/* WorkoutPage component for specific routine */}
+                    <Route path="/brawnify" element={<Brawnify />} /> {/* Brawnify component */}
                     {/* Add more routes as needed */}
                   </Routes>
                 </div>
