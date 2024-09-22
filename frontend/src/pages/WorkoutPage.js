@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useWorkoutsContext } from '../hooks/useWorkoutsContext';
 import { useParams, useNavigate } from 'react-router-dom';
-import WorkoutDetails from '../Mcomponents/WorkoutDetails';
-import WorkoutFormModal from '../Mcomponents/WorkoutFormModal';
+import WorkoutDetails from '../custom-components/WorkoutDetails';
+import WorkoutFormModal from '../custom-components/WorkoutFormModal';
 
 const Home = () => {
   const { workouts, dispatch: workoutsDispatch } = useWorkoutsContext();

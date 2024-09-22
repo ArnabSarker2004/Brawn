@@ -6,8 +6,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Routines from './pages/Routines'; // Import Routines
 import WorkoutPage from './pages/WorkoutPage'; // Import WorkoutPage for displaying workouts for a routine
 import Brawnify from './pages/Brawnify'; // Import Brawnify
-import Navbar from './Mcomponents/Navbar';
-import Brand from './Mcomponents/Brand';
+import Navbar from './custom-components/Navbar';
+import Brand from './custom-components/Brand';
 import { WorkoutsContextProvider } from './context/WorkoutsContext';
 import { SetsContextProvider } from './context/SetsContext';
 import { RoutinesContextProvider } from './context/RoutinesContext'; // Import RoutinesContextProvider

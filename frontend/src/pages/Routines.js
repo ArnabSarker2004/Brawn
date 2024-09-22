@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Routine from '../Mcomponents/Routine';
-import RoutineFormModal from '../Mcomponents/RoutineFormModal'; // Modal for adding routine
+import Routine from '../custom-components/Routine';
+import RoutineFormModal from '../custom-components/RoutineFormModal'; // Modal for adding routine
 import { useRoutinesContext } from '../hooks/useRoutinesContext';
 
 const Routines = () => {
