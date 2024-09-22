@@ -44,21 +44,21 @@ const getWorkout = async (req, res) => {
 // Add a new workout to a routine
 const createWorkout = async (req, res) => {
   const { routineId } = req.params;
-  const { title, sets } = req.body;
+  const { title, timeBased, sets } = req.body;
 
   let emptyFields = [];
   if (!title) emptyFields.push('title');
-  if (!sets || !Array.isArray(sets) || sets.length === 0) {
-    emptyFields.push('sets');
+
+  if (timeBased) {
+    sets.forEach((set, index) => {
+      if (!set.time) emptyFields.push(`sets[${index}].time`);
+      if (!set.weight) emptyFields.push(`sets[${index}].weight`);
+    });
   } else {
     sets.forEach((set, index) => {
       if (!set.reps) emptyFields.push(`sets[${index}].reps`);
       if (!set.weight) emptyFields.push(`sets[${index}].weight`);
     });
-  }
-
-  if (emptyFields.length > 0) {
-    return res.status(400).json({ error: 'Please fill in all fields', emptyFields });
   }
 
   if (!mongoose.Types.ObjectId.isValid(routineId)) {
@@ -71,13 +71,12 @@ const createWorkout = async (req, res) => {
     return res.status(404).json({ error: 'No such routine' });
   }
 
-  const newWorkout = { title, sets };
+  const newWorkout = { title, timeBased, sets };
   routine.workouts.push(newWorkout);
 
   try {
     await routine.save();
-    // Return the last workout added (with ID)
-    res.status(200).json(routine.workouts[routine.workouts.length - 1]);
+    res.status(201).json(routine.workouts[routine.workouts.length - 1]);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -86,22 +85,7 @@ const createWorkout = async (req, res) => {
 // Update a specific workout within a routine
 const updateWorkout = async (req, res) => {
   const { routineId, workoutId } = req.params;
-  const { title, sets } = req.body;
-
-  let emptyFields = [];
-  if (!title) emptyFields.push('title');
-  if (!sets || !Array.isArray(sets) || sets.length === 0) {
-    emptyFields.push('sets');
-  } else {
-    sets.forEach((set, index) => {
-      if (!set.reps) emptyFields.push(`sets[${index}].reps`);
-      if (!set.weight) emptyFields.push(`sets[${index}].weight`);
-    });
-  }
-
-  if (emptyFields.length > 0) {
-    return res.status(400).json({ error: 'Please fill in all fields', emptyFields });
-  }
+  const { title, sets, timeBased } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(routineId) || !mongoose.Types.ObjectId.isValid(workoutId)) {
     return res.status(404).json({ error: 'No such routine or workout' });
@@ -120,7 +104,8 @@ const updateWorkout = async (req, res) => {
   }
 
   workout.title = title;
-  workout.sets = sets;
+  workout.timeBased = timeBased;
+  workout.sets = sets; // Ensure you handle time or reps based on timeBased flag.
 
   try {
     await routine.save();
@@ -148,7 +133,7 @@ const deleteWorkout = async (req, res) => {
 
   try {
     await routine.save();
-    res.status(200).json({ message: 'Workout removed', routine });
+    res.status(200).json({ message: 'Workout removed' });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

@@ -3,14 +3,12 @@ const Schema = mongoose.Schema;
 
 // Define the Set schema
 const setSchema = new Schema({
-  reps: {
-    type: Number,
-    required: true
-  },
   weight: {
     type: Number,
     required: true
-  }
+  },
+  reps: Number,  // Optional, based on the workout's timeBased flag
+  time: Number   // Optional, also based on the workout's timeBased flag
 });
 
 // Define the Workout schema
@@ -19,10 +17,14 @@ const workoutSchema = new Schema({
     type: String,
     required: true
   },
+  timeBased: {
+    type: Boolean,
+    required: true  // Specifies if the workout uses time instead of reps
+  },
   sets: {
     type: [setSchema],
-    default: [] // Default to an empty array if no sets are provided
-  } 
+    default: []  // Ensures the array exists even if it's empty
+  }
 });
 
 // Define the Routine schema
@@ -33,9 +35,8 @@ const routineSchema = new Schema({
   },
   workouts: {
     type: [workoutSchema],
-    default: [] // Default to an empty array if no workouts are provided
+    default: []  // Ensures the array exists even if it's empty
   }
 }, { timestamps: true });
 
-// Export the Routine model based on the routineSchema
 module.exports = mongoose.model('Routine', routineSchema);
