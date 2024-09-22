@@ -25,13 +25,13 @@ const Home = () => {
 
   return (
     <div className="home">
-      <div className="back-btn" onClick={() => navigate('/routines')}>
-        <span className="material-symbols-outlined">arrow_back</span>
-        <span>Back to Routines</span>
-      </div>
-
       <div className="add-workout-btn" onClick={() => setShowModal(true)}>
         Add Workout
+      </div>
+      <div className="buttons-row">
+        <div className="back-btn" onClick={() => navigate('/routines')}>
+          <span>Back</span>
+        </div>
       </div>
 
       {showModal && <WorkoutFormModal setShowModal={setShowModal} routineId={routineId} />}

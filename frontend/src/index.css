@@ -166,7 +166,7 @@ body {
 .home {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 50px;
 }
 
 .add-workout-row {
@@ -540,7 +540,14 @@ div.error {
 }
 
 /* Button styles */
+
+.buttons-row {
+  display: flex;
+  justify-content: space-between;
+}
+
 .add-workout-btn {
+  flex: 0 0 80%;
   background: #fff;
   border: 2px dashed var(--primary);
   color: var(--primary);
@@ -555,6 +562,23 @@ div.error {
 .add-workout-btn:hover {
   background-color: var(--primary);
   color: #fff;
+}
+
+.back-btn{
+  background: #fff;
+  border: 2px solid black;
+  color: black;
+  padding: 20px;
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.back-btn:hover{
+  background: black;
+  color: white;
 }
 
 .modal-buttons {
