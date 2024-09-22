@@ -5,6 +5,9 @@ const mongoose = require('mongoose'); // ODM library for MongoDB
 const workoutRoutes = require('./routes/workouts'); // Import workout routes
 const setRoutes = require('./routes/sets'); // Import sets routes
 const routineRoutes = require('./routes/routines'); // Import routine routes
+const cors = require('cors');
+const config = require('./config');
+const autRoutes = require('./routes/auth');
 
 // Create an Express app
 const app = express();
@@ -12,7 +15,11 @@ const app = express();
 // Middleware to parse JSON bodies
 app.use(express.json());
 
+app.use(cors());
+
 // Middleware to log the request path and method
+
+// app.use('/api/auth', authRoutes);
 app.use((req, res, next) => {
     console.log(req.path, req.method);
     next();
