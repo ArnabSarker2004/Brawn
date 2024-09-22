@@ -4,7 +4,8 @@ import { useWorkoutsContext } from '../hooks/useWorkoutsContext';
 const WorkoutFormModal = ({ setShowModal, routineId }) => {
   const { dispatch } = useWorkoutsContext();
   const [title, setTitle] = useState('');
-  const [sets, setSets] = useState([{ reps: '', weight: '' }]);
+  const [timeBased, setTimeBased] = useState(false);  // Toggle for choosing between time and reps
+  const [sets, setSets] = useState([{ reps: '', weight: '', time: '' }]);
   const [error, setError] = useState(null);
 
   const handleSetChange = (index, event) => {
@@ -14,7 +15,8 @@ const WorkoutFormModal = ({ setShowModal, routineId }) => {
   };
 
   const handleAddSet = () => {
-    setSets([...sets, { reps: '', weight: '' }]);
+    // Add a set with either reps or time based on the toggle
+    setSets([...sets, { reps: '', weight: '', time: '' }]);
   };
 
   const handleRemoveSet = (index) => {
@@ -25,7 +27,13 @@ const WorkoutFormModal = ({ setShowModal, routineId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const workout = { title, sets };
+    const workout = { title, sets: sets.map(set => ({ 
+      weight: set.weight,
+      reps: timeBased ? undefined : set.reps, // Only include reps or time depending on the toggle
+      time: timeBased ? set.time : undefined
+    })),
+    timeBased
+    };
 
     try {
       const response = await fetch(`/api/routines/${routineId}/workouts`, {
@@ -63,11 +71,18 @@ const WorkoutFormModal = ({ setShowModal, routineId }) => {
             value={title}
           />
 
+          <label>Time Based:</label>
+          <input
+            type="checkbox"
+            checked={timeBased}
+            onChange={(e) => setTimeBased(!timeBased)}
+          />
+
           <div className="workout-table">
             <div className="workout-table-header">
               <span>SET</span>
               <span>LBS</span>
-              <span>REPS</span>
+              <span>{timeBased ? "TIME (s)" : "REPS"}</span>
             </div>
             {sets.map((set, index) => (
               <div className="workout-table-row" key={index}>
@@ -80,9 +95,9 @@ const WorkoutFormModal = ({ setShowModal, routineId }) => {
                 />
                 <input
                   type="number"
-                  name="reps"
+                  name={timeBased ? "time" : "reps"}
                   onChange={(e) => handleSetChange(index, e)}
-                  value={set.reps}
+                  value={timeBased ? set.time : set.reps}
                 />
                 <button type="button" onClick={() => handleRemoveSet(index)} className="remove-set-btn">Remove Set</button>
               </div>

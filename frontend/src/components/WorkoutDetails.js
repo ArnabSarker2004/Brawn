@@ -28,13 +28,13 @@ const WorkoutDetails = ({ workout, routineId }) => {
         <div className="workout-table-header">
           <span>SET</span>
           <span>LBS</span>
-          <span>REPS</span>
+          <span>{workout.timeBased ? "TIME (s)" : "REPS"}</span>
         </div>
         {workout.sets.map((set, index) => (
           <div className="workout-table-row" key={index}>
             <span>{index + 1}</span>
-            <span>{set.weight}</span>
-            <span>{set.reps}</span>
+            <span>{set.weight} lbs</span>
+            <span>{workout.timeBased ? `${set.time} sec` : `${set.reps} reps`}</span>
           </div>
         ))}
       </div>

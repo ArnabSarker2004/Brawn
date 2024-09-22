@@ -4,6 +4,7 @@ import { useWorkoutsContext } from '../hooks/useWorkoutsContext';
 const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
   const { dispatch: workoutDispatch } = useWorkoutsContext();
   const [title, setTitle] = useState(workout.title);
+  const [timeBased, setTimeBased] = useState(workout.timeBased);
   const [sets, setSets] = useState(workout.sets);
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
@@ -11,6 +12,7 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
   useEffect(() => {
     setTitle(workout.title);
     setSets(workout.sets);
+    setTimeBased(workout.timeBased);
   }, [workout]);
 
   const handleSetChange = (index, event) => {
@@ -20,7 +22,11 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
   };
 
   const handleAddSet = () => {
-    setSets([...sets, { reps: '', weight: '' }]);
+    if (timeBased) {
+      setSets([...sets, { weight: '', time: '' }]);
+    } else {
+      setSets([...sets, { weight: '', reps: '' }]);
+    }
   };
 
   const handleRemoveSet = (index) => {
@@ -33,7 +39,11 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
     if (!title.trim()) emptyFields.push('title');
     sets.forEach((set, index) => {
       if (!set.weight) emptyFields.push(`sets[${index}].weight`);
-      if (!set.reps) emptyFields.push(`sets[${index}].reps`);
+      if (timeBased) {
+        if (!set.time) emptyFields.push(`sets[${index}].time`);
+      } else {
+        if (!set.reps) emptyFields.push(`sets[${index}].reps`);
+      }
     });
     return emptyFields;
   };
@@ -48,7 +58,7 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
       return;
     }
 
-    const updatedWorkout = { title, sets };
+    const updatedWorkout = { title, sets, timeBased };
 
     const response = await fetch(`/api/routines/${routineId}/workouts/${workout._id}`, {
       method: 'PATCH',
@@ -69,14 +79,10 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
     }
   };
 
-  const handleCloseModal = () => {
-    setShowEditModal(false);
-  };
-
   return (
     <div className="modal">
       <div className="modal-content">
-        <span className="close" onClick={handleCloseModal}>
+        <span className="close" onClick={() => setShowEditModal(false)}>
           &times;
         </span>
         <form onSubmit={handleSubmit}>
@@ -90,12 +96,18 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
             className={emptyFields.includes('title') ? 'error' : ''}
           />
 
+          <label>Time Based:</label>
+          <input
+            type="checkbox"
+            checked={timeBased}
+            onChange={() => setTimeBased(!timeBased)}
+          />
+
           <div className="workout-table">
             <div className="workout-table-header">
               <span>SET</span>
               <span>LBS</span>
-              <span>REPS</span>
-              <span></span>
+              <span>{timeBased ? "TIME (s)" : "REPS"}</span>
             </div>
             {sets.map((set, index) => (
               <div className="workout-table-row" key={index}>
@@ -109,10 +121,10 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
                 />
                 <input
                   type="number"
-                  name="reps"
+                  name={timeBased ? "time" : "reps"}
                   onChange={(e) => handleSetChange(index, e)}
-                  value={set.reps}
-                  className={emptyFields.includes(`sets[${index}].reps`) ? 'error' : ''}
+                  value={timeBased ? set.time : set.reps}
+                  className={emptyFields.includes(`sets[${index}].${timeBased ? "time" : "reps"}`) ? 'error' : ''}
                 />
                 <button type="button" onClick={() => handleRemoveSet(index)} className="remove-set-btn">
                   Remove Set

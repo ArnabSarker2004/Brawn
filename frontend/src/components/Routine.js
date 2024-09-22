@@ -2,14 +2,30 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import RoutineEditModal from './RoutineEditModal';
 
-const Routine = ({ routine, onDelete }) => {
+const Routine = ({ routine, onDelete, workouts = [] }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const navigate = useNavigate();
 
   return (
     <div className="routine-details">
-      <h4 onClick={() => navigate(`/routines/${routine._id}`)}>{routine.name}</h4> {/* Clickable to show workouts */}
+      {/* Routine Name */}
+      <h4 onClick={() => navigate(`/routines/${routine._id}`)}>{routine.name}</h4>
+      
+      {/* Display Workout Names */}
+      <div className="routine-workouts">
+        {workouts && workouts.length > 0 ? (
+          <ul>
+            {workouts.map((workout) => (
+              <li key={workout._id}>{workout.title}</li>
+            ))}
+          </ul>
+        ) : (
+          <p>No workouts added yet.</p>
+        )}
+      </div>
+
+      {/* Routine Actions */}
       <div className="routine-actions">
         <span className="material-symbols-outlined" onClick={() => setIsEditModalOpen(true)}>edit</span>
         <span className="material-symbols-outlined" onClick={() => setIsDeleteModalOpen(true)}>delete</span>

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 // Define your API key as a variable
-//const API_KEY = ''; // Add your key
+const API_KEY = ''; // Add your key
 
-function ChatComponent() {
+function Brawnify() {
   const [messages, setMessages] = useState([
     { user: 'Brawnie', content: 'Hey, welcome to Brawnify, how can I assist you?' }
   ]);
@@ -124,4 +124,4 @@ function ChatComponent() {
   );
 }
 
-export default ChatComponent;
+export default Brawnify;

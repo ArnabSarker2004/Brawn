@@ -150,7 +150,7 @@ body {
 .pages {
   height: 88vh;
   max-width: 100vw;
-  padding: 12vh 20px 0px 60px;
+  padding: 12vh 20px 0px calc(50px + 20px);
 }
 
 /* Grid Layout */
@@ -184,6 +184,180 @@ body {
   }
 }
 
+/* Routines Page */
+.routine-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.add-routine-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.routine-details {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  position: relative;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 300px;
+}
+
+.routine-details:hover {
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.routine-details h4 {
+  margin: 0 0 10px 0;
+  font-size: 1.4em;
+  color: var(--primary);
+  cursor: pointer;
+}
+
+.routine-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.routine-name {
+  flex: 1;
+  margin-right: 10px;
+  font-size: 1.2em;
+}
+
+.routine-details-list {
+  flex: 2;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 1em;
+  color: #555;
+}
+
+.routine-details-list li {
+  margin-bottom: 5px;
+}
+
+.routine-actions {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.routine-actions .material-symbols-outlined {
+  cursor: pointer;
+  background: #f1f1f1;
+  padding: 8px;
+  border-radius: 50%;
+  color: #333;
+}
+
+.routine-actions .edit:hover {
+  color: var(--primary);
+  transition: 0.2s ease-in;
+}
+
+.routine-actions .close:hover {
+  color: var(--error);
+  transition: 0.2s ease-in;
+}
+
+
+/* Add Routine Button */
+.add-routine-btn {
+  background: #fff;
+  border: 2px dashed var(--primary);
+  color: var(--primary);
+  padding: 20px;
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.add-routine-btn:hover {
+  background-color: var(--primary);
+  color: #fff;
+}
+
+/* Modal Styles */
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 4px;
+  max-width: 600px;
+  width: 100%;
+  position: relative;
+}
+
+.modal-content .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 30px;
+}
+
+/* Modal buttons */
+.modal-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.save-routine-btn, .cancel-btn, .delete-btn {
+  background: var(--primary);
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background: #ddd;
+}
+
+.save-routine-btn:hover, .delete-btn:hover {
+  background-color: var(--navbar-hover);
+}
+
+.cancel-btn:hover {
+  background-color: darkgray;
+}
+
+.delete-btn {
+  background: var(--error);
+}
+
+.delete-btn:hover {
+  background-color: darkred;
+}
+
+/* Workout */
 .workout-details {
   background: #fff;
   border-radius: 4px;
@@ -443,150 +617,4 @@ div.error {
   .navbar.expanded ~ .content {
     margin-left: 150px;
   }
-}
-
-/* Routines Page */
-.routine-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(3, 1fr));
-  gap: 20px;
-}
-
-.add-routine-row {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.routine-details {
-  background: #fff;
-  border-radius: 4px;
-  padding: 20px;
-  position: relative;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
-  transition: box-shadow 0.3s ease;
-  min-width: 250px;
-}
-
-.routine-details:hover {
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.routine-details h4 {
-  margin: 0 0 10px 0;
-  font-size: 1.2em;
-  color: var(--primary);
-  cursor: pointer;
-}
-
-.routine-actions {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  display: flex;
-  gap: 10px;
-}
-
-.routine-actions .material-symbols-outlined {
-  cursor: pointer;
-  background: #f1f1f1;
-  padding: 5px;
-  border-radius: 50%;
-  color: #333;
-}
-
-.routine-actions .edit:hover {
-  color: var(--primary);
-  transition: 0.2s ease-in;
-}
-
-.routine-actions .close:hover {
-  color: var(--error);
-  transition: 0.2s ease-in;
-}
-
-/* Add Routine Button */
-.add-routine-btn {
-  background: #fff;
-  border: 2px dashed var(--primary);
-  color: var(--primary);
-  padding: 20px;
-  font-size: 16px;
-  text-align: center;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
-}
-
-.add-routine-btn:hover {
-  background-color: var(--primary);
-  color: #fff;
-}
-
-/* Modal Styles */
-.modal {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-}
-
-.modal-content {
-  background: #fff;
-  padding: 20px;
-  border-radius: 4px;
-  max-width: 600px;
-  width: 100%;
-  position: relative;
-}
-
-.modal-content .close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-  font-size: 30px;
-}
-
-/* Modal buttons */
-.modal-buttons {
-  display: flex;
-  gap: 10px;
-  justify-content: flex-end;
-  margin-top: 20px;
-}
-
-.save-routine-btn, .cancel-btn, .delete-btn {
-  background: var(--primary);
-  color: #fff;
-  padding: 10px 20px;
-  font-size: 15px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.cancel-btn {
-  background: #ddd;
-}
-
-.save-routine-btn:hover, .delete-btn:hover {
-  background-color: var(--navbar-hover);
-}
-
-.cancel-btn:hover {
-  background-color: darkgray;
-}
-
-.delete-btn {
-  background: var(--error);
-}
-
-.delete-btn:hover {
-  background-color: darkred;
 }
