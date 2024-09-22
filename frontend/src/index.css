@@ -137,6 +137,15 @@ body {
   vertical-align: middle;
 }
 
+.brand-Container {
+  max-height: 300px;
+  /* vertical-align: middle; */
+  justify-content: center;
+}
+
+
+
+
 .brand-container h1 {
   display: inline-block;
   margin: 0;
@@ -617,4 +626,9 @@ div.error {
   .navbar.expanded ~ .content {
     margin-left: 150px;
   }
+
+
+
+
+
 }

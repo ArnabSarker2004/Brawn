@@ -55,6 +55,7 @@ const Routines = () => {
       {/* Add Routine Modal */}
       {showAddModal && <RoutineFormModal onClose={() => setShowAddModal(false)} />}
     </div>
+    
   );
 };
 
