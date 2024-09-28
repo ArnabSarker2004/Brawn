@@ -166,7 +166,7 @@ body {
 .home {
   display: flex;
   flex-direction: column;
-  gap: 50px;
+  gap: 20px;
 }
 
 .add-workout-row {
@@ -367,6 +367,11 @@ body {
 }
 
 /* Workout */
+
+.Workout-Title h1{
+  margin: 10;
+  text-align: center;
+}
 .workout-details {
   background: #fff;
   border-radius: 4px;
@@ -455,7 +460,7 @@ body {
 
 /* New Workout Form */
 label {
-  display: block;
+  display: flex;
   color: var(--primary);
 }
 
@@ -469,6 +474,20 @@ input {
   border: 3px solid #ddd;
   border-radius: 4px;
   box-sizing: border-box;
+}
+
+.checkbox-input{
+  height: 20px;
+  width: 20px;
+  margin-left: 20px;
+  margin-top: 20px ;
+  cursor: pointer;
+}
+
+.time-based{
+  display: flex;
+  width: 50%;
+  align-items: center;
 }
 
 input.error {
@@ -533,21 +552,21 @@ div.error {
   font-size: 30px;
 }
 
-.set-form {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
 /* Button styles */
 
-.buttons-row {
+.back-buttons-row {
   display: flex;
   justify-content: space-between;
 }
 
+.add-workout-btn-row{
+  display: flex;
+  justify-content: center;  /* Horizontally center the div */
+  align-items: center;      /* Vertically center the div */
+
+}
 .add-workout-btn {
-  flex: 0 0 80%;
+  width: 200px;
   background: #fff;
   border: 2px dashed var(--primary);
   color: var(--primary);

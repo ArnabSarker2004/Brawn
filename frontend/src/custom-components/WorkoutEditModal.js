@@ -96,12 +96,14 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
             className={emptyFields.includes('title') ? 'error' : ''}
           />
 
-          <label>Time Based:</label>
-          <input
-            type="checkbox"
-            checked={timeBased}
-            onChange={() => setTimeBased(!timeBased)}
-          />
+          <div className="time-based">
+            <label className="time-based-text">Time Based:</label>
+            <input className="checkbox-input"
+              type="checkbox"
+              checked={timeBased}
+              onChange={(e) => setTimeBased(!timeBased)}
+            />
+          </div>
 
           <div className="workout-table">
             <div className="workout-table-header">
