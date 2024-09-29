@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 
 const Signup = () => {
   // State to manage the logged-in user
-
+  const [loggedInUser, setLoggedInUser] = useState(null);
 
   return (
-    <Login  />
+    <Login setLoggedInUser={setLoggedInUser} />
   );
 };
 

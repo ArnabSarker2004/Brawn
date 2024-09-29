@@ -7,15 +7,13 @@ const Brand = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    setHasToken(!!token);  // If token exists, set hasToken to true
+    setHasToken(!!token);  
   }, []);
 
   return (
     <div className="brand-container">
-      <img src={BrawnLogo} alt="Brawn Logo" /> {/* Adjust logo size */}
+      <img src={BrawnLogo} alt="Brawn Logo" /> 
       <h1 className="text-xl font-bold">Brawn</h1>
-      
-      {/* Conditionally render Logout button if token exists */}
       {hasToken && (
         <div className="absolute right-4 top-4">
           <Logout />

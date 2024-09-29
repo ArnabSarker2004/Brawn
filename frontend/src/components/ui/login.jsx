@@ -7,7 +7,7 @@ import axios from 'axios';
 import { cn } from "../../lib/utils";
 import { useNavigate } from "react-router-dom";
 
-export function Login() {  // Add setLoggedInUser as a prop
+export function Login({setLoggedInUser}) {  
 
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
@@ -19,37 +19,34 @@ export function Login() {  // Add setLoggedInUser as a prop
 
     const { username, password } = formData;
 
-    // Handle form input changes
+
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    // Handle login submission
     const onSubmitLogin = async e => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:4000/api/auth/login', { username, password });  // Send username, not email
-            localStorage.setItem('token', 'token'); // this will be needed to be changed when there is an actual login token that I am using
-           
+            const res = await axios.post('http://localhost:4000/api/auth/login', { username, password });  
+            console.log(res.data);
+            localStorage.setItem('token', res.data.token);
+            setLoggedInUser(username);
             setMessage('Logged in successfully');
-            navigate('/dashboard');  // Redirect to dashboard
+            navigate('/dashboard');  
         } catch (err) {
             console.error(err.response.data);
             setMessage('Failed to login - wrong credentials');
         }
     };
 
-    // Handle sign-up submission
     const onSubmitSignUp = async e => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:4000/api/auth/register', { username, password });  // Send username, not email
-            if (res && res.data) {
-                localStorage.setItem('token', 'token');  // Store the token
-                
+            const res = await axios.post('http://localhost:4000/api/auth/register', { username, password }); 
+            
+                localStorage.setItem('token', res.data.token);
+                console.log(res.data);
+                setLoggedInUser(username);
                 setMessage('Registered successfully, redirecting...');
-                navigate('/dashboard');  // Automatically redirect after registration
-            } else {
-                setMessage('Something went wrong. Please try again.');
-            }
+                navigate('/dashboard');  // Automatically redirect after registration            
         } catch (err) {
             console.error('Error occurred during sign-up:', err);
             if (err.response && err.response.data) {
