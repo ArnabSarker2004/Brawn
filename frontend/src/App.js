@@ -1,57 +1,97 @@
 import './tailwind.css';
 import './index.css';
-// Import this after regular CSS so it does not get overwritten by the Tailwind base class
-import React from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import Routines from './pages/Routines'; // Import Routines
-import WorkoutPage from './pages/WorkoutPage'; // Import WorkoutPage for displaying workouts for a routine
-import Brawnify from './pages/Brawnify'; // Import Brawnify
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useLocation, Link, Navigate } from 'react-router-dom';
+
+import Routines from './pages/Routines';
+import WorkoutPage from './pages/WorkoutPage';
+import Brawnify from './pages/Brawnify';
 import Navbar from './custom-components/Navbar';
 import Brand from './custom-components/Brand';
 import { WorkoutsContextProvider } from './context/WorkoutsContext';
 import { SetsContextProvider } from './context/SetsContext';
-import { RoutinesContextProvider } from './context/RoutinesContext'; 
+import { RoutinesContextProvider } from './context/RoutinesContext';
 import Dashboard from './pages/dashboard';
-import Signup from './pages/signup'; 
+import Signup from './pages/signup';
+import { Logout } from './components/ui/logout';
 
 function AppContent() {
-  const location = useLocation(); // Get the current route
+  const location = useLocation();
+  const isLoginPage = location.pathname === '/';
 
-  const isSignupPage = location.pathname === '/signup'; // Check if the current route is the signup page
+  // Display a loading state until we determine if the user is logged in or not
+  
+ 
+  console.log(localStorage.getItem('token'));
 
   return (
-    <div className={`${isSignupPage ? "w-screen h-screen flex justify-center items-center" : "content"}`}>
-      {/* Conditionally render Navbar and Brand if not on signup page */}
-      {!isSignupPage && (
+    <div className={`${isLoginPage ? "w-screen h-screen flex justify-center items-center" : "content"}`}>
+      {/* Ensure Navbar and Brand always render if logged in */}
+      {localStorage.getItem('token') && !isLoginPage && (
         <>
+       
           <Navbar />
           <Brand />
+          
         </>
       )}
-      <div className={`${isSignupPage ? "w-full h-full" : "pages"}`}>
+
+      <div className={`${isLoginPage ? "w-full h-full" : "pages"}`}>
         <Routes>
-          {/* Define routes here */}
-          <Route path="/routines" element={<Routines />} /> {/* Routines component renders here */}
-          <Route path="/routines/:routineId" element={<WorkoutPage />} /> {/* WorkoutPage component for specific routine */}
-          <Route path="/brawnify" element={<Brawnify />} /> {/* Brawnify component */}
-          <Route path="/dashboard" element={<Dashboard />} /> {/* Dashboard component */}
-          <Route path="/signup" element={<Signup />} /> {/* Signup component */}
-          {/* Add more routes as needed */}
+          <Route path="/" element={<Signup  />} />
+          <Route path="/routines" element={<PrivateRoute ><Routines /></PrivateRoute>} />
+          <Route path="/routines/:routineId" element={<PrivateRoute ><WorkoutPage /></PrivateRoute>} />
+          <Route path="/brawnify" element={<PrivateRoute ><Brawnify /></PrivateRoute>} />
+          <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
         </Routes>
       </div>
     </div>
   );
 }
 
+
+
+
+function PrivateRoute({ children}) {
+  const token = localStorage.getItem('token'); 
+
+  return ( token) ? (
+    children
+  ) : (
+    <div className="whitespace-pre flex h-screen w-[100%] rounded-lg justify-center items-center p-2 text-center text-2xl font-bold">
+      <Brand />
+      <div className="overflow-hidden whitespace-pre">
+        You need to be logged in to view this page. 
+        <div>
+          <Link to="/">Click here to login</Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+
+
+
 function App() {
+  
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      
+    } else {
+          }
+  }, []);
+
   return (
     <div className="App">
       <BrowserRouter>
-        {/* Wrap the entire app with RoutinesContextProvider */}
         <RoutinesContextProvider>
           <WorkoutsContextProvider>
             <SetsContextProvider>
-              <AppContent />
+              <AppContent  />
             </SetsContextProvider>
           </WorkoutsContextProvider>
         </RoutinesContextProvider>
@@ -59,5 +99,6 @@ function App() {
     </div>
   );
 }
+
 
 export default App;

@@ -7,7 +7,7 @@ const setRoutes = require('./routes/sets'); // Import sets routes
 const routineRoutes = require('./routes/routines'); // Import routine routes
 const cors = require('cors');
 const config = require('./config');
-const autRoutes = require('./routes/auth');
+const authRoutes = require('./routes/auth');
 
 // Create an Express app
 const app = express();
@@ -17,9 +17,6 @@ app.use(express.json());
 
 app.use(cors());
 
-// Middleware to log the request path and method
-
-// app.use('/api/auth', authRoutes);
 app.use((req, res, next) => {
     console.log(req.path, req.method);
     next();
@@ -33,6 +30,9 @@ app.use('/api/routines', workoutRoutes); // Workout routes under routines
 
 // Register the set routes with the app (nested under workouts)
 app.use('/api/routines', setRoutes); // Set routes under workouts
+
+//initializing authentication route
+app.use('/api/auth', authRoutes);
 
 // Connect to the MongoDB database
 mongoose.connect(process.env.MONGO_URI)

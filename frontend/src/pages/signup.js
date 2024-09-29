@@ -1,12 +1,12 @@
-import { Login} from '../components/ui/login'
+import { Login } from '../components/ui/login';
+import React, { useState } from 'react';
 
+const Signup = () => {
+  // State to manage the logged-in user
 
-import React from 'react';
-
-const Signup= () => {
 
   return (
-    <Login/>
+    <Login  />
   );
 };
 
