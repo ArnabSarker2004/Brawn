@@ -27,12 +27,13 @@ const WorkoutFormModal = ({ setShowModal, routineId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const workout = { title, sets: sets.map(set => ({ 
-      weight: set.weight,
-      reps: timeBased ? undefined : set.reps, // Only include reps or time depending on the toggle
-      time: timeBased ? set.time : undefined
-    })),
-    timeBased
+    const workout = {
+      title, sets: sets.map(set => ({
+        weight: set.weight,
+        reps: timeBased ? undefined : set.reps, // Only include reps or time depending on the toggle
+        time: timeBased ? set.time : undefined
+      })),
+      timeBased
     };
 
     try {
@@ -71,12 +72,14 @@ const WorkoutFormModal = ({ setShowModal, routineId }) => {
             value={title}
           />
 
-          <label>Time Based:</label>
-          <input
-            type="checkbox"
-            checked={timeBased}
-            onChange={(e) => setTimeBased(!timeBased)}
-          />
+          <div className="time-based">
+            <label className="time-based-text">Time Based:</label>
+            <input className="checkbox-input"
+              type="checkbox"
+              checked={timeBased}
+              onChange={(e) => setTimeBased(!timeBased)}
+            />
+          </div>
 
           <div className="workout-table">
             <div className="workout-table-header">
