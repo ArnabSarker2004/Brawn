@@ -1,17 +1,16 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// Define the Set schema
 const setSchema = new Schema({
   weight: {
     type: Number,
     required: true
   },
-  reps: Number,  // Optional, based on the workout's timeBased flag
-  time: Number   // Optional, also based on the workout's timeBased flag
+  reps: Number,  
+  time: Number   
 });
 
-// Define the Workout schema
+
 const workoutSchema = new Schema({
   title: {
     type: String,
@@ -19,15 +18,15 @@ const workoutSchema = new Schema({
   },
   timeBased: {
     type: Boolean,
-    required: true  // Specifies if the workout uses time instead of reps
+    required: true  
   },
   sets: {
     type: [setSchema],
-    default: []  // Ensures the array exists even if it's empty
+    default: []  
   }
 });
 
-// Define the Routine schema
+
 const routineSchema = new Schema({
   name: {
     type: String,
@@ -35,7 +34,7 @@ const routineSchema = new Schema({
   },
   workouts: {
     type: [workoutSchema],
-    default: []  // Ensures the array exists even if it's empty
+    default: []  
   }
 }, { timestamps: true });
 

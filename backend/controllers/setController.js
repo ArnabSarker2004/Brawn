@@ -1,7 +1,6 @@
-const Routine = require('../models/routineModel'); // Assuming the routine model is in the models folder
+const Routine = require('../models/routineModel'); 
 const mongoose = require('mongoose');
 
-// Get all sets within a workout in a routine
 const getAllSets = async (req, res) => {
     const { routineId, workoutId } = req.params;
 
@@ -24,7 +23,6 @@ const getAllSets = async (req, res) => {
     res.status(200).json(workout.sets);
 };
 
-// Get a specific set within a workout in a routine
 const getSet = async (req, res) => {
     const { routineId, workoutId, setId } = req.params;
 
@@ -53,12 +51,10 @@ const getSet = async (req, res) => {
     res.status(200).json(set);
 };
 
-// Add a new set to a workout within a routine
 const addSet = async (req, res) => {
     const { routineId, workoutId } = req.params;
     const { weight, reps } = req.body;
 
-    // Validate IDs
     if (!mongoose.Types.ObjectId.isValid(routineId) || !mongoose.Types.ObjectId.isValid(workoutId)) {
         return res.status(404).json({ error: 'Invalid routine or workout ID' });
     }
@@ -70,26 +66,23 @@ const addSet = async (req, res) => {
         return res.status(404).json({ error: 'Routine not found' });
     }
 
-    // Find the workout within the routine
     const workout = routine.workouts.id(workoutId);
 
     if (!workout) {
         return res.status(404).json({ error: 'Workout not found' });
     }
 
-    // Create a new set and add it to the workout's sets array
     const newSet = { weight, reps };
     workout.sets.push(newSet);
 
     try {
-        await routine.save(); // Save the updated routine document
+        await routine.save(); 
         res.status(201).json(newSet);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
 };
 
-// Update a specific set within a workout in a routine
 const updateSet = async (req, res) => {
     const { routineId, workoutId, setId } = req.params;
     const { reps, weight } = req.body;
@@ -127,7 +120,6 @@ const updateSet = async (req, res) => {
     }
 };
 
-// Delete a specific set within a workout in a routine
 const deleteSet = async (req, res) => {
     const { routineId, workoutId, setId } = req.params;
 
@@ -147,7 +139,6 @@ const deleteSet = async (req, res) => {
         return res.status(404).json({ error: 'No such workout' });
     }
 
-    // Use pull instead of remove
     workout.sets.pull({ _id: setId });
 
     try {

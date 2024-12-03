@@ -1,7 +1,6 @@
 const Routine = require('../models/routineModel');
 const mongoose = require('mongoose');
 
-// Get all workouts within a routine
 const getWorkouts = async (req, res) => {
   const { routineId } = req.params;
 
@@ -18,7 +17,6 @@ const getWorkouts = async (req, res) => {
   res.status(200).json(routine.workouts);
 };
 
-// Get a specific workout within a routine
 const getWorkout = async (req, res) => {
   const { routineId, workoutId } = req.params;
 
@@ -41,7 +39,6 @@ const getWorkout = async (req, res) => {
   res.status(200).json(workout);
 };
 
-// Add a new workout to a routine
 const createWorkout = async (req, res) => {
   const { routineId } = req.params;
   const { title, timeBased, sets } = req.body;
@@ -82,7 +79,6 @@ const createWorkout = async (req, res) => {
   }
 };
 
-// Update a specific workout within a routine
 const updateWorkout = async (req, res) => {
   const { routineId, workoutId } = req.params;
   const { title, sets, timeBased } = req.body;
@@ -105,7 +101,7 @@ const updateWorkout = async (req, res) => {
 
   workout.title = title;
   workout.timeBased = timeBased;
-  workout.sets = sets; // Ensure you handle time or reps based on timeBased flag.
+  workout.sets = sets; 
 
   try {
     await routine.save();
@@ -115,7 +111,6 @@ const updateWorkout = async (req, res) => {
   }
 };
 
-// Delete a specific workout within a routine
 const deleteWorkout = async (req, res) => {
   const { routineId, workoutId } = req.params;
 

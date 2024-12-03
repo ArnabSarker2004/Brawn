@@ -1,13 +1,11 @@
-const Routine = require('../models/routineModel'); // Update the path if needed
+const Routine = require('../models/routineModel'); 
 const mongoose = require('mongoose');
 
-// Get all routines
 const getRoutines = async (req, res) => {
   const routines = await Routine.find({}).sort({ createdAt: -1 });
   res.status(200).json(routines);
 };
 
-// Get a single routine by ID
 const getRoutine = async (req, res) => {
   const { id } = req.params;
 
@@ -24,7 +22,6 @@ const getRoutine = async (req, res) => {
   res.status(200).json(routine);
 };
 
-// Create a new routine
 const createRoutine = async (req, res) => {
   const { name, workouts } = req.body;
 
@@ -50,7 +47,6 @@ const createRoutine = async (req, res) => {
   }
 };
 
-// Delete a routine by ID
 const deleteRoutine = async (req, res) => {
   const { id } = req.params;
 
@@ -67,7 +63,6 @@ const deleteRoutine = async (req, res) => {
   res.status(200).json(routine);
 };
 
-// Update a routine by ID
 const updateRoutine = async (req, res) => {
   const { id } = req.params;
 
@@ -75,7 +70,6 @@ const updateRoutine = async (req, res) => {
     return res.status(404).json({ error: 'No such routine' });
   }
 
-  // Use { new: true } to return the updated routine
   const routine = await Routine.findOneAndUpdate({ _id: id }, { ...req.body }, { new: true });
 
   if (!routine) {
