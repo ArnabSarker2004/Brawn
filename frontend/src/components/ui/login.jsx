@@ -11,7 +11,7 @@ export function Login({setLoggedInUser}) {
 
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        username: '',  // Collect username
+        username: '',  
         password: ''
     });
     const [message, setMessage] = useState('');
@@ -28,6 +28,7 @@ export function Login({setLoggedInUser}) {
             const res = await axios.post('http://localhost:4000/api/auth/login', { username, password });  
             console.log(res.data);
             localStorage.setItem('token', res.data.token);
+            localStorage.setItem('username',res.data.username);
             setLoggedInUser(username);
             setMessage('Logged in successfully');
             navigate('/dashboard');  
@@ -43,6 +44,7 @@ export function Login({setLoggedInUser}) {
             const res = await axios.post('http://localhost:4000/api/auth/register', { username, password }); 
             
                 localStorage.setItem('token', res.data.token);
+                localStorage.setItem('username', res.data.username);
                 console.log(res.data);
                 setLoggedInUser(username);
                 setMessage('Registered successfully, redirecting...');
