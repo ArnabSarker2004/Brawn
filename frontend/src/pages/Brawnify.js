@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-// Define your API key as a variable
-const API_KEY = ''; // Add your key
+const API_KEY = ''; 
 
 function Brawnify() {
   const [messages, setMessages] = useState([
@@ -11,12 +10,10 @@ function Brawnify() {
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef(null);
 
-  // Auto-scroll to the latest message when messages update
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Handle sending a new message
   const handleSendMessage = async (e) => {
     e.preventDefault();
 
@@ -27,7 +24,6 @@ function Brawnify() {
 
     setLoading(true); // Show loading state
 
-    // Call the API to get Brawnie's response
     const botResponse = await fetchGPTResponse(userMessage);
     setMessages((prevMessages) => [
       ...prevMessages,
@@ -35,17 +31,16 @@ function Brawnify() {
     ]);
 
     setUserMessage('');
-    setLoading(false); // Hide loading state
+    setLoading(false); 
   };
 
-  // Fetch GPT response
   const fetchGPTResponse = async (message) => {
     try {
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${API_KEY}`, // Using API key variable here
+          Authorization: `Bearer ${API_KEY}`, 
         },
         body: JSON.stringify({
           model: 'gpt-3.5-turbo',
@@ -70,7 +65,6 @@ function Brawnify() {
 
   return (
     <div className="flex flex-col w-full h-full bg-white">
-      {/* Message container with reduced height */}
       <div className="flex-1 p-4 overflow-y-auto">
         {messages.map((msg, index) => (
           <div
@@ -98,7 +92,6 @@ function Brawnify() {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input form */} 
       <form
         className="flex items-center p-4 border-t border-gray-300 bg-gray-50 mb-5"
         onSubmit={handleSendMessage}
@@ -115,7 +108,7 @@ function Brawnify() {
         <button
           type="submit"
           className="ml-4 bg-green-600 w-10 h-10 flex items-center justify-center rounded-full hover:bg-green-700 focus:outline-none"
-          disabled={loading} // Disable button while loading
+          disabled={loading} 
         >
           <span className="material-symbols-outlined text-white">send</span>
         </button>

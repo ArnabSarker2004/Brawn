@@ -7,18 +7,17 @@ import WorkoutFormModal from '../custom-components/WorkoutFormModal';
 const Home = () => {
   const { workouts, dispatch: workoutsDispatch } = useWorkoutsContext();
   const [showModal, setShowModal] = useState(false);
-  const [routineName, setRoutineName] = useState(''); // State to hold the routine name
-  const { routineId } = useParams(); // Get the routine ID from the URL
+  const [routineName, setRoutineName] = useState(''); 
+  const { routineId } = useParams(); 
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRoutineDetails = async () => {
-      // Fetch the routine details including the name
       const response = await fetch(`/api/routines/${routineId}`);
       const data = await response.json();
 
       if (response.ok) {
-        setRoutineName(data.name); // Assuming 'name' is the field for the routine name
+        setRoutineName(data.name); 
       }
     };
 
@@ -31,14 +30,14 @@ const Home = () => {
       }
     };
 
-    fetchRoutineDetails(); // Fetch routine details including name
-    fetchWorkouts(); // Fetch the workouts
+    fetchRoutineDetails(); 
+    fetchWorkouts(); 
   }, [routineId, workoutsDispatch]);
 
   return (
     <div className="home">
       <div className="Workout-Title">
-        <h1>{routineName}</h1> {/* Display the routine name here */}
+        <h1>{routineName}</h1> 
       </div>
       <div className='add-workout-btn-row'>
         <div className="add-workout-btn" onClick={() => setShowModal(true)}>
