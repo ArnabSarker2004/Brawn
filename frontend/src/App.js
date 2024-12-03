@@ -5,8 +5,8 @@ import { BrowserRouter, Routes, Route, useLocation, Link, Navigate } from 'react
 import Routines from './pages/Routines';
 import WorkoutPage from './pages/WorkoutPage';
 import Brawnify from './pages/Brawnify';
-import Navbar from './custom-components/Navbar';
-import Brand from './custom-components/Brand';
+import Navbar from './custom-components/Navigation/Navbar';
+import Brand from './custom-components/Headers/Brand';
 import { WorkoutsContextProvider } from './context/WorkoutsContext';
 import { SetsContextProvider } from './context/SetsContext';
 import { RoutinesContextProvider } from './context/RoutinesContext';

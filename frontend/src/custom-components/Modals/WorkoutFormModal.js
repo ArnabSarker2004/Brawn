@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { useWorkoutsContext } from '../hooks/useWorkoutsContext';
-
+import { useWorkoutsContext } from "../../hooks/useWorkoutsContext"
 const WorkoutFormModal = ({ setShowModal, routineId }) => {
 const { dispatch } = useWorkoutsContext();
 const [title, setTitle] = useState('');

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import BrawnLogo from '../assets/Brawn_Logo.png'; // Import the logo
-import { Logout } from '../components/ui/logout';
+import BrawnLogo from '../../assets/Brawn_Logo.png'; 
+import { Logout } from '../../components/ui/logout';
 
 const Brand = () => {
   const [hasToken, setHasToken] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    setHasToken(!!token);  
+    setHasToken(token);  
   }, []);
 
   return (
