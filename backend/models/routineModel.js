@@ -43,5 +43,4 @@ const routineSchema = new Schema({
   }
 }, { timestamps: true });
 
-console.log('Hello World');
 module.exports = mongoose.model('Routine', routineSchema);
