@@ -1,143 +1,151 @@
-const Routine = require('../models/routineModel');
-const mongoose = require('mongoose');
+    const Routine = require('../models/routineModel');
+    const mongoose = require('mongoose');
 
-const getWorkouts = async (req, res) => {
-  const { routineId } = req.params;
+    const getWorkouts = async (req, res) => {
+        const { routineId, user } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(routineId)) {
-    return res.status(404).json({ error: 'No such routine' });
-  }
+        if(!mongoose.Types.ObjectId.isValid(user)){
+            return res.status(404).json({error: 'User Not Provided'});
+        }
 
-  const routine = await Routine.findById(routineId);
+        if (!mongoose.Types.ObjectId.isValid(routineId)) {
+            return res.status(404).json({ error: 'No such routine' });
+        }
 
-  if (!routine) {
-    return res.status(404).json({ error: 'No such routine' });
-  }
+        const routine = await Routine.findById(routineId);
 
-  res.status(200).json(routine.workouts);
-};
+        if (!routine) {
+            return res.status(404).json({ error: 'No such routine' });
+        }
 
-const getWorkout = async (req, res) => {
-  const { routineId, workoutId } = req.params;
+        res.status(200).json(routine.workouts);
+    };
 
-  if (!mongoose.Types.ObjectId.isValid(routineId) || !mongoose.Types.ObjectId.isValid(workoutId)) {
-    return res.status(404).json({ error: 'No such routine or workout' });
-  }
+    const getWorkout = async (req, res) => {
+        const { routineId, workoutId, user } = req.params;
 
-  const routine = await Routine.findById(routineId);
+        if (!mongoose.Types.ObjectId.isValid(user)){
+            return res.status(404).json({error:'User is not found'});
+        }
 
-  if (!routine) {
-    return res.status(404).json({ error: 'No such routine' });
-  }
+        if (!mongoose.Types.ObjectId.isValid(routineId) || !mongoose.Types.ObjectId.isValid(workoutId)) {
+            return res.status(404).json({ error: 'No such routine or workout' });
+        }
 
-  const workout = routine.workouts.id(workoutId);
+        const routine = await Routine.findById(routineId);
 
-  if (!workout) {
-    return res.status(404).json({ error: 'No such workout' });
-  }
+        if (!routine) {
+            return res.status(404).json({ error: 'No such routine' });
+        }
 
-  res.status(200).json(workout);
-};
+        const workout = routine.workouts.id(workoutId);
 
-const createWorkout = async (req, res) => {
-  const { routineId } = req.params;
-  const { title, timeBased, sets } = req.body;
+        if (!workout) {
+            return res.status(404).json({ error: 'No such workout' });
+        }
 
-  let emptyFields = [];
-  if (!title) emptyFields.push('title');
+        res.status(200).json(workout);
+    };
 
-  if (timeBased) {
-    sets.forEach((set, index) => {
-      if (!set.time) emptyFields.push(`sets[${index}].time`);
-      if (!set.weight) emptyFields.push(`sets[${index}].weight`);
-    });
-  } else {
-    sets.forEach((set, index) => {
-      if (!set.reps) emptyFields.push(`sets[${index}].reps`);
-      if (!set.weight) emptyFields.push(`sets[${index}].weight`);
-    });
-  }
+    const createWorkout = async (req, res) => {
+        const { routineId, user } = req.params;
+        const { title, timeBased, sets } = req.body;
 
-  if (!mongoose.Types.ObjectId.isValid(routineId)) {
-    return res.status(404).json({ error: 'No such routine' });
-  }
+        let emptyFields = [];
+        if (!title) emptyFields.push('title');
 
-  const routine = await Routine.findById(routineId);
+        if (timeBased) {
+            sets.forEach((set, index) => {
+            if (!set.time) emptyFields.push(`sets[${index}].time`);
+            if (!set.weight) emptyFields.push(`sets[${index}].weight`);
+            });
+        } else {
+            sets.forEach((set, index) => {
+            if (!set.reps) emptyFields.push(`sets[${index}].reps`);
+            if (!set.weight) emptyFields.push(`sets[${index}].weight`);
+            });
+        }
 
-  if (!routine) {
-    return res.status(404).json({ error: 'No such routine' });
-  }
+        if (!mongoose.Types.ObjectId.isValid(routineId)) {
+            return res.status(404).json({ error: 'No such routine' });
+        }
 
-  const newWorkout = { title, timeBased, sets };
-  routine.workouts.push(newWorkout);
+        const routine = await Routine.findById(routineId);
 
-  try {
-    await routine.save();
-    res.status(201).json(routine.workouts[routine.workouts.length - 1]);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
+        if (!routine) {
+            return res.status(404).json({ error: 'No such routine' });
+        }
 
-const updateWorkout = async (req, res) => {
-  const { routineId, workoutId } = req.params;
-  const { title, sets, timeBased } = req.body;
+        const newWorkout = { title, timeBased, sets };
+        routine.workouts.push(newWorkout);
 
-  if (!mongoose.Types.ObjectId.isValid(routineId) || !mongoose.Types.ObjectId.isValid(workoutId)) {
-    return res.status(404).json({ error: 'No such routine or workout' });
-  }
+        try {
+            await routine.save();
+            res.status(201).json(routine.workouts[routine.workouts.length - 1]);
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    };
 
-  const routine = await Routine.findById(routineId);
+    const updateWorkout = async (req, res) => {
+        const { routineId, workoutId } = req.params;
+        const { title, sets, timeBased } = req.body;
 
-  if (!routine) {
-    return res.status(404).json({ error: 'No such routine' });
-  }
+        if (!mongoose.Types.ObjectId.isValid(routineId) || !mongoose.Types.ObjectId.isValid(workoutId)) {
+            return res.status(404).json({ error: 'No such routine or workout' });
+        }
 
-  const workout = routine.workouts.id(workoutId);
+        const routine = await Routine.findById(routineId);
 
-  if (!workout) {
-    return res.status(404).json({ error: 'No such workout' });
-  }
+        if (!routine) {
+            return res.status(404).json({ error: 'No such routine' });
+        }
 
-  workout.title = title;
-  workout.timeBased = timeBased;
-  workout.sets = sets; 
+        const workout = routine.workouts.id(workoutId);
 
-  try {
-    await routine.save();
-    res.status(200).json(workout);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
+        if (!workout) {
+            return res.status(404).json({ error: 'No such workout' });
+        }
 
-const deleteWorkout = async (req, res) => {
-  const { routineId, workoutId } = req.params;
+        workout.title = title;
+        workout.timeBased = timeBased;
+        workout.sets = sets; 
 
-  if (!mongoose.Types.ObjectId.isValid(routineId) || !mongoose.Types.ObjectId.isValid(workoutId)) {
-    return res.status(404).json({ error: 'No such routine or workout' });
-  }
+        try {
+            await routine.save();
+            res.status(200).json(workout);
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    };
 
-  const routine = await Routine.findById(routineId);
+    const deleteWorkout = async (req, res) => {
+        const { routineId, workoutId } = req.params;
 
-  if (!routine) {
-    return res.status(404).json({ error: 'No such routine' });
-  }
+        if (!mongoose.Types.ObjectId.isValid(routineId) || !mongoose.Types.ObjectId.isValid(workoutId)) {
+            return res.status(404).json({ error: 'No such routine or workout' });
+        }
 
-  routine.workouts.pull(workoutId);
+        const routine = await Routine.findById(routineId);
 
-  try {
-    await routine.save();
-    res.status(200).json({ message: 'Workout removed' });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
+        if (!routine) {
+            return res.status(404).json({ error: 'No such routine' });
+        }
 
-module.exports = {
-  getWorkouts,
-  getWorkout,
-  createWorkout,
-  updateWorkout,
-  deleteWorkout
-};
+        routine.workouts.pull(workoutId);
+
+        try {
+            await routine.save();
+            res.status(200).json({ message: 'Workout removed' });
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    };
+
+    module.exports = {
+    getWorkouts,
+    getWorkout,
+    createWorkout,
+    updateWorkout,
+    deleteWorkout
+    };

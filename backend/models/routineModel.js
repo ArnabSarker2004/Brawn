@@ -35,6 +35,11 @@ const routineSchema = new Schema({
   workouts: {
     type: [workoutSchema],
     default: []  
+  },
+  user:{
+    type: Schema.Types.ObjectId,
+    ref:'User',
+    required:true
   }
 }, { timestamps: true });
 
