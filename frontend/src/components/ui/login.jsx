@@ -125,7 +125,6 @@ export function Login({setLoggedInUser}) {
                         </div>
                     </TabsContent>
 
-                    {/* Sign In Form */}
                     <TabsContent value="Sign In">
                         <div className="w-full max-w-md">
                             <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">

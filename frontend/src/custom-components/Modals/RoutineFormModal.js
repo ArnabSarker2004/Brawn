@@ -2,27 +2,26 @@ import React, { useState } from 'react';
 import { useRoutinesContext } from '../../hooks/useRoutinesContext';
 
 const RoutineFormModal = ({ onClose }) => {
-  const { dispatch } = useRoutinesContext(); // Access dispatch from the context
+  const { dispatch } = useRoutinesContext(); 
   const [name, setName] = useState('');
   const [error, setError] = useState(null);
-
+  const token = localStorage.getItem('token');
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validation check: Ensure the name is not empty
     if (name.trim() === '') {
       setError('Please fill in all the fields');
       return;
     }
 
-    setError(null); // Clear any existing errors
+    setError(null); 
 
     try {
-      // API call to create a new routine
       const response = await fetch('/api/routines', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({ name }),
       });
@@ -30,17 +29,13 @@ const RoutineFormModal = ({ onClose }) => {
       const data = await response.json();
 
       if (!response.ok) {
-        // If the API returns an error, set the error message
         setError(data.error || 'Failed to create routine');
       } else {
-        // Update context with the new routine
         dispatch({ type: 'CREATE_ROUTINE', payload: data });
 
-        // Close the modal on success
         onClose();
       }
     } catch (err) {
-      // Handle any network or fetch errors
       setError('An error occurred. Please try again.');
       console.error('Error submitting form:', err);
     }

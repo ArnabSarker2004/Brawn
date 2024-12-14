@@ -4,12 +4,19 @@ import RoutineFormModal from '../custom-components/Modals/RoutineFormModal';
 import { useRoutinesContext } from '../hooks/useRoutinesContext';
 
 const Routines = () => {
+  const token = localStorage.getItem('token');
   const { routines, dispatch } = useRoutinesContext();
   const [showAddModal, setShowAddModal] = useState(false);
 
   useEffect(() => {
     const fetchRoutines = async () => {
-      const response = await fetch('/api/routines');
+      const response = await fetch('/api/routines',
+        { method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`}
+        }
+      );
       const data = await response.json();
 
       if (response.ok) {
@@ -23,7 +30,13 @@ const Routines = () => {
   }, [dispatch]);
 
   const handleDeleteRoutine = async (id) => {
-    const response = await fetch(`/api/routines/${id}`, { method: 'DELETE' });
+    const response = await fetch(`/api/routines/${id}`, { 
+      method: 'DELETE', 
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }  
+    });
 
     if (response.ok) {
       const deletedRoutine = await response.json();

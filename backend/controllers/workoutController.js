@@ -2,11 +2,7 @@
     const mongoose = require('mongoose');
 
     const getWorkouts = async (req, res) => {
-        const { routineId, user } = req.params;
-
-        if(!mongoose.Types.ObjectId.isValid(user)){
-            return res.status(404).json({error: 'User Not Provided'});
-        }
+        const { routineId} = req.params;
 
         if (!mongoose.Types.ObjectId.isValid(routineId)) {
             return res.status(404).json({ error: 'No such routine' });
@@ -22,11 +18,7 @@
     };
 
     const getWorkout = async (req, res) => {
-        const { routineId, workoutId, user } = req.params;
-
-        if (!mongoose.Types.ObjectId.isValid(user)){
-            return res.status(404).json({error:'User is not found'});
-        }
+        const { routineId, workoutId } = req.params;
 
         if (!mongoose.Types.ObjectId.isValid(routineId) || !mongoose.Types.ObjectId.isValid(workoutId)) {
             return res.status(404).json({ error: 'No such routine or workout' });
@@ -48,7 +40,7 @@
     };
 
     const createWorkout = async (req, res) => {
-        const { routineId, user } = req.params;
+        const { routineId} = req.params;
         const { title, timeBased, sets } = req.body;
 
         let emptyFields = [];

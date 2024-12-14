@@ -8,7 +8,7 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
   const [sets, setSets] = useState(workout.sets);
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
-
+  const token = localStorage.getItem('token');
   useEffect(() => {
     setTitle(workout.title);
     setSets(workout.sets);
@@ -65,6 +65,7 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
       body: JSON.stringify(updatedWorkout),
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       },
     });
     const json = await response.json();

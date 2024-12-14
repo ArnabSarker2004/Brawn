@@ -8,10 +8,8 @@ const Routine = ({ routine, onDelete, workouts = [] }) => {
 
   return (
     <div className="routine-details">
-      {/* Routine Name */}
       <h4 onClick={() => navigate(`/routines/${routine._id}`)}>{routine.name}</h4>
       
-      {/* Display Workout Names */}
       <div className="routine-workouts">
         {workouts && workouts.length > 0 ? (
           <ul>
@@ -24,13 +22,11 @@ const Routine = ({ routine, onDelete, workouts = [] }) => {
         )}
       </div>
 
-      {/* Routine Actions */}
       <div className="routine-actions">
         <span className="material-symbols-outlined" onClick={() => setIsEditModalOpen(true)}>edit</span>
         <span className="material-symbols-outlined" onClick={() => setIsDeleteModalOpen(true)}>delete</span>
       </div>
       
-      {/* Edit Routine Modal */}
       {isEditModalOpen && (
         <RoutineEditModal
           routine={routine}
@@ -38,7 +34,6 @@ const Routine = ({ routine, onDelete, workouts = [] }) => {
         />
       )}
 
-      {/* Confirm Delete Modal */}
       {isDeleteModalOpen && (
         <div className="modal">
           <div className="modal-content">
@@ -47,8 +42,8 @@ const Routine = ({ routine, onDelete, workouts = [] }) => {
             <div className="modal-buttons">
               <button 
                 onClick={() => {
-                  onDelete(routine._id); // Call onDelete only when confirm is pressed
-                  setIsDeleteModalOpen(false); // Close modal after confirming delete
+                  onDelete(routine._id); 
+                  setIsDeleteModalOpen(false); 
                 }} 
                 className="delete-btn"
               >

@@ -4,11 +4,16 @@ import WorkoutEditModal from '../Modals/WorkoutEditModal';
 const WorkoutDetails = ({ workout, routineId }) => {
   const { dispatch } = useWorkoutsContext();
   const [showEditModal, setShowEditModal] = useState(false);
+  const token = localStorage.getItem('token');
 
   const handleDelete = async () => {
     try {
       const response = await fetch(`/api/routines/${routineId}/workouts/${workout._id}`, {
         method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+          },
       });
       if (response.ok) {
         dispatch({ type: 'DELETE_WORKOUT', payload: { _id: workout._id } });

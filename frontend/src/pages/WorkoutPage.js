@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import WorkoutDetails from '../custom-components/Workout/WorkoutDetails';
 import WorkoutFormModal from '../custom-components/Modals/WorkoutFormModal';
 const Home = () => {
+  const token = localStorage.getItem('token');
   const { workouts, dispatch: workoutsDispatch } = useWorkoutsContext();
   const [showModal, setShowModal] = useState(false);
   const [routineName, setRoutineName] = useState(''); 
@@ -12,7 +13,13 @@ const Home = () => {
 
   useEffect(() => {
     const fetchRoutineDetails = async () => {
-      const response = await fetch(`/api/routines/${routineId}`);
+      const response = await fetch(`/api/routines/${routineId}`,
+        { method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`}
+        }
+      );
       const data = await response.json();
 
       if (response.ok) {
@@ -21,7 +28,13 @@ const Home = () => {
     };
 
     const fetchWorkouts = async () => {
-      const response = await fetch(`/api/routines/${routineId}/workouts`);
+      const response = await fetch(`/api/routines/${routineId}/workouts`,
+        { method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`}
+        }
+      );
       const data = await response.json();
 
       if (response.ok) {
