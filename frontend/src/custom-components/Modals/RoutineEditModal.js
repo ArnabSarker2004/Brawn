@@ -51,8 +51,8 @@ return (
         />
         {error && <div className="error">{error}</div>}
         <div className="modal-buttons">
-        <button onClick={handleSave}>Save</button>
-        <button onClick={onClose}>Cancel</button>
+        <button onClick={handleSave} className='save-routine-btn'>Save</button>
+        <button onClick={onClose} className='cancel-routine-btn'>Cancel</button>
         </div>
     </div>
     </div>

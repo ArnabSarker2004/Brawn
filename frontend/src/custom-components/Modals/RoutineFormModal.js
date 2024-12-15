@@ -52,8 +52,8 @@ const RoutineFormModal = ({ onClose }) => {
           placeholder="Routine Name"
         />
         <div className="modal-buttons">
-          <button onClick={handleSubmit}>Add</button>
-          <button onClick={onClose}>Cancel</button>
+          <button onClick={handleSubmit} className='save-routine-btn'>Add</button>
+          <button onClick={onClose} className='cancel-routine-btn'>Cancel</button>
         </div>
         {error && <div className="error">{error}</div>}
       </div>
@@ -62,3 +62,4 @@ const RoutineFormModal = ({ onClose }) => {
 };
 
 export default RoutineFormModal;
+ 
