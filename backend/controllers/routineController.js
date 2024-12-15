@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 
 const getRoutines = async (req, res) => {
     const userID = req.user.id;
-    console.log(userID);
     const routines = await Routine.find({user: userID}).sort({ createdAt: -1 }); 
     res.status(200).json(routines);
 };

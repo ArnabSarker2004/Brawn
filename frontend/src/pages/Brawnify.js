@@ -49,7 +49,6 @@ function Brawnify() {
       });
 
       const responseBody = await response.json();
-      console.log('Response Body:', responseBody);
 
       if (!response.ok) {
         console.error('API Error:', responseBody);

@@ -26,7 +26,6 @@ export function Login({setLoggedInUser}) {
         e.preventDefault();
         try {
             const res = await axios.post('http://localhost:4000/api/auth/login', { username, password });  
-            console.log(res.data);
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('username',res.data.username);
             setLoggedInUser(username);
@@ -45,10 +44,9 @@ export function Login({setLoggedInUser}) {
             
                 localStorage.setItem('token', res.data.token);
                 localStorage.setItem('username', res.data.username);
-                console.log(res.data);
                 setLoggedInUser(username);
                 setMessage('Registered successfully, redirecting...');
-                navigate('/dashboard');  // Automatically redirect after registration            
+                navigate('/dashboard');  
         } catch (err) {
             console.error('Error occurred during sign-up:', err);
             if (err.response && err.response.data) {
