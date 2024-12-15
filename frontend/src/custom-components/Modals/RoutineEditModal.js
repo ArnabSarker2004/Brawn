@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRoutinesContext } from '../../hooks/useRoutinesContext';
-
+import './modal.css';
 const RoutineEditModal = ({ routine, onClose }) => {
     const [name, setName] = useState(routine.name);
     const [error, setError] = useState(null);

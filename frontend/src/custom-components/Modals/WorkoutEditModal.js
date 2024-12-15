@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useWorkoutsContext } from '../../hooks/useWorkoutsContext';
+import './modal.css';
 
 const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
   const { dispatch: workoutDispatch } = useWorkoutsContext();
