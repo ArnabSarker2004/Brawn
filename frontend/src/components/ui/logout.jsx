@@ -8,7 +8,7 @@ const handleLogout = () =>{
     navigate('/');
 }
 return (
-    (<Link onClick = {handleLogout} className="navbar-item absolute bottom-0">
+    (<Link onClick = {handleLogout} className="navbar-item absolute bottom-0 w-full">
         <span className="material-symbols-outlined navbar-logo">
             logout
         </span>
