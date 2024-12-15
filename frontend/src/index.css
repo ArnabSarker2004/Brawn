@@ -122,7 +122,7 @@ body {
 
 .brand-container {
   background-color: #fff;
-  padding: 3vh 0;
+  padding: 1vh 0;
   text-align: center;
   width: 100%;
   position: fixed;
@@ -640,33 +640,13 @@ div.error {
 }
 
 @media (max-width: 768px) {
-  .navbar {
-    width: 50px;
-  }
 
   .navbar.expanded {
-    width: 150px;
-  }
-
-  .navbar-content {
-    align-items: center;
-  }
-
-  .navbar-item span {
-    display: none;
-  }
-
-  .brand-container {
-    text-align: left;
-    margin: 10px;
+    width: 200px;
   }
 
   .navbar.collapsed + .content {
     margin-left: 50px;
-  }
-
-  .navbar.expanded ~ .content {
-    margin-left: 150px;
   }
 
 }

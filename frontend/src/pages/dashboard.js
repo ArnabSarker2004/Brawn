@@ -1,18 +1,10 @@
 import React from 'react';
-import { useState } from 'react';
-
-import { Calendar } from '../components/ui/calendar';
 const Dashboard = () => {
-  const [date, setDate] = useState(null);
-  return (
-    
-    <Calendar
-      mode="single"
-      selected={date}
-      onSelect={setDate}
-      className="rounded-md border"
-    />
-  );
+return (
+    <div>
+        Hello World
+    </div>
+);
 };
 
 export default Dashboard;
