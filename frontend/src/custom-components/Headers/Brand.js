@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import BrawnLogo from '../../assets/Brawn_Logo.png'; 
-
+import './brand.css';
 const Brand = () => {
   const [hasToken, setHasToken] = useState(false);
 

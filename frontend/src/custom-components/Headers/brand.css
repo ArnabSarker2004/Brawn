@@ -1,0 +1,31 @@
+
+.brand-container {
+    background-color: #fff;
+    padding: 1vh 0;
+    text-align: center;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.brand-container img {
+    max-height: 50px;
+    vertical-align: middle;
+}
+
+.brand-Container {
+    max-height: 300px;
+    justify-content: center;
+}
+
+.brand-container h1 {
+    display: inline-block;
+    margin: 0;
+    padding-left: 10px;
+    font-size: 24px;
+    vertical-align: middle;
+    color: #333;
+}
