@@ -2,6 +2,7 @@
 import { Logout } from '../../components/ui/logout';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import './navigation.css';
 
 const Navbar = () => {
     const [isExpanded, setIsExpanded] = useState(false);
