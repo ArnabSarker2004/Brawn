@@ -19,7 +19,9 @@ export function Login({setLoggedInUser}) {
 
     const { username, password } = formData;
 
-
+    const isMobile  = () =>{
+        return window.matchMedia("(max-width: 768px)").matches;
+    }
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
     const onSubmitLogin = async e => {
@@ -59,15 +61,14 @@ export function Login({setLoggedInUser}) {
 
     return (
         <div className="flex h-screen bg-gray-100">
-            <div className="w-1/2 bg-white p-12 flex flex-col text-white">
+            {!isMobile() && <div className="w-1/2 bg-white p-12 flex flex-col text-white">
                 <img src={BrawnLogo} alt="Brawn Logo" className="h-20 w-20" />
-
                 <div className="flex flex-1 items-center justify-center">
                     <h1 className="text-5xl font-semibold text-brand">Brawn</h1>
                 </div>
-            </div>
+            </div>}
 
-            <div className="w-1/2 flex items-center justify-center p-12">
+            <div className={isMobile() ? "flex items-center justify-center p-12" : "w-1/2 flex items-center justify-center p-12" }>
                 <Tabs defaultValue="Sign Up" className="w-[400px]">
                     <TabsList className="flex w-full">
                         <TabsTrigger value="Sign Up" className="w-1/2 text-center" onClick={() => setIsLogin(false)}>
@@ -78,7 +79,6 @@ export function Login({setLoggedInUser}) {
                         </TabsTrigger>
                     </TabsList>
 
-                    {/* Sign Up Form */}
                     <TabsContent value="Sign Up">
                         <div className="w-full max-w-md">
                             <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
