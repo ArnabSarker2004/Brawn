@@ -59,7 +59,6 @@ const addSet = async (req, res) => {
         return res.status(404).json({ error: 'Invalid routine or workout ID' });
     }
 
-    // Find the routine by ID
     const routine = await Routine.findById(routineId);
 
     if (!routine) {

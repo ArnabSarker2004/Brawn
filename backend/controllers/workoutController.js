@@ -40,7 +40,7 @@
     };
 
     const createWorkout = async (req, res) => {
-        const { routineId} = req.params;
+        const { routineId } = req.params;
         const { title, timeBased, sets } = req.body;
 
         let emptyFields = [];
@@ -135,9 +135,9 @@
     };
 
     module.exports = {
-    getWorkouts,
-    getWorkout,
-    createWorkout,
-    updateWorkout,
-    deleteWorkout
+        getWorkouts,
+        getWorkout,
+        createWorkout,
+        updateWorkout,
+        deleteWorkout
     };
