@@ -1,4 +1,5 @@
 import { useState } from "react";
+import './modal.css';
 import { useWorkoutsContext } from "../../hooks/useWorkoutsContext"
 const WorkoutFormModal = ({ setShowModal, routineId }) => {
 

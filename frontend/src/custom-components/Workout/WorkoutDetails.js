@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useWorkoutsContext } from '../../hooks/useWorkoutsContext';
 import WorkoutEditModal from '../Modals/WorkoutEditModal';
+import './workout.css';
 const WorkoutDetails = ({ workout, routineId }) => {
   const { dispatch } = useWorkoutsContext();
   const [showEditModal, setShowEditModal] = useState(false);

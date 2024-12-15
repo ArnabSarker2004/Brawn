@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import RoutineEditModal from '../Modals/RoutineEditModal';
+import './workout.css';
 const Routine = ({ routine, onDelete, workouts = [] }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);

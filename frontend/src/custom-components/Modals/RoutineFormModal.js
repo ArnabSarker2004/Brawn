@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useRoutinesContext } from '../../hooks/useRoutinesContext';
+import './modal.css';
 
 const RoutineFormModal = ({ onClose }) => {
   const { dispatch } = useRoutinesContext(); 
