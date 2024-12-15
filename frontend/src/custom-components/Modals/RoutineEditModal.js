@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useRoutinesContext } from '../../hooks/useRoutinesContext';
+import {Button} from '../../components/ui/button'
 import './modal.css';
 const RoutineEditModal = ({ routine, onClose }) => {
     const [name, setName] = useState(routine.name);
@@ -51,8 +52,12 @@ return (
         />
         {error && <div className="error">{error}</div>}
         <div className="modal-buttons">
-        <button onClick={handleSave} className='save-routine-btn'>Save</button>
-        <button onClick={onClose} className='cancel-routine-btn'>Cancel</button>
+            <Button variant="primary" onClick={handleSave}>
+                Save
+            </Button>
+            <Button variant="destructive" onClick={onClose}>
+                Cancel
+            </Button>
         </div>
     </div>
     </div>

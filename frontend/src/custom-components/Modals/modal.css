@@ -30,6 +30,7 @@
 }
 
 .modal-buttons {
+    border: none !important;
     display: flex;
     gap: 10px;
     justify-content: flex-end;

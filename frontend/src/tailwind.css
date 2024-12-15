@@ -75,7 +75,7 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-none;
   }
   body {
     @apply bg-background text-foreground;
