@@ -41,8 +41,8 @@ body {
 
 
 .save-routine-btn,
-.cancel-btn,
-.delete-btn {
+.cancel-routine-btn,
+.delete-routine-btn {
     background: var(--primary);
     color: #fff;
     padding: 10px 20px;
@@ -51,16 +51,16 @@ body {
     cursor: pointer;
 }
 
-.cancel-btn {
-    background: #ddd;
+.cancel-routine-btn {
+    background: #e7195a;
 }
 
 .save-routine-btn:hover, .delete-btn:hover {
     background-color: var(--navbar-hover);
 }
 
-.cancel-btn:hover {
-    background-color: darkgray;
+.cancel-routine-btn:hover {
+    background-color: darkred;
 }
 
 .delete-btn {
