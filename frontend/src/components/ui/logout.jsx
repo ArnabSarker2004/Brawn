@@ -1,7 +1,6 @@
-import { Button } from "./button"
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-export function Logout() {
+export function Logout({isExpanded}) {
 
   const navigate = useNavigate();
   const handleLogout = () =>{
@@ -9,10 +8,10 @@ export function Logout() {
     navigate('/');
   }
   return (
-    (<Button onClick = {handleLogout} variant="outline" className="inline-flex items-center space-x-2">
-      <LogOutIcon className="h-4 w-4" />
-      <span>Logout</span>
-    </Button>)
+    (<Link onClick = {handleLogout} className="navbar-item">
+      <LogOutIcon className="material-symbols-outlined navbar-logo" />
+      {isExpanded && <span className="navbar-text">Logout</span>}
+    </Link>)
   );
 }
 
@@ -21,8 +20,8 @@ function LogOutIcon(props) {
     (<svg
       {...props}
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
+      width="25"
+      height="25"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"

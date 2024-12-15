@@ -75,9 +75,9 @@ body {
 }
 
 .navbar-logo {
-  font-size: 25px;
-  width: 25px; 
-  text-align: center;
+  font-size: 25px !important; 
+  width: 25px!important; 
+  text-align: center!important;
 }
 
 .navbar-text {
