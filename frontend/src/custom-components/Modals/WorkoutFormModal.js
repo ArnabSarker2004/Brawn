@@ -1,5 +1,6 @@
 import { useState } from "react";
 import './modal.css';
+import {Button} from '../../components/ui/button';
 import { useWorkoutsContext } from "../../hooks/useWorkoutsContext"
 const WorkoutFormModal = ({ setShowModal, routineId }) => {
 
@@ -104,13 +105,19 @@ const WorkoutFormModal = ({ setShowModal, routineId }) => {
                             onChange={(e) => handleSetChange(index, e)}
                             value={timeBased ? set.time : set.reps}
                             />
-                            <button type="button" onClick={() => handleRemoveSet(index)} className="remove-set-btn">Remove Set</button>
+                            <Button variant="destructive" onClick={() => handleRemoveSet(index)}>
+                                Remove Set
+                            </Button>
                         </div>
                         ))}
                     </div>
                     <div className="modal-buttons">
-                        <button type="button" onClick={handleAddSet} className="add-set-btn">Add Set</button>
-                        <button type="submit" className="save-workout-btn">Save Workout</button>
+                        <Button variant="primary"onClick={handleAddSet}>
+                            Add Set
+                        </Button>
+                        <Button variant="primary">
+                            Save Workout
+                        </Button>
                     </div>
                     {error && <div className="error">{error}</div>}
                     </form>

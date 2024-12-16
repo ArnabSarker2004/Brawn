@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Routine from '../custom-components/Workout/Routine';
 import RoutineFormModal from '../custom-components/Modals/RoutineFormModal'; 
 import { useRoutinesContext } from '../hooks/useRoutinesContext';
-
+import {Button} from '../components/ui/button';
 const Routines = () => {
   const token = localStorage.getItem('token');
   const { routines, dispatch } = useRoutinesContext();
@@ -49,7 +49,9 @@ const Routines = () => {
   return (
     <div className="routine-grid">
       <div className="add-routine-row">
-        <button className="add-routine-btn" onClick={() => setShowAddModal(true)}>Add Routine</button>
+        <Button variant="primary" onClick={() => setShowAddModal(true)}>
+          Add Routine
+        </Button>
       </div>
 
       <div className="routine-list">

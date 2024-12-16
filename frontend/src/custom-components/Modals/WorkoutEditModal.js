@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useWorkoutsContext } from '../../hooks/useWorkoutsContext';
 import './modal.css';
+import {Button} from '../../components/ui/button';
 
 const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
   const { dispatch: workoutDispatch } = useWorkoutsContext();
@@ -130,20 +131,20 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
                   value={timeBased ? set.time : set.reps}
                   className={emptyFields.includes(`sets[${index}].${timeBased ? "time" : "reps"}`) ? 'error' : ''}
                 />
-                <button type="button" onClick={() => handleRemoveSet(index)} className="remove-set-btn">
+                <Button variant="destructive" onClick={() => handleRemoveSet(index)}>
                   Remove Set
-                </button>
+                </Button>
               </div>
             ))}
           </div>
 
           <div className="modal-buttons">
-            <button type="button" onClick={handleAddSet} className="add-set-btn">
+            <Button variant="primary"onClick={handleAddSet}>
               Add Set
-            </button>
-            <button type="submit" className="save-workout-btn">
+            </Button>
+            <Button variant="primary">
               Save Workout
-            </button>
+            </Button>
           </div>
 
           {error && <div className="error">{error}</div>}

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import RoutineEditModal from '../Modals/RoutineEditModal';
 import './workout.css';
+import {Button} from '../../components/ui/button';
 const Routine = ({ routine, onDelete, workouts = [] }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -43,18 +44,18 @@ const Routine = ({ routine, onDelete, workouts = [] }) => {
             <h4>Confirm Delete</h4>
             <p>Are you sure you want to delete this routine? This action cannot be undone.</p>
             <div className="modal-buttons">
-              <button
+              <Button
                 onClick={() => {
                   onDelete(routine._id);
                   setIsDeleteModalOpen(false);
                 }}
-                className="delete-btn"
+                variant="destructive"
               >
                 Delete
-              </button>
-              <button onClick={() => setIsDeleteModalOpen(false)} className="cancel-btn">
+              </Button>
+              <Button variant="primary"onClick={() => setIsDeleteModalOpen(false)}>
                 Cancel
-              </button>
+              </Button>
             </div>
           </div>
         </div>
