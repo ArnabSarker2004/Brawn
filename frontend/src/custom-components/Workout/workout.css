@@ -117,24 +117,6 @@
     color: var(--error);
     transition: 0.2s ease-in;
 }
-
-.add-routine-btn {
-    background: #fff;
-    border: 2px dashed var(--primary);
-    color: var(--primary);
-    padding: 20px;
-    font-size: 16px;
-    text-align: center;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-}
-
-.add-routine-btn:hover {
-    background-color: var(--primary);
-    color: #fff;
-}
-
 .Workout-Title h1 {
     margin: 10;
     text-align: center;

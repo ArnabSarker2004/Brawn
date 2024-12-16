@@ -39,38 +39,6 @@ body {
     gap: 20px;
 }
 
-
-.save-routine-btn,
-.cancel-routine-btn,
-.delete-routine-btn {
-    background: var(--primary);
-    color: #fff;
-    padding: 10px 20px;
-    font-size: 15px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.cancel-routine-btn {
-    background: #e7195a;
-}
-
-.save-routine-btn:hover, .delete-btn:hover {
-    background-color: var(--navbar-hover);
-}
-
-.cancel-routine-btn:hover {
-    background-color: darkred;
-}
-
-.delete-btn {
-    background: var(--error);
-}
-
-.delete-btn:hover {
-    background-color: darkred;
-}
-
 .edit:hover {
     color: var(--primary);
     transition: 0.2s ease-in;
@@ -184,42 +152,4 @@ div.error {
     transition: background-color 0.3s ease;
 }
 
-.back-btn:hover {
-    background: black;
-    color: white;
-}
-
-.add-set-btn,
-.save-workout-btn {
-    background: var(--primary);
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 15px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.add-set-btn:hover,
-.save-workout-btn:hover {
-    background-color: var(--navbar-hover);
-    transition-duration: 0.2s;
-    transition-timing-function: ease-in;
-}
-
-.remove-set-btn {
-    background: var(--error);
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    font-size: 12px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.remove-set-btn:hover {
-    background-color: darkred;
-    transition-duration: 0.2s;
-    transition-timing-function: ease-in;
-}
 

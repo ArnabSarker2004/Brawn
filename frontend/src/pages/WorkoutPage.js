@@ -3,6 +3,7 @@ import { useWorkoutsContext } from '../hooks/useWorkoutsContext';
 import { useParams, useNavigate } from 'react-router-dom';
 import WorkoutDetails from '../custom-components/Workout/WorkoutDetails';
 import WorkoutFormModal from '../custom-components/Modals/WorkoutFormModal';
+import {Button} from '../components/ui/button';
 const Home = () => {
   const token = localStorage.getItem('token');
   const { workouts, dispatch: workoutsDispatch } = useWorkoutsContext();
@@ -65,9 +66,9 @@ const Home = () => {
         ))}
       </div>
       <div className="back-buttons-row">
-        <div className="back-btn" onClick={() => navigate('/routines')}>
-          <span>Back</span>
-        </div>
+        <Button variant ="outline" size="lg" onClick={() => navigate('/routines') }>
+          Back
+        </Button>
       </div>
     </div>
   );
