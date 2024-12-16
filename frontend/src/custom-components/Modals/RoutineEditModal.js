@@ -52,10 +52,10 @@ return (
         />
         {error && <div className="error">{error}</div>}
         <div className="modal-buttons">
-            <Button variant="primary" onClick={handleSave}>
+            <Button variant="default" disabled={false} onClick={handleSave}>
                 Save
             </Button>
-            <Button variant="destructive" onClick={onClose}>
+            <Button variant="secondary" onClick={onClose}>
                 Cancel
             </Button>
         </div>

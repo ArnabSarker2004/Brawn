@@ -53,10 +53,10 @@ const RoutineFormModal = ({ onClose }) => {
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Routine Name"/>
                 <div className="modal-buttons">
-                    <Button variant="primary" onClick={handleSubmit}>
+                    <Button variant="default" onClick={handleSubmit}>
                         Add
                     </Button>
-                    <Button variant="primary" onClick={onClose}>
+                    <Button variant="secondary" onClick={onClose}>
                         Cancel
                     </Button>
                 </div>

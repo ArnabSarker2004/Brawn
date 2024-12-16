@@ -49,7 +49,7 @@ const Routines = () => {
   return (
     <div className="routine-grid">
       <div className="add-routine-row">
-        <Button variant="primary" onClick={() => setShowAddModal(true)}>
+        <Button variant="default" onClick={() => setShowAddModal(true)}>
           Add Routine
         </Button>
       </div>

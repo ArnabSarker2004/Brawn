@@ -112,10 +112,10 @@ const WorkoutFormModal = ({ setShowModal, routineId }) => {
                         ))}
                     </div>
                     <div className="modal-buttons">
-                        <Button variant="primary"onClick={handleAddSet}>
+                        <Button variant="secondary"onClick={handleAddSet}>
                             Add Set
                         </Button>
-                        <Button variant="primary">
+                        <Button variant="default">
                             Save Workout
                         </Button>
                     </div>

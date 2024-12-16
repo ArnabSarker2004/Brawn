@@ -53,7 +53,7 @@ const Routine = ({ routine, onDelete, workouts = [] }) => {
               >
                 Delete
               </Button>
-              <Button variant="primary"onClick={() => setIsDeleteModalOpen(false)}>
+              <Button variant="secondary"onClick={() => setIsDeleteModalOpen(false)}>
                 Cancel
               </Button>
             </div>
