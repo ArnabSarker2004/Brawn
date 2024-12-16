@@ -53,8 +53,17 @@
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
 }
 
+.routine-title-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+}
+
+
 .routine-details h4 {
+    display: flex;
     margin: 0 0 10px 0;
+    width: fit-content;
     font-size: 1.4em;
     color: var(--primary);
     cursor: pointer;
@@ -87,8 +96,8 @@
 
 .routine-actions {
     display: flex;
-    justify-content: space-around;
-    margin-top: 10px;
+    justify-content: flex-start;
+    gap: 15px;
 }
 
 .routine-actions .material-symbols-outlined {
