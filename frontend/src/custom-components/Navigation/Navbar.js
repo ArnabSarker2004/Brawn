@@ -43,6 +43,11 @@ const Navbar = () => {
                     {isExpanded && <span className="navbar-text">Brawnify <sup>AI</sup></span>}
                 </Link>
                 {hasToken && <Logout isExpanded={isExpanded}/>}
+                {hasToken &&
+                <Link className='navbar-item'>
+                    <span className='material-symbols-outlined navbar-logo'>person</span>
+                    {isExpanded && <span className='navbar-text'>Profile</span>}
+                </Link>}
             </div>
         </div>
         {isExpanded && <div className="overlay" onClick={toggleCollapse}></div>}
