@@ -15,12 +15,12 @@ const userSchema = new Schema({
 
     FirstName: {
         type: String,
-        required: true,
+        required: false,
     },
 
     LastName:{
         type:String,
-        required: true
+        required: false
     },
 
     Age:{
@@ -35,17 +35,17 @@ const userSchema = new Schema({
 
     Gender:{
         type: String,
-        required: true
+        required: false
     },
 
     Height:{
         type: String,
-        required: true
+        required:false 
     },
 
     Weight:{
         type: Number,
-        required: true
+        required: false 
     },
 
     BMR:{
