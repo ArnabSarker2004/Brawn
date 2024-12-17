@@ -25,14 +25,11 @@
 
 .routine-grid {
     display: grid;
-    grid-template-rows: repeat(auto-fill, minmax(300px));
-    gap: 20px;
 }
 
 .add-routine-row {
     display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
+    justify-content: end;
 }
 
 .routine-details {

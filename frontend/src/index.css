@@ -30,7 +30,7 @@ body {
 .pages {
     height: 88vh;
     max-width: 100vw;
-    padding: 12vh 20px 0px calc(50px + 20px);
+    padding: 9vh 20px 0px calc(50px + 20px);
 }
 
 .home {
