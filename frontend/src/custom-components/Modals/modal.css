@@ -37,3 +37,11 @@
     justify-content: flex-end;
     margin-top: 20px;
 }
+.modal-text{
+    display: flex;
+    margin: 0 0 10px 0;
+    width: fit-content;
+    font-size: 1.4em;
+    color: var(--primary);
+    cursor: pointer;
+}

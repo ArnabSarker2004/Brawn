@@ -46,7 +46,9 @@ const RoutineFormModal = ({ onClose }) => {
     return (
         <div className="modal">
             <div className="modal-content">
-                <h4>Add New Routine</h4>
+                <h4 className='modal-text'>
+                    Add New Routine
+                </h4>
                 <input
                     type="text"
                     value={name}

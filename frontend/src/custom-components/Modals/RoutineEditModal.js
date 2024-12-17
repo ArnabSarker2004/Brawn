@@ -42,24 +42,23 @@ const RoutineEditModal = ({ routine, onClose }) => {
 
 return (
     <div className="modal">
-    <div className="modal-content">
-        <h4>Edit Routine Name</h4>
-        <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Routine Name"
-        />
-        {error && <div className="error">{error}</div>}
-        <div className="modal-buttons">
-            <Button variant="default" disabled={false} onClick={handleSave}>
-                Save
-            </Button>
-            <Button variant="secondary" onClick={onClose}>
-                Cancel
-            </Button>
+        <div className="modal-content">
+            <h4 className='modal-text'>Edit Routine Name</h4>
+            <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Routine Name"/>
+            {error && <div className="error">{error}</div>}
+            <div className="modal-buttons">
+                <Button variant="default" disabled={false} onClick={handleSave}>
+                    Save
+                </Button>
+                <Button variant="secondary" onClick={onClose}>
+                    Cancel
+                </Button>
+            </div>
         </div>
-    </div>
     </div>
 );
 };
