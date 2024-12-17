@@ -10,7 +10,8 @@ const userSchema = new Schema({
 
     password: {
         type: String,
-        required: true
+        required: true,
+        minlength: 3
     },
 
     FirstName: {
@@ -25,12 +26,14 @@ const userSchema = new Schema({
 
     Age:{
         type: Number,
-        required: false
+        required: false,
+        min: 0
     },
 
     YearsOfWorkoutExperience:{
         type: Number,
-        required: false
+        required: false,
+        min: 0
     },
 
     Gender:{
@@ -40,18 +43,20 @@ const userSchema = new Schema({
 
     Height:{
         type: String,
-        required:false 
+        required:false,
+        min: 0
     },
 
     Weight:{
         type: Number,
-        required: false 
+        required: false,
+        min: 0
     },
 
-    BMR:{
-        type: Number, 
-        required: false
-    },
+    // BMR:{
+    //     type: Number, 
+    //     required: false
+    // },
 
     IsNewUser:{
         type: Boolean,
