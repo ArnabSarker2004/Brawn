@@ -48,16 +48,11 @@ const Home = () => {
   }, [routineId, workoutsDispatch]);
 
   return (
+    <div>
     <div className="home">
       <div className="Workout-Title">
         <h1>{routineName}</h1> 
       </div>
-      <div className='add-workout-btn-row'>
-        <div className="add-workout-btn" onClick={() => setShowModal(true)}>
-          Add Workout
-        </div>
-      </div>
-
       {showModal && <WorkoutFormModal setShowModal={setShowModal} routineId={routineId} />}
 
       <div className="workout-grid">
@@ -65,8 +60,14 @@ const Home = () => {
           <WorkoutDetails key={workout._id} workout={workout} routineId={routineId} />
         ))}
       </div>
+      </div>
+      <div className='add-workout-btn-row pt-5 pb-2'>
+        <Button variant="default" size="lg" className="w-full" onClick={() => setShowModal(true)}>
+          Add Workout
+        </Button>
+      </div>
       <div className="back-buttons-row">
-        <Button variant ="outline" size="lg" onClick={() => navigate('/routines') }>
+        <Button variant ="outline" size="lg" className="w-full mb-4" onClick={() => navigate('/routines') }>
           Back
         </Button>
       </div>

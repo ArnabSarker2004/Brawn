@@ -115,7 +115,7 @@
     transition: 0.2s ease-in;
 }
 .Workout-Title h1 {
-    margin: 10;
+    margin: 5px;
     text-align: center;
 }
 .workout-details {
