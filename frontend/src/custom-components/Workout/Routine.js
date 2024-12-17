@@ -9,9 +9,9 @@ const Routine = ({ routine, onDelete, workouts = [] }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="routine-details">
+    <div onClick={() => navigate(`/routines/${routine._id}`)} className="routine-details">
       <div className='routine-title-actions'>
-        <h4 onClick={() => navigate(`/routines/${routine._id}`)}>{routine.name}</h4>
+        <h4>{routine.name}</h4>
 
         <div className="routine-actions">
           <span className="material-symbols-outlined" onClick={() => setIsEditModalOpen(true)}>edit</span>
