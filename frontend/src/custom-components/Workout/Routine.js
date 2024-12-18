@@ -21,10 +21,11 @@ const Routine = ({ routine, onDelete, workouts = [] }) => {
 
       <div className="routine-workouts">
         {workouts && workouts.length > 0 ? (
-          <div className='workout-table-row mt-3'>
+          <div className='routine-workout-table-row mt-3'>
             {workouts.map((workout) => (
-              
-              <span key={workout._id}>{workout.title}</span>
+              <div>
+                <h5 key={workout._id}>{workout.title}</h5>
+              </div>
             ))}
           </div>
         ) : (

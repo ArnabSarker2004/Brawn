@@ -23,99 +23,6 @@
     }
 }
 
-.routine-grid {
-    display: grid;
-}
-
-.add-routine-row {
-    margin-top: 15px;
-    display: flex;
-    justify-content: end;
-}
-
-.routine-details {
-    margin-bottom: 15px ;
-    background: #fff;
-    border-radius: 8px;
-    padding: 20px;
-    position: relative;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-width: 300px;
-    cursor: pointer;
-}
-
-.routine-details:hover {
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.routine-title-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center; 
-}
-
-
-.routine-details h4 {
-    display: flex;
-    margin: 0 0 10px 0;
-    width: fit-content;
-    font-size: 1.4em;
-    color: var(--primary);
-    cursor: pointer;
-}
-
-.routine-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.routine-name {
-    flex: 1;
-    margin-right: 10px;
-    font-size: 1.2em;
-}
-
-.routine-details-list {
-    flex: 2;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    font-size: 1em;
-    color: #555;
-}
-
-.routine-details-list li {
-    margin-bottom: 5px;
-}
-
-.routine-actions {
-    display: flex;
-    justify-content: flex-start;
-    gap: 15px;
-}
-
-.routine-actions .material-symbols-outlined {
-    cursor: pointer;
-    background: #f1f1f1;
-    padding: 8px;
-    border-radius: 50%;
-    color: #333;
-}
-
-.routine-actions .edit:hover {
-    color: var(--primary);
-    transition: 0.2s ease-in;
-}
-
-.routine-actions .close:hover {
-    color: var(--error);
-    transition: 0.2s ease-in;
-}
 .Workout-Title h1 {
     margin: 5px;
     text-align: center;
@@ -153,7 +60,6 @@
     background: #f9f9f9;
     padding: 5px 0;
 }
-
 
 .workout-table-header span {
     font-weight: bold;
@@ -194,4 +100,76 @@
     padding: 5px;
     border-radius: 50%;
     color: #333;
+}
+
+.routine-details {
+    margin-bottom: 15px ;
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    position: relative;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 300px;
+    cursor: pointer;
+}
+
+.routine-details:hover {
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.routine-title-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+}
+
+.routine-details h4 {
+    display: flex;
+    margin: 0 0 10px 0;
+    width: fit-content;
+    font-size: 1.4em;
+    color: var(--primary);
+    cursor: pointer;
+}
+
+.routine-actions {
+    display: flex;
+    justify-content: flex-start;
+    gap: 15px;
+}
+
+.routine-actions .material-symbols-outlined {
+    cursor: pointer;
+    background: #f1f1f1;
+    padding: 8px;
+    border-radius: 50%;
+    color: #333;
+}
+
+.routine-actions .edit:hover {
+    color: var(--primary);
+    transition: 0.2s ease-in;
+}
+
+.routine-actions .close:hover {
+    color: var(--error);
+    transition: 0.2s ease-in;
+}
+
+.routine-workout-table-row h5{
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 1em;
+    color: #eee;
+    margin: 0 0 10px 0;
+
+}
+
+.routine-workout-table-row div{
+    width: fit-content;
+    background-color: var(--primary);
 }
