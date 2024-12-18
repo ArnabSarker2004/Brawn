@@ -118,7 +118,7 @@ div.error {
 
 .add-workout-btn-row {
     display: flex;
-    justify-content: center;
+    justify-content: end;
     align-items: center;
 
 }
