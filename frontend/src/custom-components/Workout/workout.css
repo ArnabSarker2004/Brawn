@@ -150,7 +150,10 @@
     grid-template-columns: 1fr 1fr 1fr;
     gap: 10px;
     align-items: center;
+    background: #f9f9f9;
+    padding: 5px 0;
 }
+
 
 .workout-table-header span {
     font-weight: bold;
@@ -163,10 +166,6 @@
     font-size: 0.9em;
 }
 
-.workout-table-row {
-    background: #f9f9f9;
-    padding: 5px 0;
-}
 
 .workout-table-row:nth-child(odd) {
     background: #eee;

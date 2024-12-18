@@ -20,12 +20,13 @@ const Routine = ({ routine, onDelete, workouts = [] }) => {
       </div>
 
       <div className="routine-workouts">
-        {routine && workouts.length > 0 ? (
-          <ul>
+        {workouts && workouts.length > 0 ? (
+          <div className='workout-table-row mt-3'>
             {workouts.map((workout) => (
-              <li key={workout._id}>{workout.title}</li>
+              
+              <span key={workout._id}>{workout.title}</span>
             ))}
-          </ul>
+          </div>
         ) : (
           <p>No workouts added yet.</p>
         )}
