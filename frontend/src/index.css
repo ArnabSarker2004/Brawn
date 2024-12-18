@@ -6,6 +6,7 @@
     --navbar-bg: #1aac83;
     --navbar-hover: #117559;
     --navbar-text-color: white;
+    overflow-x: hidden;
 }
 
 body {

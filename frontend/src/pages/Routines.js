@@ -3,10 +3,32 @@ import Routine from '../custom-components/Workout/Routine';
 import RoutineFormModal from '../custom-components/Modals/RoutineFormModal'; 
 import { useRoutinesContext } from '../hooks/useRoutinesContext';
 import {Button} from '../components/ui/button';
+import {useWorkoutsContext} from '../hooks/useWorkoutsContext';
+import { useParams } from 'react-router-dom';
 const Routines = () => {
     const token = localStorage.getItem('token');
     const { routines, dispatch } = useRoutinesContext();
+    const {workouts, workoutDispatch} = useWorkoutsContext();
     const [showAddModal, setShowAddModal] = useState(false);
+    const {routineId} = useParams();
+    
+    useEffect(() =>{
+        const fetchWorkouts = async () => {
+        const response = await fetch(`/api/routines/${routineId}/workouts`,
+            { method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`}
+            }
+        );
+        const data = await response.json();
+
+        if (response.ok) {
+            workoutDispatch({ type: 'SET_WORKOUTS', payload: data });
+        }
+        };
+        fetchWorkouts();
+    }, [workoutDispatch]);
 
     useEffect(() => {
         const fetchRoutines = async () => {
@@ -17,6 +39,7 @@ const Routines = () => {
                 'Authorization': `Bearer ${token}`}
             }
         );
+
         const data = await response.json();
 
         if (response.ok) {
@@ -25,7 +48,6 @@ const Routines = () => {
             console.error('Failed to fetch routines');
         }
     };
-
         fetchRoutines();
     }, [dispatch]);
 
@@ -57,7 +79,7 @@ const Routines = () => {
             <div className="routine-list">
                 {routines && routines.map((routine) => (
                 <Routine
-                    key={routine._id}
+                    workouts={workouts}
                     routine={routine}
                     onDelete={handleDeleteRoutine} 
                 />

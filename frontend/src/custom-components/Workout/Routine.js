@@ -20,7 +20,7 @@ const Routine = ({ routine, onDelete, workouts = [] }) => {
       </div>
 
       <div className="routine-workouts">
-        {workouts && workouts.length > 0 ? (
+        {routine && workouts.length > 0 ? (
           <ul>
             {workouts.map((workout) => (
               <li key={workout._id}>{workout.title}</li>
