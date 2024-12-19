@@ -44,7 +44,7 @@ const Navbar = () => {
                 </Link>
                 {hasToken && <Logout isExpanded={isExpanded}/>}
                 {hasToken &&
-                <Link className='navbar-item'>
+                <Link to="/profile" className='navbar-item'>
                     <span className='material-symbols-outlined navbar-logo'>person</span>
                     {isExpanded && <span className='navbar-text'>Profile</span>}
                 </Link>}
