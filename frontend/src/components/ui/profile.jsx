@@ -34,6 +34,23 @@ return (
                     <Input id="email" type="email" defaultValue="john@example.com" />
                 </div>
             </div>
+            <CardDescription>
+                Your Body
+            </CardDescription>
+            <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                    <Label htmlFor="Height">
+                        Height
+                    </Label>
+                    <Input id="height" defaultValue="6 foot" />
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="weight">
+                        Weight
+                    </Label>
+                    <Input id="weight" type="weight" defaultValue="200" />
+                </div>
+            </div>
             <div className="space-y-2">
                 <Label htmlFor="bio">
                     Bio
