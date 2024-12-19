@@ -172,4 +172,5 @@
 .routine-workout-table-row div{
     width: fit-content;
     background-color: var(--primary);
+    border-radius: 5px;
 }
