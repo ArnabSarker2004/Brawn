@@ -7,6 +7,7 @@
     --navbar-hover: #117559;
     --navbar-text-color: white;
     overflow-x: hidden !important;
+    font-family: sans-serif;
 }
 
 body {
