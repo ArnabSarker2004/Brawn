@@ -51,6 +51,34 @@ return (
                     <Input id="weight" type="weight" defaultValue="200" />
                 </div>
             </div>
+            <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                    <Label htmlFor="age">
+                        Age
+                    </Label>
+                    <Input id="age" defaultValue="69" />
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="Gender">
+                        Gender
+                    </Label>
+                    <Input id="gender" type="gender" defaultValue="Male" />
+                </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                    <Label htmlFor="Basal Metabolic Rate">
+                        Basal Metabolic Rate
+                    </Label>
+                    <Input id="BMR" defaultValue="2000" />
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="YOE">
+                        Years of Working Out
+                    </Label>
+                    <Input id="YOE" type="YOE" defaultValue="5"/>
+                </div>
+            </div>
             <div className="space-y-2">
                 <Label htmlFor="bio">
                     Bio
