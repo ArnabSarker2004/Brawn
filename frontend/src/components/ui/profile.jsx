@@ -4,7 +4,7 @@ import { Input } from './input';
 import { Textarea } from './textarea';
 import { Button } from './button';
 
-export function Profile() {
+export function Profile({Name, Email, Height, Weight, Age, Gender, BMR, YOE, Bio}) {
 return (
     <div className="w-full max-w-8xl mx-auto md:pb-20 gap-10">
     <header className="mb-8">
@@ -25,13 +25,13 @@ return (
                     <Label htmlFor="name">
                         Name
                     </Label>
-                    <Input id="name" defaultValue="John Doe" />
+                    <Input id="name" defaultValue={Name}/>
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="email">
                         Email
                     </Label>
-                    <Input id="email" type="email" defaultValue="john@example.com" />
+                    <Input id="email" type="email" defaultValue={Email}/>
                 </div>
             </div>
             <CardDescription>
@@ -42,13 +42,13 @@ return (
                     <Label htmlFor="Height">
                         Height
                     </Label>
-                    <Input id="height" defaultValue="6 foot" />
+                    <Input id="height" defaultValue={Height}/>
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="weight">
                         Weight
                     </Label>
-                    <Input id="weight" type="weight" defaultValue="200" />
+                    <Input id="weight" type="weight" defaultValue={Weight} />
                 </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -56,13 +56,13 @@ return (
                     <Label htmlFor="age">
                         Age
                     </Label>
-                    <Input id="age" defaultValue="69" />
+                    <Input id="age" defaultValue={Age}/>
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="Gender">
                         Gender
                     </Label>
-                    <Input id="gender" type="gender" defaultValue="Male" />
+                    <Input id="gender" type="gender" defaultValue={Gender}/>
                 </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -70,20 +70,20 @@ return (
                     <Label htmlFor="Basal Metabolic Rate">
                         Basal Metabolic Rate
                     </Label>
-                    <Input id="BMR" defaultValue="2000" />
+                    <Input id="BMR" defaultValue={BMR}/>
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="YOE">
                         Years of Working Out
                     </Label>
-                    <Input id="YOE" type="YOE" defaultValue="5"/>
+                    <Input id="YOE" type="YOE" defaultValue={YOE}/>
                 </div>
             </div>
             <div className="space-y-2">
                 <Label htmlFor="bio">
                     Bio
                 </Label>
-                <Textarea id="bio" rows={3} defaultValue="I love working out." />
+                <Textarea id="bio" rows={3} defaultValue={Bio}/>
             </div>
             <Button className="w-full" size="lg">
                 Save Changes
