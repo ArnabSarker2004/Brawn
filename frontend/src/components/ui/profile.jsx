@@ -7,9 +7,6 @@ import { Button } from './button';
 export function Profile({Name, Email, Height, Weight, Age, Gender, BMR, YOE, Bio}) {
 return (
     <div className="w-full max-w-8xl mx-auto md:pb-20 gap-10">
-    <header className="mb-8">
-        <h1 className="text-3xl font-bold">Profile Settings</h1>
-    </header>
     <Card>
         <CardHeader>
             <CardTitle>

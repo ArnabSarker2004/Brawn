@@ -16,12 +16,8 @@ export function Login({setLoggedInUser}) {
     });
     const [message, setMessage] = useState('');
     const [isLogin, setIsLogin] = useState(true); 
-
     const { username, password } = formData;
-
-    const isMobile  = () =>{
-        return window.matchMedia("(max-width: 768px)").matches;
-    }
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
     const onSubmitLogin = async e => {
@@ -61,16 +57,16 @@ export function Login({setLoggedInUser}) {
 
     return (
         <div className="flex h-screen bg-gray-100 overflow-y-hidden overflow-x-hidden">
-            {!isMobile() && <div className="w-1/2 bg-white p-12 flex flex-col text-white">
+            {!isMobile && <div className="w-1/2 bg-white p-12 flex flex-col text-white">
                 <img src={BrawnLogo} alt="Brawn Logo" className="h-20 w-20" />
                 <div className="flex flex-1 items-center justify-center">
                     <h1 className="text-5xl font-semibold text-brand">Brawn</h1>
                 </div>
             </div>}
 
-            <div className={isMobile() ? "flex items-center justify-center p-12" : "w-1/2 flex items-center justify-center p-12" }>
-                <Tabs defaultValue="Sign Up" className="w-[400px]">
-                    <TabsList className="flex w-full">
+            <div className={isMobile? "flex items-center justify-center m-auto w-auto max-w-screen-sm" : "w-1/2 flex items-center justify-center p-12" }>
+                <Tabs defaultValue="Sign Up" className="w-auto max-w-screen-md">
+                    <TabsList className="flex w-auto gap-2">
                         <TabsTrigger value="Sign Up" className="w-1/2 text-center" onClick={() => setIsLogin(false)}>
                             Sign Up
                         </TabsTrigger>
@@ -80,7 +76,7 @@ export function Login({setLoggedInUser}) {
                     </TabsList>
 
                     <TabsContent value="Sign Up">
-                        <div className="w-full max-w-md">
+                        <div className="w-auto max-w-sm">
                             <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
                                 <h2 className="text-2xl font-bold text-gray-900">Create an account</h2>
                                 <p className="mt-2 text-sm text-gray-600">Enter your username and password to create an account</p>
