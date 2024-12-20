@@ -12,6 +12,7 @@ import { SetsContextProvider } from './context/SetsContext';
 import { RoutinesContextProvider } from './context/RoutinesContext';
 import Dashboard from './pages/dashboard';
 import Signup from './pages/signup';
+import Profile from './pages/profile';
 
 
 function AppContent() {
@@ -45,6 +46,7 @@ return (
         <Route path="/routines/:routineId" element={<PrivateRoute ><WorkoutPage /></PrivateRoute>} />
         <Route path="/brawnify" element={<PrivateRoute ><Brawnify /></PrivateRoute>} />
         <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+        <Route path='/profile' element={<PrivateRoute><Profile/></PrivateRoute>}/>
         </Routes>
     </div>
     </div>
