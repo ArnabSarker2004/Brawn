@@ -60,7 +60,7 @@ export function Login({setLoggedInUser}) {
     };
 
     return (
-        <div className="flex h-screen bg-gray-100">
+        <div className="flex h-screen bg-gray-100 overflow-y-hidden overflow-x-hidden">
             {!isMobile() && <div className="w-1/2 bg-white p-12 flex flex-col text-white">
                 <img src={BrawnLogo} alt="Brawn Logo" className="h-20 w-20" />
                 <div className="flex flex-1 items-center justify-center">
