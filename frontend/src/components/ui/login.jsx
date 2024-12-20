@@ -19,11 +19,11 @@ export function Login({setLoggedInUser}) {
     const { username, password } = formData;
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
-
+    const URL = process.env.NODE_ENV ==='production' ? 'http://brawn.vercel.app' :'http://localhost:4000'  
     const onSubmitLogin = async e => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:4000/api/auth/login', { username, password });  
+            const res = await axios.post(`${URL}/api/auth/login`, { username, password });  
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('username',res.data.username);
             setLoggedInUser(username);
@@ -38,7 +38,7 @@ export function Login({setLoggedInUser}) {
     const onSubmitSignUp = async e => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:4000/api/auth/register', { username, password }); 
+            const res = await axios.post(`${URL}/api/auth/register`, { username, password }); 
             
                 localStorage.setItem('token', res.data.token);
                 localStorage.setItem('username', res.data.username);
