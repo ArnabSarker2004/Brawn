@@ -66,7 +66,7 @@ const Routines = () => {
 
         <div className="routine-grid">
             <div className="add-routine-row">
-                <Button variant="default" className= "w-full text-lg mb-4" onClick={() => setShowAddModal(true)}>
+                <Button variant="default" className= "w-full text-2xl mb-4" onClick={() => setShowAddModal(true)}>
                     Add Routine
                 </Button>
             </div>
