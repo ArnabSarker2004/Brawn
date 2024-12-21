@@ -9,6 +9,7 @@ const cors = require('cors');
 const config = require('./config');
 const authRoutes = require('./routes/auth');
 const user = require('./routes/user')
+app.options('*', cors());
 
 const app = express();
 app.use(express.json());
