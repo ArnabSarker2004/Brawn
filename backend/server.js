@@ -8,6 +8,7 @@ const routineRoutes = require('./routes/routines');
 const cors = require('cors');
 const config = require('./config');
 const authRoutes = require('./routes/auth');
+const user = require('./routes/user')
 
 const app = express();
 app.use(express.json());
@@ -21,6 +22,7 @@ app.use('/api/routines', routineRoutes);
 app.use('/api/routines', workoutRoutes); 
 app.use('/api/routines', setRoutes); 
 app.use('/api/auth', authRoutes);
+app.use('/api/user', user )
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         
