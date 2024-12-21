@@ -35,7 +35,7 @@ const createBody = async (req, res) =>{
     if (!experience) return emptyFields.push('experience');
     if (!gender) return emptyFields.push('gender');
     if (!height) return emptyFields.push('height');
-    // if (!bmr) return emptyFields.push('bmr');
+    if (!bmr) return emptyFields.push('bmr');
 
     if (emptyFields.length > 0) return res.status(400).json({error: 'Please fill in all fields', emptyFields});
 
