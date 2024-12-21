@@ -19,7 +19,7 @@ export function Login({setLoggedInUser}) {
     const { username, password } = formData;
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
-    const URL = process.env.NODE_ENV ==='production' ? 'https://brawn.vercel.app' :'http://localhost:4000'  
+    const URL = process.env.NODE_ENV ==='production' ? 'https://brawn-backend.vercel.app' :'http://localhost:4000'  
     const onSubmitLogin = async e => {
         e.preventDefault();
         try {
