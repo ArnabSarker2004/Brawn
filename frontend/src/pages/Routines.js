@@ -7,10 +7,13 @@ const Routines = () => {
     const token = localStorage.getItem('token');
     const { routines, dispatch } = useRoutinesContext();
     const [showAddModal, setShowAddModal] = useState(false);
+    const URL = process.env.NODE_ENV === 'production'
+    ? 'https://brawn.onrender.com'
+    : 'http://localhost:4000';
     
     useEffect(() => {
         const fetchRoutinesWithWorkouts = async () => {
-            const response = await fetch('/api/routines', {
+            const response = await fetch(`${URL}/api/routines`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -22,7 +25,7 @@ const Routines = () => {
                 const routinesData = await response.json();
                 const routinesWithWorkouts = await Promise.all(
                     routinesData.map(async (routine) => {
-                        const workoutsResponse = await fetch(`/api/routines/${routine._id}/workouts`, {
+                        const workoutsResponse = await fetch(`${URL}/api/routines/${routine._id}/workouts`, {
                             method: 'GET',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -46,7 +49,7 @@ const Routines = () => {
 
 
     const handleDeleteRoutine = async (id) => {
-        const response = await fetch(`/api/routines/${id}`, { 
+        const response = await fetch(`${URL}/api/routines/${id}`, { 
             method: 'DELETE', 
             headers: {
                 'Content-Type': 'application/json',

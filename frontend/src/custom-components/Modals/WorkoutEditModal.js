@@ -11,6 +11,9 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
   const token = localStorage.getItem('token');
+  const URL = process.env.NODE_ENV === 'production'
+    ? 'https://brawn.onrender.com'
+    : 'http://localhost:4000'; 
   useEffect(() => {
     setTitle(workout.title);
     setSets(workout.sets);
@@ -62,7 +65,7 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
 
     const updatedWorkout = { title, sets, timeBased };
 
-    const response = await fetch(`/api/routines/${routineId}/workouts/${workout._id}`, {
+    const response = await fetch(`${URL}/api/routines/${routineId}/workouts/${workout._id}`, {
       method: 'PATCH',
       body: JSON.stringify(updatedWorkout),
       headers: {

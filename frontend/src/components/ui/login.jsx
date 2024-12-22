@@ -7,13 +7,9 @@ import axios from 'axios';
 import { cn } from "../../lib/utils";
 import { useNavigate } from "react-router-dom";
 
-export function Login({setLoggedInUser}) {  
-
+export function Login({ setLoggedInUser }) {  
     const navigate = useNavigate();
-    const [formData, setFormData] = useState({
-        username: '',  
-        password: ''
-    });
+    const [formData, setFormData] = useState({ username: '', password: '' });
     const [message, setMessage] = useState('');
     const [isLogin, setIsLogin] = useState(true); 
     const { username, password } = formData;
@@ -25,26 +21,25 @@ export function Login({setLoggedInUser}) {
         try {
             const res = await axios.post(`${URL}/api/auth/login`, { username, password });  
             localStorage.setItem('token', res.data.token);
-            localStorage.setItem('username',res.data.username);
+            localStorage.setItem('username', res.data.username);
             setLoggedInUser(username);
             setMessage('Logged in successfully');
             navigate('/dashboard');  
         } catch (err) {
-            console.error(err.response.data);
+            console.error(err.response?.data || err.message);
             setMessage('Failed to login - wrong credentials');
         }
     };
 
-    const onSubmitSignUp = async e => {
+    const onSubmitSignUp = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post(`${URL}/api/auth/register`, { username, password }); 
-            
-                localStorage.setItem('token', res.data.token);
-                localStorage.setItem('username', res.data.username);
-                setLoggedInUser(username);
-                setMessage('Registered successfully, redirecting...');
-                navigate('/dashboard');  
+            const res = await axios.post(`${URL}/api/auth/register`, { username, password });  
+            localStorage.setItem('token', res.data.token);
+            localStorage.setItem('username', res.data.username);
+            setLoggedInUser(username);
+            setMessage('Registered successfully, redirecting...');
+            navigate('/dashboard');  
         } catch (err) {
             console.error('Error occurred during sign-up:', err);
             if (err.response && err.response.data) {

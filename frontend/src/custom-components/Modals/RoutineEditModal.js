@@ -6,6 +6,9 @@ const RoutineEditModal = ({ routine, onClose }) => {
     const [name, setName] = useState(routine.name);
     const [error, setError] = useState(null);
     const { dispatch } = useRoutinesContext();
+    const URL = process.env.NODE_ENV === 'production'
+    ? 'https://brawn.onrender.com'
+    : 'http://localhost:4000'; 
 
     const token = localStorage.getItem('token');
     const handleSave = async () => {
@@ -15,7 +18,7 @@ const RoutineEditModal = ({ routine, onClose }) => {
         }
 
         try {
-        const response = await fetch(`/api/routines/${routine._id}`, {
+        const response = await fetch(`${URL}/api/routines/${routine._id}`, {
             method: 'PATCH',
             headers: {
             'Content-Type': 'application/json',

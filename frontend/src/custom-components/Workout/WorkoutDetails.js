@@ -7,9 +7,12 @@ const WorkoutDetails = ({ workout, routineId }) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const token = localStorage.getItem('token');
 
+  const URL = process.env.NODE_ENV === 'production'
+  ? 'https://brawn.onrender.com'
+  : 'http://localhost:4000';
   const handleDelete = async () => {
     try {
-      const response = await fetch(`/api/routines/${routineId}/workouts/${workout._id}`, {
+      const response = await fetch(`${URL}/api/routines/${routineId}/workouts/${workout._id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

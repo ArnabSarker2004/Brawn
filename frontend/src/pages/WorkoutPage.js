@@ -11,6 +11,10 @@ const Home = () => {
     const [showModal, setShowModal] = useState(false);
     const [routineName, setRoutineName] = useState(''); 
     const { routineId } = useParams(); 
+    const URL = process.env.NODE_ENV === 'production'
+    ? 'https://brawn.onrender.com'
+    : 'http://localhost:4000';
+    
     
     const navigate = useNavigate();
 
@@ -18,7 +22,7 @@ const Home = () => {
 
     useEffect(() => {
         const fetchRoutineDetails = async () => {
-        const response = await fetch(`/api/routines/${routineId}`,
+        const response = await fetch(`${URL}/api/routines/${routineId}`,
             { method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -33,7 +37,7 @@ const Home = () => {
         };
 
         const fetchWorkouts = async () => {
-        const response = await fetch(`/api/routines/${routineId}/workouts`,
+        const response = await fetch(`${URL}/api/routines/${routineId}/workouts`,
             { method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
