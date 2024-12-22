@@ -9,7 +9,10 @@ const WorkoutFormModal = ({ setShowModal, routineId }) => {
     const [timeBased, setTimeBased] = useState(false);  
     const [sets, setSets] = useState([{ reps: '', weight: '', time: '' }]);
     const [error, setError] = useState(null);
-
+    const URL = process.env.NODE_ENV === 'production'
+    ? 'https://brawn.onrender.com'
+    : 'http://localhost:4000';
+    
     const token = localStorage.getItem('token');
     const handleSetChange = (index, event) => {
         const newSets = [...sets];
@@ -39,7 +42,7 @@ const WorkoutFormModal = ({ setShowModal, routineId }) => {
         };
 
         try {
-            const response = await fetch(`/api/routines/${routineId}/workouts`, {
+            const response = await fetch(`${URL}/api/routines/${routineId}/workouts`, {
                 method: 'POST',
                 body: JSON.stringify(workout),
                 headers: {

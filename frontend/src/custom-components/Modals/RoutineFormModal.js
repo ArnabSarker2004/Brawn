@@ -8,6 +8,9 @@ const RoutineFormModal = ({ onClose }) => {
     const [name, setName] = useState('');
     const [error, setError] = useState(null);
     const token = localStorage.getItem('token');
+    const URL = process.env.NODE_ENV === 'production'
+    ? 'https://brawn.onrender.com'
+    : 'http://localhost:4000'; 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -19,7 +22,7 @@ const RoutineFormModal = ({ onClose }) => {
         setError(null); 
 
         try {
-        const response = await fetch('/api/routines', {
+        const response = await fetch(`${URL}/api/routines`, {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',
