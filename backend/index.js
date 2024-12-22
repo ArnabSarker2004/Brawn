@@ -11,7 +11,7 @@ const userRoutes = require('./routes/user');
 
 const app = express();
 const corsOptions = {
-    origin: "https://brawn-app.onrender.com",
+    origin: ["https://brawn-app.onrender.com","http://localhost:3000"],
     methods: 'GET, POST, PUT, DELETE',
     credentials: true
 };
