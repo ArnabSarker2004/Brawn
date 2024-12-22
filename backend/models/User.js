@@ -53,10 +53,10 @@ const userSchema = new Schema({
         min: 0
     },
 
-    // BMR:{
-    //     type: Number, 
-    //     required: false
-    // },
+    BMR:{
+        type: Number, 
+        required: false
+    },
 
     IsNewUser:{
         type: Boolean,
