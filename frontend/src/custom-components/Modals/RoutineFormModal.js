@@ -9,7 +9,7 @@ const RoutineFormModal = ({ onClose }) => {
     const [error, setError] = useState(null);
     const token = localStorage.getItem('token');
     const URL = process.env.NODE_ENV === 'production'
-    ? 'https://brawn.onrender.com'
+    ? 'https://brawn-tedx.onrender.com'
     : 'http://localhost:4000'; 
     const handleSubmit = async (e) => {
         e.preventDefault();

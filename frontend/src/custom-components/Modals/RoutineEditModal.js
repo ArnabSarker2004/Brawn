@@ -7,7 +7,7 @@ const RoutineEditModal = ({ routine, onClose }) => {
     const [error, setError] = useState(null);
     const { dispatch } = useRoutinesContext();
     const URL = process.env.NODE_ENV === 'production'
-    ? 'https://brawn.onrender.com'
+    ? 'https://brawn-tedx.onrender.com'
     : 'http://localhost:4000'; 
 
     const token = localStorage.getItem('token');

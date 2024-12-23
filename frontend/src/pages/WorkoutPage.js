@@ -12,7 +12,7 @@ const Home = () => {
     const [routineName, setRoutineName] = useState(''); 
     const { routineId } = useParams(); 
     const URL = process.env.NODE_ENV === 'production'
-    ? 'https://brawn.onrender.com'
+    ? 'https://brawn-tedx.onrender.com'
     : 'http://localhost:4000';
     
     

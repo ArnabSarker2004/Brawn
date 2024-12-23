@@ -10,7 +10,7 @@ const WorkoutFormModal = ({ setShowModal, routineId }) => {
     const [sets, setSets] = useState([{ reps: '', weight: '', time: '' }]);
     const [error, setError] = useState(null);
     const URL = process.env.NODE_ENV === 'production'
-    ? 'https://brawn.onrender.com'
+    ? 'https://brawn-tedx.onrender.com'
     : 'http://localhost:4000';
     
     const token = localStorage.getItem('token');
