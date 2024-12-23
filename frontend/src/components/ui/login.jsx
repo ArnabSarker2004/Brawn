@@ -14,9 +14,10 @@ export function Login({ setLoggedInUser }) {
     const [isLogin, setIsLogin] = useState(true); 
     const { username, password } = formData;
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
-    const URL = process.env.NODE_ENV ==='production' ? 'https://brawn-backend.vercel.app' :'http://localhost:4000'  
-    const onSubmitLogin = async e => {
+    const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+    const URL = process.env.NODE_ENV === 'production' ? 'https://brawn.onrender.com' : 'http://localhost:4000';
+
+    const onSubmitLogin = async (e) => {
         e.preventDefault();
         try {
             const res = await axios.post(`${URL}/api/auth/login`, { username, password });  

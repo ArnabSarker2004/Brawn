@@ -2,13 +2,12 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose'); 
 const cors = require('cors');
-const request = require('request'); // For making HTTP requests
+const request = require('request'); 
 const workoutRoutes = require('./routes/workouts'); 
 const setRoutes = require('./routes/sets'); 
 const routineRoutes = require('./routes/routines'); 
 const authRoutes = require('./routes/auth');
-const user = require('./routes/user')
-app.options('*', cors());
+const userRoutes = require('./routes/user');
 
 const app = express();
 const corsOptions = {
