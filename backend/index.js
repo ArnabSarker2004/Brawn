@@ -11,7 +11,7 @@ const userRoutes = require('./routes/user');
 
 const app = express();
 const corsOptions = {
-    origin: ["https://brawn-app.onrender.com","http://localhost:3000"],
+    origin: ["https://brawnapp.onrender.com","http://localhost:3000"],
     methods: 'GET, POST, PUT, DELETE',
     credentials: true
 };
@@ -27,7 +27,7 @@ app.use((req, res, next) => {
 app.use('/proxy/*', (req, res) => {
     const baseTargetUrl =
         process.env.NODE_ENV === 'production'
-            ? 'https://brawn.onrender.com'
+            ? 'https://brawn-tedx.onrender.com'
             : 'http://localhost:4000';
 
     const targetUrl = `${baseTargetUrl}${req.originalUrl.replace('/proxy', '')}`;
