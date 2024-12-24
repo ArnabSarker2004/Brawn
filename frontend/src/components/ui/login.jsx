@@ -7,11 +7,10 @@ import axios from 'axios';
 import { cn } from "../../lib/utils";
 import { useNavigate } from "react-router-dom";
 
-export function Login({ setLoggedInUser }) {  
+export function Login() {  
     const navigate = useNavigate();
     const [formData, setFormData] = useState({ username: '', password: '' });
     const [message, setMessage] = useState('');
-    const [isLogin, setIsLogin] = useState(true); 
     const { username, password } = formData;
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -20,12 +19,11 @@ export function Login({ setLoggedInUser }) {
     const onSubmitLogin = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post(`${URL}/api/auth/login`, { username, password },{withCredentials: true});  
-            localStorage.setItem('token', res.data.token);
-            localStorage.setItem('username', res.data.username);
-            setLoggedInUser(username);
-            setMessage('Logged in successfully');
-            navigate('/dashboard');  
+            const res = await axios.post(`${URL}/api/auth/login`, { username, password },{withCredentials: true}); 
+            if(res){
+                setMessage('Logged in successfully');
+                navigate('/dashboard');
+            }
         } catch (err) {
             console.error(err.response?.data || err.message);
             setMessage('Failed to login - wrong credentials');
@@ -35,12 +33,12 @@ export function Login({ setLoggedInUser }) {
     const onSubmitSignUp = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post(`${URL}/api/auth/register`, { username, password },{withCredentials: true});  
-            localStorage.setItem('token', res.data.token);
-            localStorage.setItem('username', res.data.username);
-            setLoggedInUser(username);
-            setMessage('Registered successfully, redirecting...');
-            navigate('/dashboard');  
+            const res = await axios.post(`${URL}/api/auth/register`, { username, password },{withCredentials: true});
+            if (res){
+                setMessage('Registered successfully, redirecting...');
+                navigate('/dashboard');
+            }
+            
         } catch (err) {
             console.error('Error occurred during sign-up:', err);
             if (err.response && err.response.data) {
@@ -63,10 +61,10 @@ export function Login({ setLoggedInUser }) {
             <div className={isMobile? "flex items-center justify-center m-auto w-auto max-w-screen-sm" : "w-1/2 flex items-center justify-center p-12" }>
                 <Tabs defaultValue="Sign Up" className="w-auto max-w-screen-md">
                     <TabsList className="flex w-auto gap-2">
-                        <TabsTrigger value="Sign Up" className="w-1/2 text-center" onClick={() => setIsLogin(false)}>
+                        <TabsTrigger value="Sign Up" className="w-1/2 text-center" >
                             Sign Up
                         </TabsTrigger>
-                        <TabsTrigger value="Sign In" className="w-1/2 text-center" onClick={() => setIsLogin(true)}>
+                        <TabsTrigger value="Sign In" className="w-1/2 text-center">
                             Sign In
                         </TabsTrigger>
                     </TabsList>
@@ -108,7 +106,7 @@ export function Login({ setLoggedInUser }) {
                                     </div>
                                 </form>
                                 <p className="mt-6 text-xs text-gray-500">
-                                    By clicking continue, you agree to our <a href="#" className="underline">Terms of Service</a> and <a href="#" className="underline">Privacy Policy</a>.
+                                    By clicking continue, you agree to our <a href="/" className="underline">Terms of Service</a> and <a href="/" className="underline">Privacy Policy</a>.
                                 </p>
                                 <p className="message mt-4">{message}</p>
                             </div>
@@ -152,7 +150,7 @@ export function Login({ setLoggedInUser }) {
                                     </div>
                                 </form>
                                 <p className="mt-6 text-xs text-gray-500">
-                                    By clicking continue, you agree to our <a href="#" className="underline">Terms of Service</a> and <a href="#" className="underline">Privacy Policy</a>.
+                                    By clicking continue, you agree to our <a href="/" className="underline">Terms of Service</a> and <a href="/" className="underline">Privacy Policy</a>.
                                 </p>
                                 <p className="message mt-4">{message}</p>
                             </div>

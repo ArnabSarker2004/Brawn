@@ -1,12 +1,10 @@
-import { useState, useEffect } from 'react';
-import { useWorkoutsContext } from '../hooks/useWorkoutsContext';
-import { useParams, useNavigate } from 'react-router-dom';
-import WorkoutDetails from '../custom-components/Workout/WorkoutDetails';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import WorkoutFormModal from '../custom-components/Modals/WorkoutFormModal';
-import {Button} from '../components/ui/button';
+import WorkoutDetails from '../custom-components/Workout/WorkoutDetails';
+import { useWorkoutsContext } from '../hooks/useWorkoutsContext';
 
 const Home = () => {
-    const token = localStorage.getItem('token');
     const { workouts, dispatch: workoutsDispatch } = useWorkoutsContext();
     const [showModal, setShowModal] = useState(false);
     const [routineName, setRoutineName] = useState(''); 
@@ -15,9 +13,6 @@ const Home = () => {
     ? 'https://brawn-tedx.onrender.com'
     : 'http://localhost:4000';
     
-    
-    const navigate = useNavigate();
-
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
     useEffect(() => {
@@ -26,7 +21,6 @@ const Home = () => {
             { method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                // 'Authorization': `Bearer ${token}`
             },
             credentials:'include'
             }
@@ -43,7 +37,6 @@ const Home = () => {
             { method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                // 'Authorization': `Bearer ${token}`
             },
             credentials:'include'
             }
@@ -57,7 +50,7 @@ const Home = () => {
 
         fetchRoutineDetails(); 
         fetchWorkouts(); 
-    }, [routineId, workoutsDispatch]);
+    }, [URL,routineId, workoutsDispatch]);
 
     return (
         <div>      

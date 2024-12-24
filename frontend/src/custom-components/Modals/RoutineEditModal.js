@@ -10,7 +10,6 @@ const RoutineEditModal = ({ routine, onClose }) => {
     ? 'https://brawn-tedx.onrender.com'
     : 'http://localhost:4000'; 
 
-    const token = localStorage.getItem('token');
     const handleSave = async () => {
         if (!name.trim()) {
         setError('Routine name cannot be empty.');
@@ -22,7 +21,6 @@ const RoutineEditModal = ({ routine, onClose }) => {
             method: 'PATCH',
             headers: {
             'Content-Type': 'application/json',
-            // 'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({ name }),
             credentials: 'include'

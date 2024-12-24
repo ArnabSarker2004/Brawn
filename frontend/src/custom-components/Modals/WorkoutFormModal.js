@@ -13,7 +13,6 @@ const WorkoutFormModal = ({ setShowModal, routineId }) => {
     ? 'https://brawn-tedx.onrender.com'
     : 'http://localhost:4000';
     
-    const token = localStorage.getItem('token');
     const handleSetChange = (index, event) => {
         const newSets = [...sets];
         newSets[index][event.target.name] = event.target.value;
@@ -47,7 +46,6 @@ const WorkoutFormModal = ({ setShowModal, routineId }) => {
                 body: JSON.stringify(workout),
                 headers: {
                 'Content-Type': 'application/json',
-                // 'Authorization': `Bearer ${token}`
                 },
                 credentials:'include'
         });

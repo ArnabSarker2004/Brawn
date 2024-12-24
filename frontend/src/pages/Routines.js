@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Button } from '../components/ui/button';
 import RoutineFormModal from '../custom-components/Modals/RoutineFormModal';
 import Routine from '../custom-components/Workout/Routine';
 import { useRoutinesContext } from '../hooks/useRoutinesContext';
 const Routines = () => {
-    const token = localStorage.getItem('token');
     const { routines, dispatch } = useRoutinesContext();
     const [showAddModal, setShowAddModal] = useState(false);
     const URL = process.env.NODE_ENV === 'production'
@@ -30,7 +28,6 @@ const Routines = () => {
                             method: 'GET',
                             headers: {
                                 'Content-Type': 'application/json',
-                                // 'Authorization': `Bearer ${token}`,
                             },
                             credentials:'include'
                         });
@@ -47,7 +44,7 @@ const Routines = () => {
         };
 
         fetchRoutinesWithWorkouts();
-    }, [dispatch, token]);
+    }, [URL, dispatch]);
 
 
     const handleDeleteRoutine = async (id) => {
@@ -55,7 +52,6 @@ const Routines = () => {
             method: 'DELETE', 
             headers: {
                 'Content-Type': 'application/json',
-                // 'Authorization': `Bearer ${token}`
             },
             credentials:'include'
         });

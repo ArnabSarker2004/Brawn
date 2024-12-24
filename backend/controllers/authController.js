@@ -76,8 +76,22 @@ const login = async (req, res) => {
     }
 };
 
+const verify = async (req, res) =>{
+    const token = req.cookies.auth_token;
+
+    if (!token) return res.status(401).json({isAuthenticated:false});
+    
+    try {
+        const decoded = jwt.verify(token, config.jwtSecret);
+        res.status(200).json({isAuthenticated:true});
+    }catch(error){
+        res.status(401).json({isAuthenticated:false});
+    }
+}
+
 
 module.exports = {
     register,
-    login
+    login,
+    verify
 };

@@ -1,20 +1,16 @@
 
-import { Logout } from '../../components/ui/logout';
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Logout } from '../../components/ui/logout';
+import { useAuth } from '../../context/AuthContext';
 import './navigation.css';
 
 const Navbar = () => {
     const [isExpanded, setIsExpanded] = useState(false);
-    const [hasToken, setToken] = useState(false);
     const currentURL = window.location.href;
     const isRoutines = currentURL.includes('routines/')
-
-    useEffect(() =>{
-        const token = localStorage.getItem('token');
-        setToken(token); 
-    }, []);
-
+    const {isAuthenticated} = useAuth();
+    
     const toggleCollapse = () => {
         setIsExpanded(!isExpanded);
     };
@@ -44,8 +40,8 @@ const Navbar = () => {
                     <span className="material-symbols-outlined navbar-logo">robot_2</span>
                     {isExpanded && <span className="navbar-text">Brawnify <sup>AI</sup></span>}
                 </Link>
-                {hasToken && <Logout isExpanded={isExpanded}/>}
-                {hasToken &&
+                {isAuthenticated && <Logout isExpanded={isExpanded}/>}
+                {isAuthenticated &&
                 <Link to="/profile" className='navbar-item'>
                     <span className='material-symbols-outlined navbar-logo'>person</span>
                     {isExpanded && <span className='navbar-text'>Profile</span>}
@@ -58,7 +54,7 @@ const Navbar = () => {
                 </Link>}
             </div>
         </div>
-        {isExpanded && <div className="overlay" onClick={toggleCollapse}></div>}
+            {isExpanded && <div className="overlay" onClick={toggleCollapse}></div>}
         </>
     );
 };

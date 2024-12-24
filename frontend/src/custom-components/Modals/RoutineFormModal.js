@@ -7,7 +7,6 @@ const RoutineFormModal = ({ onClose }) => {
     const { dispatch } = useRoutinesContext(); 
     const [name, setName] = useState('');
     const [error, setError] = useState(null);
-    const token = localStorage.getItem('token');
     const URL = process.env.NODE_ENV === 'production'
     ? 'https://brawn-tedx.onrender.com'
     : 'http://localhost:4000'; 
@@ -26,7 +25,6 @@ const RoutineFormModal = ({ onClose }) => {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',
-            // 'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({ name }),
             credentials:'include'

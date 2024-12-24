@@ -5,7 +5,6 @@ import './workout.css';
 const WorkoutDetails = ({ workout, routineId }) => {
   const { dispatch } = useWorkoutsContext();
   const [showEditModal, setShowEditModal] = useState(false);
-  const token = localStorage.getItem('token');
 
   const URL = process.env.NODE_ENV === 'production'
   ? 'https://brawn-tedx.onrender.com'
