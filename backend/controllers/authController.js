@@ -29,9 +29,9 @@ const register = async (req, res) => {
         if (err) throw err;
 
         res.cookie('auth_token', token, {
-            // httpOnly: true,                
-            // secure: process.env.NODE_ENV === 'production', 
-            sameSite: 'None',            
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production', 
+            sameSite: 'None', 
         });
         res.status(201).json({ username, msg: 'Registration successful' });
     });
@@ -64,11 +64,12 @@ const login = async (req, res) => {
         if (err) throw err;
 
         res.cookie('auth_token', token, {
-            // httpOnly: true,                
-            // secure: process.env.NODE_ENV === 'production', 
-            sameSite: 'Strict',            
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production', 
+            sameSite: 'None', 
         });
-        res.status(201).json({ username, msg: 'login wassuccessful' });
+        
+        res.status(201).json({ username, msg: 'login was successful' });
     });
     } catch (err) {
         console.error(err.message);
