@@ -7,11 +7,14 @@ export const AuthProvider = ({children}) =>{
     const[isAuthenticated, setAuthentication] = useState(false);
     const[isLoading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const URL = process.env.NODE_ENV === 'production'
+    ? 'https://brawn-tedx.onrender.com'
+    : 'http://localhost:4000'; 
 
     const verify= () =>{
         setLoading(true);
         try{
-            axios.get('api/auth/verify', {withCredentials:true})
+            axios.get(`${URL}/api/auth/verify`, {withCredentials:true})
             .then ((res) =>{
                 setAuthentication(res.data.isAuthenticated);
             })
@@ -30,7 +33,7 @@ export const AuthProvider = ({children}) =>{
     })
 
     const logout = async () =>{
-        await axios.post('api/auth/logout', {withCredentials:true})
+        await axios.post(`${URL}/api/auth/logout`, {withCredentials:true})
         navigate('/');
         setAuthentication(false);
         
