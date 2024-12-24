@@ -7,6 +7,8 @@ import './navigation.css';
 const Navbar = () => {
     const [isExpanded, setIsExpanded] = useState(false);
     const [hasToken, setToken] = useState(false);
+    const currentURL = window.location.href;
+    const isRoutines = currentURL.includes('routines/')
 
     useEffect(() =>{
         const token = localStorage.getItem('token');
@@ -47,6 +49,12 @@ const Navbar = () => {
                 <Link to="/profile" className='navbar-item'>
                     <span className='material-symbols-outlined navbar-logo'>person</span>
                     {isExpanded && <span className='navbar-text'>Profile</span>}
+                </Link>}
+                {isRoutines && <Link to="/routines" className='navbar-item'>
+                    <span className='material-symbols-outlined navbar-logo'>
+                        keyboard_backspace
+                    </span>
+                    {isExpanded && <span className='navbar-text'>Back</span>}
                 </Link>}
             </div>
         </div>

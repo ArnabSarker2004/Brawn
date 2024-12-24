@@ -10,7 +10,7 @@ const Routines = () => {
     const URL = process.env.NODE_ENV === 'production'
     ? 'https://brawn-tedx.onrender.com'
     : 'http://localhost:4000';
-    
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     useEffect(() => {
         const fetchRoutinesWithWorkouts = async () => {
             const response = await fetch(`${URL}/api/routines`, {
@@ -68,11 +68,6 @@ const Routines = () => {
     return (
 
         <div className="routine-grid">
-            <div className="add-routine-row">
-                <Button variant="default" className= "w-full text-2xl mb-4" onClick={() => setShowAddModal(true)}>
-                    Add Routine
-                </Button>
-            </div>
             <div className="routine-list">
                 {routines && routines.map((routine) => (
                 <Routine
@@ -82,7 +77,13 @@ const Routines = () => {
                 />
                 ))}
             </div>
-            {showAddModal && <RoutineFormModal onClose={() => setShowAddModal(false)} />}
+            {showAddModal && <RoutineFormModal onClose={() => setShowAddModal(false)} />} 
+            <div className="fixed bottom-8 right-4 flex items-center space-x-2 cursor-pointer "  onClick={() => setShowAddModal(true)}>
+                <div className="flex items-center justify-center w-12 h-12 rounded-full bg-brawn">
+                    <span className="material-symbols-outlined text-white">add</span>
+                </div>
+                {!isMobile && <span className="text-gray-600 font-medium">Add Routine</span>}
+            </div>
         </div>
     );
 };

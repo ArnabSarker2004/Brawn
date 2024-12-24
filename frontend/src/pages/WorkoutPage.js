@@ -67,27 +67,14 @@ const Home = () => {
                 <WorkoutDetails key={workout._id} workout={workout} routineId={routineId} />
                 ))}
             </div>
-            {!isMobile && <div className='flex items-end justify-end gap-4'> 
-                <Button variant ="outline" size="lg" onClick={() => navigate('/routines') }>
-                    Back
-                </Button>
-                <Button variant="default" size="lg" onClick={() => setShowModal(true)}>
-                    Add Workout
-                </Button>
-            </div>}
         </div>
-            {isMobile && <div> 
-                <div className='add-workout-btn-row pt-5 pb-2'>
-                    <Button variant="default" size="lg" className="w-full" onClick={() => setShowModal(true)}>
-                        Add Workout
-                    </Button>
-                    </div>
-                    <div className="back-buttons-row">
-                        <Button variant ="outline" size="lg" className="w-full mb-4" onClick={() => navigate('/routines') }>
-                            Back
-                        </Button>
-                    </div>
-            </div>} 
+            <div className="fixed bottom-8 right-4 flex items-center space-x-2 cursor-pointer "  onClick={() => setShowModal(true)}>
+                <div className="flex items-center justify-center w-12 h-12 rounded-full bg-brawn">
+                    <span className="material-symbols-outlined text-white">add</span>
+                </div>
+                {!isMobile && <span className="text-gray-600 font-medium">Add Workout</span>}
+            </div>
+
         </div>
     );
 };
