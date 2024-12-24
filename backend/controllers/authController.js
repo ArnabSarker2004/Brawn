@@ -31,7 +31,7 @@ const register = async (req, res) => {
         res.cookie('auth_token', token, {
             // httpOnly: true,                
             // secure: process.env.NODE_ENV === 'production', 
-            sameSite: 'Strict',            
+            sameSite: 'None',            
         });
         res.status(201).json({ username, msg: 'Registration successful' });
     });

@@ -57,10 +57,6 @@ app.use('/api/routines', setRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 
-app.get("/", (req, res) => {
-    res.status(201).json({ message: "Connected to Backend!" });
-});
-
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         app.listen(process.env.PORT, () => {
