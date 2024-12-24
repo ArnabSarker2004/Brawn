@@ -8,8 +8,9 @@ const setRoutes = require('./routes/sets');
 const routineRoutes = require('./routes/routines'); 
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
-
+const cookieParser = require('cookie-parser');
 const app = express();
+app.use(cookieParser());
 const corsOptions = {
     origin: ["https://brawnapp.onrender.com","http://localhost:3000"],
     methods: 'GET, POST, PUT, DELETE, PATCH',
@@ -23,6 +24,7 @@ app.use((req, res, next) => {
     console.log(req.path, req.method);
     next();
 });
+
 
 app.use('/proxy/*', (req, res) => {
     const baseTargetUrl =

@@ -25,11 +25,16 @@ const register = async (req, res) => {
             user: { id: user.id }
         };
 
-        jwt.sign(payload, config.jwtSecret, { expiresIn: 36000 }, 
-        (err, token) => {
-            if (err) throw err;
-            res.json({ token,username });
+    jwt.sign(payload, config.jwtSecret, { expiresIn: 36000 }, (err, token) => {
+        if (err) throw err;
+
+        res.cookie('auth_token', token, {
+            // httpOnly: true,                
+            // secure: process.env.NODE_ENV === 'production', 
+            sameSite: 'Strict',            
         });
+        res.status(201).json({ username, msg: 'Registration successful' });
+    });
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
@@ -54,16 +59,23 @@ const login = async (req, res) => {
             }
         };
 
-        jwt.sign(payload, config.jwtSecret, { expiresIn: 36000}, 
-        (err, token) => {
-            if (err) throw err;
-            res.json({ token,username });
+        
+    jwt.sign(payload, config.jwtSecret, { expiresIn: 36000 }, (err, token) => {
+        if (err) throw err;
+
+        res.cookie('auth_token', token, {
+            // httpOnly: true,                
+            // secure: process.env.NODE_ENV === 'production', 
+            sameSite: 'Strict',            
         });
+        res.status(201).json({ username, msg: 'login wassuccessful' });
+    });
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
     }
 };
+
 
 module.exports = {
     register,

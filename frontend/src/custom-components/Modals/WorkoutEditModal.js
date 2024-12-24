@@ -70,8 +70,9 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
       body: JSON.stringify(updatedWorkout),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        // 'Authorization': `Bearer ${token}`
       },
+      credentials:'include'
     });
     const json = await response.json();
 

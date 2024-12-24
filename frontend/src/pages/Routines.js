@@ -17,8 +17,9 @@ const Routines = () => {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
+                    // 'Authorization': `Bearer ${token}`,
                 },
+                credentials:'include'
             });
 
             if (response.ok) {
@@ -29,8 +30,9 @@ const Routines = () => {
                             method: 'GET',
                             headers: {
                                 'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${token}`,
+                                // 'Authorization': `Bearer ${token}`,
                             },
+                            credentials:'include'
                         });
 
                         const workoutsData = workoutsResponse.ok ? await workoutsResponse.json() : [];
@@ -53,8 +55,9 @@ const Routines = () => {
             method: 'DELETE', 
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }  
+                // 'Authorization': `Bearer ${token}`
+            },
+            credentials:'include'
         });
 
         if (response.ok) {

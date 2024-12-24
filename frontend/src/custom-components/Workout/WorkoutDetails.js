@@ -16,8 +16,9 @@ const WorkoutDetails = ({ workout, routineId }) => {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          // 'Authorization': `Bearer ${token}`
           },
+          credentials:'include'
       });
       if (response.ok) {
         dispatch({ type: 'DELETE_WORKOUT', payload: { _id: workout._id } });

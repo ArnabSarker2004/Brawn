@@ -47,8 +47,9 @@ const WorkoutFormModal = ({ setShowModal, routineId }) => {
                 body: JSON.stringify(workout),
                 headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                // 'Authorization': `Bearer ${token}`
                 },
+                credentials:'include'
         });
 
         if (response.ok) {
