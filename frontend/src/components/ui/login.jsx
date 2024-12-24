@@ -116,7 +116,7 @@ export function Login({ setLoggedInUser }) {
                     </TabsContent>
 
                     <TabsContent value="Sign In">
-                        <div className="w-full max-w-md">
+                        <div className="w-auto max-w-sm">
                             <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
                                 <h2 className="text-2xl font-bold text-gray-900">Sign In</h2>
                                 <p className="mt-2 text-sm text-gray-600">Enter your username and password to sign in</p>
