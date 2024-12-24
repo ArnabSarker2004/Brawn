@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { cn } from "../../lib/utils";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 export function Login() {  
     const navigate = useNavigate();
@@ -15,13 +16,14 @@ export function Login() {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
     const URL = process.env.NODE_ENV === 'production' ? 'https://brawn-tedx.onrender.com' : 'http://localhost:4000';
-
+    const {verify} = useAuth();
     const onSubmitLogin = async (e) => {
         e.preventDefault();
         try {
             const res = await axios.post(`${URL}/api/auth/login`, { username, password },{withCredentials: true}); 
             if(res){
                 setMessage('Logged in successfully');
+                await verify();
                 navigate('/dashboard');
             }
         } catch (err) {

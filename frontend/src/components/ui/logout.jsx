@@ -1,12 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
-
+import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 export function Logout({isExpanded}) {
+    const {logout} = useAuth();
 
-const navigate = useNavigate();
-const handleLogout = () =>{
-    localStorage.removeItem('token');
-    navigate('/');
-}
+    const handleLogout = () =>{
+        logout();
+    }
 return (
     (<Link onClick = {handleLogout} className="navbar-item absolute bottom-0 w-full">
         <span className="material-symbols-outlined navbar-logo">

@@ -89,9 +89,15 @@ const verify = async (req, res) =>{
     }
 }
 
+const logout = async(req, res) =>{
+    res.clearCookie('auth_token');
+    res.status(200).json({message: "logged out successfully"});
+}
+
 
 module.exports = {
     register,
     login,
-    verify
+    verify,
+    logout
 };
