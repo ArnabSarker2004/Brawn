@@ -6,7 +6,6 @@ import { Textarea } from './textarea';
 import { Button } from './button';
 
 export function Profile({ error, data, onSave }) {
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     const [formData, setFormData] = useState({
         Name: data?.Name || "",
         Email: data?.Email || "",
@@ -57,7 +56,7 @@ export function Profile({ error, data, onSave }) {
                     <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-2">
                             <Label htmlFor="Name">Name</Label>
-                            <Input id="Name" value={formData.Name} onChange={handleChange} />
+                            <Input id="Name" type="text" value={formData.Name} onChange={handleChange} />
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="Email">Email</Label>
@@ -67,8 +66,8 @@ export function Profile({ error, data, onSave }) {
                     <CardDescription>Your Body</CardDescription>
                     <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-2">
-                            <Label htmlFor="Height">Height</Label>
-                            <Input id="Height" value={formData.Height} onChange={handleChange} />
+                            <Label htmlFor="Height">Height (cm)</Label>
+                            <Input id="Height" type="number" value={formData.Height} onChange={handleChange} />
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="Weight">Weight</Label>
@@ -78,11 +77,11 @@ export function Profile({ error, data, onSave }) {
                     <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-2">
                             <Label htmlFor="Age">Age</Label>
-                            <Input id="Age" value={formData.Age} onChange={handleChange} />
+                            <Input id="Age" type="number" value={formData.Age} onChange={handleChange} />
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="Gender">Gender</Label>
-                            <Input id="Gender" value={formData.Gender} onChange={handleChange} />
+                            <Input id="Gender" type="text" value={formData.Gender} onChange={handleChange} />
                         </div>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
@@ -96,7 +95,7 @@ export function Profile({ error, data, onSave }) {
                         </div>
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="Bio">Bio</Label>
+                        <Label htmlFor="Bio" type="text">Bio</Label>
                         <Textarea id="Bio" rows={3} value={formData.Bio} onChange={handleChange} />
                     </div>
                     <Button className="w-full" size="lg" type="submit">

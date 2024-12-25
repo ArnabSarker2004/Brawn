@@ -10,7 +10,7 @@ import Brawnify from './pages/Brawnify';
 import Dashboard from './pages/dashboard';
 import Profile from './pages/profile';
 import Routines from './pages/Routines';
-import Signup from './pages/signup';
+import Signup from './pages/signup-login';
 import WorkoutPage from './pages/WorkoutPage';
 import './tailwind.css';
 
@@ -44,9 +44,6 @@ const AppContent = () => {
     );
 }
 
-
-
-
 function PrivateRoute({ children }) {
     let {isAuthenticated} = useAuth();
     
@@ -64,6 +61,7 @@ function PrivateRoute({ children }) {
         </div>
     );
 }
+
 function App() {
     return (
         <div className="App">

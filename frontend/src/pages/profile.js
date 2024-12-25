@@ -58,7 +58,7 @@ const ProfilePage = () => {
         }
     }
     useEffect(() =>{
-        if (user) getUserdata(user);
+        if (user) getUserdata();
     }, [user]);
 
     return (
