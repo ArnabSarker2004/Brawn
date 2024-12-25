@@ -79,7 +79,7 @@ const login = async (req, res) => {
 
 const verify = async (req, res) =>{
     const token = req.cookies.auth_token;
-
+    console.log(token);
     if (!token) return res.status(401).json({isAuthenticated:false});
     
     try {
