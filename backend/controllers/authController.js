@@ -27,7 +27,6 @@ const register = async (req, res) => {
 
     jwt.sign(payload, config.jwtSecret, { expiresIn: 36000 }, (err, token) => {
         if (err) throw err;
-
         res.cookie('auth_token', token, {
             httpOnly: true,
             secure: true, 
@@ -79,7 +78,6 @@ const login = async (req, res) => {
 
 const verify = async (req, res) =>{
     const token = req.cookies.auth_token;
-    console.log(token);
     if (!token) return res.status(401).json({isAuthenticated:false});
     
     try {
