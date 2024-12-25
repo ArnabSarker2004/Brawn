@@ -63,10 +63,10 @@ export function Login() {
             <div className={isMobile? "flex items-center justify-center m-auto w-auto max-w-screen-sm" : "w-1/2 flex items-center justify-center p-12" }>
                 <Tabs defaultValue="Sign Up" className="w-auto max-w-screen-md">
                     <TabsList className="flex w-auto gap-2">
-                        <TabsTrigger value="Sign Up" className="w-1/2 text-center" >
+                        <TabsTrigger value="Sign Up" className="w-1/2 font-semibold hover:shadow-lg transition-shadow duration-300	text-center" >
                             Sign Up
                         </TabsTrigger>
-                        <TabsTrigger value="Sign In" className="w-1/2 text-center">
+                        <TabsTrigger value="Sign In" className="w-1/2 hover:shadow-lg transition-shadow duration-300 font-semibold	text-center">
                             Sign In
                         </TabsTrigger>
                     </TabsList>
@@ -75,7 +75,7 @@ export function Login() {
                         <div className="w-auto max-w-sm">
                             <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
                                 <h2 className="text-2xl font-bold text-gray-900">Create an account</h2>
-                                <p className="mt-2 text-sm text-gray-600">Enter your username and password to create an account</p>
+                                <p className="mt-2 text-sm text-gray-600">Enter username and password to Create an account</p>
                                 <form onSubmit={onSubmitSignUp} className="mb-0 space-y-6">
                                     <div>
                                         <Input id="username" name="username" placeholder="Username" value={username} onChange={onChange} required />
@@ -119,7 +119,7 @@ export function Login() {
                         <div className="w-auto max-w-sm">
                             <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
                                 <h2 className="text-2xl font-bold text-gray-900">Sign In</h2>
-                                <p className="mt-2 text-sm text-gray-600">Enter your username and password to sign in</p>
+                                <p className="mt-2 text-sm text-gray-600">Enter username and password to Sign In</p>
                                 <form onSubmit={onSubmitLogin} className="mb-0 space-y-6">
                                     <div>
                                         <Input id="username" name="username" placeholder="Username" value={username} onChange={onChange} required/>
