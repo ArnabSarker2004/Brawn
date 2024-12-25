@@ -70,7 +70,7 @@ export function Profile({ error, data, onSave }) {
                             <Input id="Height" type="number" value={formData.Height} onChange={handleChange} />
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="Weight">Weight</Label>
+                            <Label htmlFor="Weight">Weight (kg/lbs)</Label>
                             <Input id="Weight" type="number" value={formData.Weight} onChange={handleChange} />
                         </div>
                     </div>
