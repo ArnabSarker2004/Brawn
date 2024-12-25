@@ -21,8 +21,6 @@ export const AuthProvider = ({children}) =>{
             .catch(()=>{
                 setAuthentication(false);
             });
-        }catch{
-            setAuthentication(false);
         }finally{
             setLoading(false);
         }

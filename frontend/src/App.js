@@ -48,16 +48,9 @@ const AppContent = () => {
 
 
 function PrivateRoute({ children }) {
-    const {isAuthenticated, isLoading} = useAuth();
-
-    if(isLoading){
-        return (
-            <div w-screen h-screen flex justfiy-center items-center >
-                Loading...
-            </div>
-        );
-    }
-    return isAuthenticated && !isLoading ? (
+    const {isAuthenticated} = useAuth();
+    
+    return isAuthenticated ? (
         children
     ) : (
         <div className="flex no-scrollbar flex-col justify-center items-center h-screen w-full p-4 text-center text-2xl font-bold">
