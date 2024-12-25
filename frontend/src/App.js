@@ -16,7 +16,7 @@ import './tailwind.css';
 
 
 const AppContent = () => {
-    const {isAuthenticated} = useAuth();
+    let {isAuthenticated} = useAuth();
     const location = useLocation();
     const isLoginPage = location.pathname === '/';
     return (
@@ -48,7 +48,7 @@ const AppContent = () => {
 
 
 function PrivateRoute({ children }) {
-    const {isAuthenticated} = useAuth();
+    let {isAuthenticated} = useAuth();
     
     return isAuthenticated ? (
         children

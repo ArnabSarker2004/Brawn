@@ -2,60 +2,50 @@ const User = require('../models/User');
 const mongoose = require('mongoose');
 
 const getBodyInfo = async (req, res) =>{
-    const userID = req.user.id;
-
-    if(!mongoose.Types.ObjectId.isValid(userID)) return res.status(404).json({error: 'no such user'});
-
-    const body = await User.findOne({user: userID});
-
+    const userID = req.body.username;
+    const body = await User.findOne({username: userID});
     if (!body) return res.status(404).json({error: 'Body doesn\'t exist'});
 
     res.status(200).json({
-        First: user.FirstName,
-        Last: user.LastName,
-        Age: user.Age,
-        Experience: user.YearsOfWorkoutExperience,
-        Gender: user.Gender,
-        Height: user.Height,
-        BMR: user.BMR
+        Name: body.Name,
+        Email:body.Email,
+        Age: body.Age,
+        Experience: body.YearsOfWorkoutExperience,
+        Gender: body.Gender,
+        Height: body.Height,
+        Weight: body.Weight,
+        BMR: body.BMR,
+        YearsOfWorkoutExperience: body.YearsOfWorkoutExperience,
+        Bio: body.Bio
     });   
 };
 
-const createBody = async (req, res) =>{
-    const userID = req.user.id;
-    if (!mongoose.Types.ObjectId.isValid(userID)) return res.status(404).json({error: 'no such user'});
-    
-    const {first, last, age, experience, gender, height, bmr} = req.body;
-    
-    var emptyFields = [];
-
-    if (!first) return emptyFields.push('first');
-    if (!last) return emptyFields.push('last');
-    if (!age) return emptyFields.push('age');
-    if (!experience) return emptyFields.push('experience');
-    if (!gender) return emptyFields.push('gender');
-    if (!height) return emptyFields.push('height');
-    if (!bmr) return emptyFields.push('bmr');
-
-    if (emptyFields.length > 0) return res.status(400).json({error: 'Please fill in all fields', emptyFields});
+const updateBody = async (req, res) => {
+    const userID = req.body.username; 
+    const { Name, Email, Height, Weight, Age, Gender, BMR, YearsOfWorkoutExperience, Bio } = req.body;
 
     try {
-        const profile = await User.create({
-            first,
-            last,
-            age,
-            experience,
-            gender,
-            height,
-            bmr
-        });
-        res.status(200).json(profile);
-    } catch(error){
-        res.status(400).json({error: error.message});
+        const updatedProfile = await User.findOneAndUpdate(
+            {username: userID},
+            {
+                $set: { Name, Email, Height, Weight, Age, Gender, BMR, YearsOfWorkoutExperience, Bio },
+            },
+            { new: true } 
+        );
+
+        if (!updatedProfile) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        res.status(200).json(updatedProfile);
+    } catch (error) {
+        console.error('Error updating profile:', error);
+        res.status(500).json({ error: error.message });
     }
 };
 
+
 module.exports ={
     getBodyInfo,
-    createBody
+    updateBody
 }

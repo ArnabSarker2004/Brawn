@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 const AuthContext = React.createContext();
 
 export const AuthProvider = ({children}) =>{
-    const[isAuthenticated, setAuthentication] = useState(false);
+    let [isAuthenticated, setAuthentication] = useState(false);
+    const[user, setUser] = useState(null);
     const[isLoading, setLoading] = useState(false);
     const navigate = useNavigate();
     const URL = process.env.NODE_ENV === 'production'
@@ -34,11 +35,14 @@ export const AuthProvider = ({children}) =>{
         await axios.post(`${URL}/api/auth/logout`, {withCredentials:true})
         navigate('/');
         setAuthentication(false);
-        
+        setUser(null);
+    }
+    const login = (userData) =>{
+        setUser(userData);
     }
 
     return(
-        <AuthContext.Provider value={{isAuthenticated, logout, verify, isLoading}}>
+        <AuthContext.Provider value={{isAuthenticated, logout, verify, isLoading, login, user}}>
             {children}
         </AuthContext.Provider>
     );

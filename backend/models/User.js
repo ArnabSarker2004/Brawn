@@ -14,14 +14,9 @@ const userSchema = new Schema({
         minlength: 3
     },
 
-    FirstName: {
+    Name: {
         type: String,
         required: false,
-    },
-
-    LastName:{
-        type:String,
-        required: false
     },
 
     Age:{
@@ -52,12 +47,18 @@ const userSchema = new Schema({
         required: false,
         min: 0
     },
-
+    Bio:{
+        type: String, 
+        required: false
+    },
     BMR:{
         type: Number, 
         required: false
     },
-
+    Email:{
+        type: String, 
+        required: false
+    },
     IsNewUser:{
         type: Boolean,
         required: false
