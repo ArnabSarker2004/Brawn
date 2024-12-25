@@ -79,10 +79,10 @@ export function Login() {
                                 <p className="mt-2 text-sm text-gray-600">Enter username and password to Create an account</p>
                                 <form onSubmit={onSubmitSignUp} className="mb-0 space-y-6">
                                     <div>
-                                        <Input id="username" name="username" placeholder="Username" value={username} onChange={onChange} required />
+                                        <Input id="username" name="username" required maxLength="20" placeholder="Username" value={username} onChange={onChange}/>
                                     </div>
                                     <div>
-                                        <Input id="password" type="password" name="password" placeholder="Password" value={password} onChange={onChange} required/>
+                                        <Input id="password" type="password" required minLength="   8" name="password" placeholder="Password" value={password} onChange={onChange}/>
                                     </div>
                                     <div>
                                         <Button type="submit" className="w-full bg-green text-white">Create Account</Button>

@@ -82,7 +82,7 @@ const verify = async (req, res) =>{
     
     try {
         const decoded = jwt.verify(token, config.jwtSecret);
-        res.status(200).json({isAuthenticated:true});
+        if (decoded) res.status(200).json({isAuthenticated:true});
     }catch(error){
         res.status(401).json({isAuthenticated:false});
     }
