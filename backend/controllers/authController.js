@@ -30,7 +30,6 @@ const register = async (req, res) => {
 
         res.cookie('auth_token', token, {
             httpOnly: true,
-            //secure: process.env.NODE_ENV === 'production',
             secure: true, 
             sameSite: 'None', 
         });
@@ -66,7 +65,6 @@ const login = async (req, res) => {
 
         res.cookie('auth_token', token, {
             httpOnly: true,
-            // secure: process.env.NODE_ENV === 'production',
             secure: true, 
             sameSite: 'None', 
         });
