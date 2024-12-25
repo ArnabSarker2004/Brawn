@@ -5,7 +5,8 @@ import { Input } from './input';
 import { Textarea } from './textarea';
 import { Button } from './button';
 
-export function Profile({ data, onSave }) {
+export function Profile({ error, data, onSave }) {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     const [formData, setFormData] = useState({
         Name: data?.Name || "",
         Email: data?.Email || "",
@@ -45,6 +46,7 @@ export function Profile({ data, onSave }) {
     };
 
     return (
+        <div>
         <form onSubmit={handleSubmit} className="w-full max-w-8xl mx-auto md:pb-20 gap-10">
             <Card>
                 <CardHeader>
@@ -101,8 +103,10 @@ export function Profile({ data, onSave }) {
                         Save Changes
                     </Button>
                 </CardContent>
+                {error && <div className="error">{error}</div>}
             </Card>
         </form>
+        </div>
     );
 }
 

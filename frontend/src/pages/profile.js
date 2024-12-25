@@ -62,7 +62,7 @@ const ProfilePage = () => {
     }, [user]);
 
     return (
-        <Profile data={body} onSave={updateUserDetails} />
+        <Profile error={error}data={body} onSave={updateUserDetails} />
     );
 };
 
