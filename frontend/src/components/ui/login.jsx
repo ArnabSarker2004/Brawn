@@ -16,7 +16,7 @@ export function Login() {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
     const URL = process.env.NODE_ENV === 'production' ? 'https://brawn-tedx.onrender.com' : 'http://localhost:4000';
-    const {verify} = useAuth();
+    const {verify, login} = useAuth();
     const onSubmitLogin = async (e) => {
         e.preventDefault();
         try {
@@ -24,6 +24,7 @@ export function Login() {
             if(res){
                 setMessage('Logged in successfully');
                 await verify();
+                login(username);
                 navigate('/dashboard');
             }
         } catch (err) {
@@ -40,7 +41,7 @@ export function Login() {
                 setMessage('Registered successfully, redirecting...');
                 navigate('/dashboard');
             }
-            
+            login(username);
         } catch (err) {
             console.error('Error occurred during sign-up:', err);
             if (err.response && err.response.data) {

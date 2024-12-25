@@ -27,10 +27,9 @@ const register = async (req, res) => {
 
     jwt.sign(payload, config.jwtSecret, { expiresIn: 36000 }, (err, token) => {
         if (err) throw err;
-
         res.cookie('auth_token', token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production', 
+            secure: true, 
             sameSite: 'None', 
         });
         res.status(201).json({ username, msg: 'Registration successful' });
@@ -65,7 +64,7 @@ const login = async (req, res) => {
 
         res.cookie('auth_token', token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production', 
+            secure: true, 
             sameSite: 'None', 
         });
         
@@ -79,7 +78,6 @@ const login = async (req, res) => {
 
 const verify = async (req, res) =>{
     const token = req.cookies.auth_token;
-
     if (!token) return res.status(401).json({isAuthenticated:false});
     
     try {

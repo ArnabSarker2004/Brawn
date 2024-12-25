@@ -2,7 +2,7 @@ const express = require('express');
 
 const {
     getBodyInfo,
-    createBody
+    updateBody
 } = require('../controllers/userController');
 
 const router = express.Router();
@@ -10,7 +10,7 @@ const requireAuth = require('../middleware/authMiddleware');
 
 router.use(requireAuth);
 
-router.get('/', getBodyInfo);
-router.post('/', createBody);
+router.post('/getbodyinfo', getBodyInfo);
+router.patch('/updatebody', updateBody);
 
 module.exports = router;
