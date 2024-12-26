@@ -18,8 +18,6 @@ const chartConfig = {
         color: "var(--navbar-hover)",
     },
 };
-
-
 const Activity = () =>{
     return (
         <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
