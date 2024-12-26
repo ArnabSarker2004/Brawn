@@ -10,6 +10,8 @@ import {
 } from "../../components/ui/table";
 import Activity from "./Activity";
 
+//NO API CALLS HERE EITHER, ALL SHOULD BE MADE IN pages/dashboard.js
+
 const Overview = () =>{
     return(
         <div>

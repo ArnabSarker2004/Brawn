@@ -2,6 +2,8 @@ import { Card, CardContent, CardHeader } from "../../components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs";
 import Overview from "../../custom-components/Overview/Overview";
 import Analytics from "../Analytics/Analytics";
+//NOTE DO NOT MAKE ANY API CALLS FROM HERE, API CALLS SHOULD NOT BE MADE THROUGH COMPONENTS
+//ALSO NO RAW HTML SHOULD BE HERE EITHER
 const Dashboard = () =>{
     return (
     <Card className="h-full w-full overflow-auto"> 

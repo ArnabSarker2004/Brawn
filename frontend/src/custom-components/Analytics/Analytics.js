@@ -7,6 +7,8 @@ import {
     TableHeader,
     TableRow,
 } from "../../components/ui/table";
+
+//NOTE DO NOT MAKE ANY API CALLS FROM HERE, API CALLS SHOULD NOT BE MADE THROUGH COMPONENTS
 const Analytics = () =>{
     return (
         <div>

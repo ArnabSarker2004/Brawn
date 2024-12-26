@@ -2,6 +2,9 @@
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from "../../components/ui/chart"
 
+
+//THIS IS A CHART WITH DUMMY DATA, DATA SHOULD BE PASSED INTO THIS CHART FROM THE FRONTEND
+//NO API CALLS HERE EITHER
 const chartData = [
     { week: "Week 1", cardio: 186, strength: 80 },
     { week: "Week 2", cardio: 305, strength: 200 },
