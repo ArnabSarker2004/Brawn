@@ -8,6 +8,7 @@ import {
     TableHeader,
     TableRow,
 } from "../../components/ui/table";
+import Activity from "./Activity";
 
 const Overview = () =>{
     return(
@@ -43,9 +44,10 @@ const Overview = () =>{
                     </CardHeader>
                 </Card>
             </div>
-            <div className="grid gap-5 grid-cols-1 md:grid-cols-2 w-full">
+            <div className="grid gap-5 grid-cols-1 md:grid-cols-2 w-full ">
                 <Card>
                     <CardContent>
+                        <Activity/>
                     </CardContent>
                 </Card>
                 <Card>
@@ -53,32 +55,30 @@ const Overview = () =>{
                         Workouts This Week
                     </CardHeader>
                     <CardContent>
-                        <Table>
-                            <TableHeader>
-                                <TableHead className="font-medium">
-                                    Workout
-                                </TableHead>
-                                <TableHead className="font-medium">
-                                    Duration
-                                </TableHead>
-                                <TableHead className="font-medium">
-                                    Date
-                                </TableHead>
-                            </TableHeader>
-                            <TableBody>
-                                <TableRow>
-                                    <TableCell>
-                                        Push
-                                    </TableCell>
-                                    <TableCell>
-                                        1 hour
-                                    </TableCell>
-                                    <TableCell>
-                                        Jan
-                                    </TableCell>
-                                </TableRow>
-                            </TableBody>
-                        </Table>
+                        <div className="max-h-96 overflow-y-scroll">
+                            <Table>
+                                <TableHeader>
+                                    <TableHead className="font-medium">
+                                        Workout
+                                    </TableHead>
+                                    <TableHead className="font-medium">
+                                        Duration
+                                    </TableHead>
+                                    <TableHead className="font-medium">
+                                        Date
+                                    </TableHead>
+                                </TableHeader>
+                                <TableBody>
+                                    {Array.from({ length: 20 }).map((_, index) => (
+                                        <TableRow key={index}>
+                                            <TableCell>Push</TableCell>
+                                            <TableCell>1 hour</TableCell>
+                                            <TableCell>Jan</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </div>
                     </CardContent>
                 </Card>
             </div>

@@ -4,7 +4,7 @@ import Overview from "../../custom-components/Overview/Overview";
 import Analytics from "../Analytics/Analytics";
 const Dashboard = () =>{
     return (
-    <Card className="h-full w-full"> 
+    <Card className="h-full w-full overflow-auto"> 
         <CardHeader className="text-brawn font-bold text-3xl">
             Dashboard
         </CardHeader>
