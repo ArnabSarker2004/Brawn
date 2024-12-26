@@ -19,7 +19,7 @@ const Overview = () =>{
                         Member Since
                     </CardHeader>
                     <CardContent>
-
+                        Aug 2024
                     </CardContent>
                 </Card>
                 <Card>
@@ -27,7 +27,7 @@ const Overview = () =>{
                         Total Workouts
                     </CardHeader>
                     <CardContent>
-
+                        100
                     </CardContent>
                 </Card>
                 <Card>
@@ -35,18 +35,24 @@ const Overview = () =>{
                         Workout Streak
                     </CardHeader>
                     <CardContent>
-
+                        4 days
                     </CardContent>
                 </Card>
                 <Card>
                     <CardHeader className="text-brawn font-medium text-sm">
                         Next Workout On
                     </CardHeader>
+                    <CardContent>
+                        Jan 1
+                    </CardContent>
                 </Card>
             </div>
             <div className="grid gap-5 grid-cols-1 md:grid-cols-2 w-full ">
                 <Card>
                     <CardContent>
+                        <CardHeader className="text-brawn font-semibold text-xl">
+                            Your Activity This Month
+                        </CardHeader>
                         <Activity/>
                     </CardContent>
                 </Card>

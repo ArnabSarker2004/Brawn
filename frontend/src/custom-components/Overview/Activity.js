@@ -3,20 +3,18 @@ import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from "../../components/ui/chart"
 
 const chartData = [
-    { month: "January", desktop: 186, mobile: 80 },
-    { month: "February", desktop: 305, mobile: 200 },
-    { month: "March", desktop: 237, mobile: 120 },
-    { month: "April", desktop: 73, mobile: 190 },
-    { month: "May", desktop: 209, mobile: 130 },
-    { month: "June", desktop: 214, mobile: 140 },
+    { week: "Week 1", cardio: 186, strength: 80 },
+    { week: "Week 2", cardio: 305, strength: 200 },
+    { week: "Week 3", cardio: 237, strength: 120 },
+    { week: "Week 4", cardio: 73, strength: 190 }
 ];
 const chartConfig = {
-    desktop: {
-        label: "Desktop",
+    cardio: {
+        label: "Cardio",
         color: "var(--primary)",
     },
-    mobile: {
-        label: "Mobile",
+    strength: {
+        label: "Strength",
         color: "var(--navbar-hover)",
     },
 };
@@ -28,15 +26,15 @@ const Activity = () =>{
             <BarChart accessibilityLayer data={chartData}>
                 <CartesianGrid vertical={false} />
                 <XAxis
-                    dataKey="month"
+                    dataKey="week"
                     tickLine={false}
                     tickMargin={10}
                     axisLine={false}
-                    tickFormatter={(value) => value.slice(0, 3)}/>
+                    tickFormatter={(value) => value.slice(0, 10)}/>
                 <ChartTooltip content={<ChartTooltipContent />} />
                 <ChartLegend content={<ChartLegendContent />} />
-                <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-                <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
+                <Bar dataKey="cardio" fill="var(--color-cardio)" radius={4} />
+                <Bar dataKey="strength" fill="var(--color-strength)" radius={4} />
             </BarChart>
         </ChartContainer>
     );
