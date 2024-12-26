@@ -1,10 +1,9 @@
 import React from 'react';
-const Dashboard = () => {
-return (
-    <div>
-        Hello World
-    </div>
-);
+import Dashboard from '../custom-components/Dashboard/Dashboard';
+const DashboardPage = () => {
+    return (
+        <Dashboard/>
+    );
 };
 
-export default Dashboard;
+export default DashboardPage;

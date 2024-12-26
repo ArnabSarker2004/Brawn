@@ -32,10 +32,6 @@ const Navbar = () => {
                     <span className="material-symbols-outlined navbar-logo">exercise</span>
                     {isExpanded && <span className="navbar-text">Workout Routines</span>}
                 </Link>
-                <Link to="/analytics" className="navbar-item">
-                    <span className="material-symbols-outlined navbar-logo">analytics</span>
-                    {isExpanded && <span className="navbar-text">Analytics</span>}
-                </Link>
                 <Link to="/brawnify" className="navbar-item">
                     <span className="material-symbols-outlined navbar-logo">robot_2</span>
                     {isExpanded && <span className="navbar-text">Brawnify <sup>AI</sup></span>}
