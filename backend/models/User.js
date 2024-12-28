@@ -67,7 +67,7 @@ const userSchema = new Schema({
     MemberSince:{
         type: String,
         required: false,
-        default: null
+        default: ""
     }
 });
 

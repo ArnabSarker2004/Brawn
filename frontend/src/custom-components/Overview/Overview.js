@@ -1,4 +1,5 @@
-
+import { useState, useEffect } from "react";
+import moment from "moment";
 import { Card, CardContent, CardHeader } from "../../components/ui/card";
 import {
     Table,
@@ -12,7 +13,8 @@ import Activity from "./Activity";
 
 //NO API CALLS HERE EITHER, ALL SHOULD BE MADE IN pages/dashboard.js
 
-const Overview = () =>{
+const Overview = ({MemberSince}) =>{
+
     return(
         <div>
             <div className="grid gap-5 md:grid-cols-4 grid-cols-1 w-full mb-4"> 
@@ -21,7 +23,7 @@ const Overview = () =>{
                         Member Since
                     </CardHeader>
                     <CardContent>
-                        Aug 2024
+                        {moment(MemberSince).format('MMMM Do, YYYY')}
                     </CardContent>
                 </Card>
                 <Card>
