@@ -7,7 +7,6 @@ const DashboardPage = () => {
     const URL = process.env.NODE_ENV === 'production'
         ? 'https://brawn-tedx.onrender.com'
         : 'http://localhost:4000';
-    const [error, setError] = useState(null);
     const [body, setBody] = useState(null);
     const { user } = useAuth();
 
@@ -29,7 +28,6 @@ const DashboardPage = () => {
             }
         }
         catch{
-            setError("no information found");
         }
     }
 
