@@ -1,7 +1,16 @@
 const User = require('../models/User');
-
+const Routine = require('../models/routineModel');
 const getBodyInfo = async (req, res) =>{
     const userID = req.body.username;
+    const ID = req.user.id;
+    const routines = await Routine.find({user: ID}).sort({ createdAt: -1 }); 
+    let totalWorkouts = 0;
+    routines.forEach(
+        (routine) => {
+            totalWorkouts += routine.completionStats.length
+        }
+    );
+
     const body = await User.findOne({username: userID});
     if (!body) return res.status(404).json({error: 'Body doesn\'t exist'});
 
@@ -17,7 +26,7 @@ const getBodyInfo = async (req, res) =>{
         YearsOfWorkoutExperience: body.YearsOfWorkoutExperience,
         Bio: body.Bio,
         MemberSince: body.MemberSince,
-        TotalWorkouts: body.TotalWorkouts,
+        TotalWorkouts: totalWorkouts,
     });   
 };
 
