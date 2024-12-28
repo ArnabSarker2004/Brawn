@@ -46,7 +46,7 @@ export function Profile({ error, data, onSave }) {
 
     return (
         <div>
-        <form onSubmit={handleSubmit} className="w-full max-w-8xl mx-auto md:pb-20 gap-10">
+        <form onSubmit={handleSubmit} className="w-full max-w-8xl mx-auto gap-10">
             <Card>
                 <CardHeader>
                     <CardTitle>Profile Settings</CardTitle>
