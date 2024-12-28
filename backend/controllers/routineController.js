@@ -96,6 +96,7 @@ const completeRoutine = async (req, res) => {
     const { id } = req.params;
     const userID = req.user.id;
     const time = req.body.value;
+
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({ error: 'No such routine' });
     }
@@ -106,39 +107,32 @@ const completeRoutine = async (req, res) => {
         return res.status(404).json({ error: 'No such routine' });
     }
 
-    //keep this comment for cardio
-    // var totalTime = routine.workouts.reduce((acc, workout) => {
-    //     return  acc + workout.sets.reduce((timeAcc, set) => timeAcc + (set.time || 0), 0);
-    // }, 0);
-    var totalTime = time;
+    // Total time remains unchanged, calculated from the input
+    const totalTime = time;
 
+    // Calculate total reps and total weight
+    let totalReps = 0;
+    let totalWeight = 0;
 
-    var totalReps = routine.workouts.reduce((acc, workout) => {
-        // Calculate total reps for the current workout
-        const workoutReps = workout.sets.reduce((repsAcc, set) => repsAcc + (set.reps || 0), 0);
+    routine.workouts.forEach(workout => {
+        workout.sets.forEach(set => {
+            const reps = set.reps || 0;
+            const weight = set.weight || 0;
+            totalReps += reps;
+            totalWeight += reps * weight; // Calculate weight for the set
+        });
+    });
 
+    console.log(`Total Time: ${totalTime}`);
+    console.log(`Total Reps: ${totalReps}`);
+    console.log(`Total Weight: ${totalWeight}`);
 
-        const updatedAcc = acc + workoutReps;
-        
-        return updatedAcc;
-    }, 0);
-    
-    console.log(`Final Total Reps: ${totalReps}`);
-    
-    console.log(totalReps);
-    var total = routine.workouts.reduce((acc, workout) => {
-
-        return acc + workout.sets.reduce((weightAcc, set) => weightAcc + (set.weight || 0), 0);
-    }, 0);
-    
-    var totalWeight = totalReps * total; //st
-
+    // Update routine completionStats with calculated values
     routine.completionStats.push({
         date: new Date().toISOString(),
         totalTime,
-        totalWeight //retarded stat
+        totalWeight,
     });
-
 
     await routine.save();
 
