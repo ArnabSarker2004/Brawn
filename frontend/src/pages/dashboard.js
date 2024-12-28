@@ -37,7 +37,7 @@ const DashboardPage = () => {
         if (user) getUserdata();
     }, [user]);
     return (
-        <Dashboard MemberSince={body?.MemberSince || ""}/>
+        <Dashboard TotalWorkouts={body?.TotalWorkouts || 0} MemberSince={body?.MemberSince || ""}/>
     );
 };
 

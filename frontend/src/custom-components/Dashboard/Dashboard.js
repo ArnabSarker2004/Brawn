@@ -4,7 +4,7 @@ import Overview from "../../custom-components/Overview/Overview";
 import Analytics from "../Analytics/Analytics";
 //NOTE DO NOT MAKE ANY API CALLS FROM HERE, API CALLS SHOULD NOT BE MADE THROUGH COMPONENTS
 //ALSO NO RAW HTML SHOULD BE HERE EITHER
-const Dashboard = ({MemberSince}) =>{
+const Dashboard = ({MemberSince, TotalWorkouts }) =>{
     return (
     <Card className="h-full w-full overflow-auto"> 
         <CardHeader className="text-brawn font-bold text-3xl">
@@ -24,7 +24,7 @@ const Dashboard = ({MemberSince}) =>{
                         </TabsTrigger> */}
                     </TabsList>
                     <TabsContent value="Overview">
-                        <Overview MemberSince={MemberSince}/>
+                        <Overview MemberSince={MemberSince} TotalWorkouts={TotalWorkouts}/>
                     </TabsContent>
                     <TabsContent value="Analytics">
                         <Analytics/>

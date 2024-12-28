@@ -13,7 +13,7 @@ import Activity from "./Activity";
 
 //NO API CALLS HERE EITHER, ALL SHOULD BE MADE IN pages/dashboard.js
 
-const Overview = ({MemberSince}) =>{
+const Overview = ({MemberSince, TotalWorkouts}) =>{
 
     return(
         <div>
@@ -31,7 +31,7 @@ const Overview = ({MemberSince}) =>{
                         Total Workouts
                     </CardHeader>
                     <CardContent>
-                        100
+                        {TotalWorkouts}
                     </CardContent>
                 </Card>
                 <Card>
