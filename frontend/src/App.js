@@ -23,10 +23,8 @@ const AppContent = () => {
         <div className={`${isLoginPage ? "w-screen h-screen flex justify-center items-center" : "content"}`}>
         {isAuthenticated && !isLoginPage && (
             <>
-        
-            <Navbar />
-            <Brand />
-            
+                <Navbar />
+                <Brand />
             </>
         )}
 
