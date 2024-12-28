@@ -13,6 +13,7 @@ import Routines from './pages/Routines';
 import Signup from './pages/signup-login';
 import WorkoutPage from './pages/WorkoutPage';
 import './tailwind.css';
+import { TimerProvider } from './context/TimerContext';
 
 
 const AppContent = () => {
@@ -65,13 +66,15 @@ function App() {
         <div className="App">
         <BrowserRouter>
             <AuthProvider>
-            <RoutinesContextProvider>
-            <WorkoutsContextProvider>
-                <SetsContextProvider>
-                <AppContent  />
-                </SetsContextProvider>
-            </WorkoutsContextProvider>
-            </RoutinesContextProvider>
+                <RoutinesContextProvider>
+                    <TimerProvider>
+                        <WorkoutsContextProvider>
+                            <SetsContextProvider>
+                                <AppContent  />
+                            </SetsContextProvider>
+                        </WorkoutsContextProvider>
+                    </TimerProvider>
+                </RoutinesContextProvider>
             </AuthProvider>
         </BrowserRouter>
         </div>

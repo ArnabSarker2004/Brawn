@@ -1,6 +1,6 @@
 
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
-import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from "../../components/ui/chart"
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from "../../components/ui/chart";
 
 
 //THIS IS A CHART WITH DUMMY DATA, DATA SHOULD BE PASSED INTO THIS CHART FROM THE FRONTEND

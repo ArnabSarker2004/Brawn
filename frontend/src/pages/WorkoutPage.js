@@ -1,9 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger
+} from '../components/ui/dropdown-menu';
 import WorkoutFormModal from '../custom-components/Modals/WorkoutFormModal';
 import WorkoutDetails from '../custom-components/Workout/WorkoutDetails';
 import { useWorkoutsContext } from '../hooks/useWorkoutsContext';
-
+import { useTimer } from '../context/TimerContext';
 const Home = () => {
     const { workouts, dispatch: workoutsDispatch } = useWorkoutsContext();
     const [showModal, setShowModal] = useState(false);
@@ -12,6 +18,7 @@ const Home = () => {
     const URL = process.env.NODE_ENV === 'production'
     ? 'https://brawn-tedx.onrender.com'
     : 'http://localhost:4000';
+    const {handleStart, handlePause, isRunning, handleComplete}= useTimer();
     
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
@@ -33,45 +40,83 @@ const Home = () => {
         };
 
         const fetchWorkouts = async () => {
-        const response = await fetch(`${URL}/api/routines/${routineId}/workouts`,
-            { method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            credentials:'include'
+            const response = await fetch(`${URL}/api/routines/${routineId}/workouts`,
+                { method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials:'include'
+                }
+            );
+            const data = await response.json();
+
+            if (response.ok) {
+                workoutsDispatch({ type: 'SET_WORKOUTS', payload: data });
             }
-        );
-        const data = await response.json();
+            };
 
-        if (response.ok) {
-            workoutsDispatch({ type: 'SET_WORKOUTS', payload: data });
+            fetchRoutineDetails(); 
+            fetchWorkouts(); 
+        }, [URL,routineId, workoutsDispatch]);
+        const handleCompleteWorkout = () =>{
+            handleComplete();
         }
-        };
-
-        fetchRoutineDetails(); 
-        fetchWorkouts(); 
-    }, [URL,routineId, workoutsDispatch]);
 
     return (
         <div>      
-        <div className="home">
-            <div className="Workout-Title">
-                <h1>{routineName}</h1> 
-            </div>
-            {showModal && <WorkoutFormModal setShowModal={setShowModal} routineId={routineId} />}
-            <div className="workout-grid">
-                {workouts && workouts.map((workout) => (
-                <WorkoutDetails key={workout._id} workout={workout} routineId={routineId} />
-                ))}
-            </div>
-        </div>
-            <div className="fixed bottom-8 right-4 flex items-center space-x-2 cursor-pointer "  onClick={() => setShowModal(true)}>
-                <div className="flex items-center justify-center w-12 h-12 rounded-full bg-brawn">
-                    <span className="material-symbols-outlined text-white">add</span>
+            <div className="home">
+                <div className="Workout-Title">
+                    <h1>{routineName}</h1> 
                 </div>
-                {!isMobile && <span className="text-gray-600 font-medium">Add Workout</span>}
+                {showModal && <WorkoutFormModal setShowModal={setShowModal} routineId={routineId} />}
+                <div className="workout-grid">
+                    {workouts && workouts.map((workout) => (
+                    <WorkoutDetails key={workout._id} workout={workout} routineId={routineId} />
+                    ))}
+                </div>
             </div>
-
+            <div className="fixed bottom-8 right-4 flex items-center cursor-pointer rounded-full overflow-hidden">
+                <DropdownMenu>
+                    <DropdownMenuTrigger>
+                        <div className="flex items-center">
+                            <span className="material-symbols-outlined text-white flex items-center justify-center w-12 h-12 rounded-full bg-brawn">
+                                fitness_center
+                            </span>
+                            {!isMobile && (
+                                <span className="text-gray-600 ml-2 font-medium text-lg">
+                                    Actions
+                                </span>
+                            )}
+                        </div>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="mr-3">
+                        {!isRunning &&  <DropdownMenuItem onClick={() =>handleStart()}>
+                            <span className="material-symbols-outlined text-brawn items-center justify-center">
+                                play_arrow
+                            </span>
+                            Start Workout
+                        </DropdownMenuItem>}
+                        {isRunning &&  <DropdownMenuItem onClick={() =>handlePause()}>
+                            <span className="material-symbols-outlined text-brawn items-center justify-center">
+                                pause
+                            </span>
+                            Pause Workout
+                        </DropdownMenuItem>}
+                        <DropdownMenuItem onClick={() =>{handleCompleteWorkout();}}>
+                            <span className="material-symbols-outlined text-brawn items-center justify-center">
+                                flag_check
+                            </span>
+                            Complete Workout
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => setShowModal(true)}>
+                            <span className="material-symbols-outlined text-brawn items-center justify-center">
+                                add
+                            </span>
+                            Add Workout
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            </div>
         </div>
     );
 };
