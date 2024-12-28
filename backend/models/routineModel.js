@@ -39,10 +39,6 @@ const routineSchema = new Schema({
         ref: 'User',
         required: true
     },
-    completed: {
-        type: Boolean,
-        default: false
-    },
     completionStats: {
         type: [
         {
