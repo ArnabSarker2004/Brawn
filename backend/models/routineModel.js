@@ -10,7 +10,6 @@ const setSchema = new Schema({
   time: Number   
 });
 
-
 const workoutSchema = new Schema({
   title: {
     type: String,
@@ -26,7 +25,6 @@ const workoutSchema = new Schema({
   }
 });
 
-
 const routineSchema = new Schema({
   name: {
     type: String,
@@ -34,13 +32,38 @@ const routineSchema = new Schema({
   },
   workouts: {
     type: [workoutSchema],
-    default: []  
+    default: []
   },
-  user:{
+  user: {
     type: Schema.Types.ObjectId,
-    ref:'User',
-    required:true
+    ref: 'User',
+    required: true
+  },
+  completed: {
+    type: Boolean,
+    default: false
+  },
+  completionStats: {
+    type: [
+      {
+        date: {
+          type: Date, // Date when the routine was completed
+          required: true
+        },
+        totalTime: {
+          type: Number, // Total workout time for this session
+          required: true
+        },
+        totalWeight: {
+          type: Number, // Total weight lifted during this session
+          required: true
+        }
+      }
+    ],
+    default: []
   }
-}, { timestamps: true });
+},
+  { timestamps: true });
+
 
 module.exports = mongoose.model('Routine', routineSchema);

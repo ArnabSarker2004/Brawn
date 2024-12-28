@@ -92,10 +92,48 @@ const updateRoutine = async (req, res) => {
     res.status(200).json(routine);
 };
 
+const completeRoutine = async (req, res) => {
+    const { id } = req.params;
+    const userID = req.user.id;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'No such routine' });
+    }
+
+    const routine = await Routine.findOne({ _id: id, user: userID });
+
+    if (!routine) {
+        return res.status(404).json({ error: 'No such routine' });
+    }
+
+    // Calculate stats for this completion
+    const totalTime = routine.workouts.reduce((acc, workout) => {
+        return acc + workout.sets.reduce((timeAcc, set) => timeAcc + (set.time || 0), 0);
+    }, 0);
+
+    const totalWeight = routine.workouts.reduce((acc, workout) => {
+        return acc + workout.sets.reduce((weightAcc, set) => weightAcc + (set.weight || 0), 0);
+    }, 0);
+
+    // Add session stats to the completionStats array
+    routine.completionStats.push({
+        date: new Date(),
+        totalTime,
+        totalWeight
+    });
+
+    routine.completed = true;
+
+    await routine.save();
+
+    res.status(200).json(routine);
+};  
+
 module.exports = {
     getRoutines,
     getRoutine,
     createRoutine,
     deleteRoutine,
-    updateRoutine
+    updateRoutine,
+    completeRoutine
 };
