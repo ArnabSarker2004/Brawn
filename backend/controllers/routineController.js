@@ -106,7 +106,6 @@ const completeRoutine = async (req, res) => {
         return res.status(404).json({ error: 'No such routine' });
     }
 
-    // Calculate stats for this completion
     const totalTime = routine.workouts.reduce((acc, workout) => {
         return acc + workout.sets.reduce((timeAcc, set) => timeAcc + (set.time || 0), 0);
     }, 0);
@@ -115,7 +114,6 @@ const completeRoutine = async (req, res) => {
         return acc + workout.sets.reduce((weightAcc, set) => weightAcc + (set.weight || 0), 0);
     }, 0);
 
-    // Add session stats to the completionStats array
     routine.completionStats.push({
         date: new Date(),
         totalTime,
