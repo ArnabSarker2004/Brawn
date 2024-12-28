@@ -18,7 +18,7 @@ const Home = () => {
     const URL = process.env.NODE_ENV === 'production'
     ? 'https://brawn-tedx.onrender.com'
     : 'http://localhost:4000';
-    const {handleStart, handlePause, isRunning, handleComplete}= useTimer();
+    const {handleStart, handlePause, isRunning, handleComplete, timer}= useTimer();
     
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
@@ -58,7 +58,25 @@ const Home = () => {
             fetchRoutineDetails(); 
             fetchWorkouts(); 
         }, [URL,routineId, workoutsDispatch]);
-        const handleCompleteWorkout = () =>{
+
+        const handleCompleteWorkout = async () =>{
+
+            const sendRoutineDetails = async() =>{
+
+                const response = await fetch(`${URL}/api/routines/${routineId}/complete`,
+                    {
+                        method:'POST',
+                        headers:{
+                            'Content-Type': 'application/json',
+                        },
+                        credentials:'include',
+                        body: JSON.stringify({"value":timer})
+                    }
+                );
+                response.ok ? console.log("timer stopped") : console.log("timer ended");
+            }
+            await sendRoutineDetails();
+
             handleComplete();
         }
 

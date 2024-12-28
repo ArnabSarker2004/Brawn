@@ -43,16 +43,16 @@ const routineSchema = new Schema({
         type: [
         {
             date: {
-                type: Date, 
-                required: true
+                type: String, 
+                required: false
             },
             totalTime: {
                 type: Number,
-                required: true
+                required: false
             },
             totalWeight: {
                 type: Number,
-                required: true
+                required: false
             }
         }
         ],
