@@ -25,4 +25,6 @@ router.patch('/:id', updateRoutine);
 
 router.get('/:id/complete', completeRoutine);
 
+router.post('/:id/complete', completeRoutine);
+
 module.exports = router;
