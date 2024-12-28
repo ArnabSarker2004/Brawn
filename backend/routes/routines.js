@@ -23,8 +23,8 @@ router.delete('/:id', deleteRoutine);
 
 router.patch('/:id', updateRoutine);
 
-router.get('/:id/complete', completeRoutine);
+router.get('/:id', completeRoutine);
 
-router.post('/:id/complete', completeRoutine);
+router.post('/:id', completeRoutine);
 
 module.exports = router;
