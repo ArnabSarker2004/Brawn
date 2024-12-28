@@ -107,10 +107,8 @@ const completeRoutine = async (req, res) => {
         return res.status(404).json({ error: 'No such routine' });
     }
 
-    // Total time remains unchanged, calculated from the input
     const totalTime = time;
 
-    // Calculate total reps and total weight
     let totalReps = 0;
     let totalWeight = 0;
 
@@ -119,7 +117,7 @@ const completeRoutine = async (req, res) => {
             const reps = set.reps || 0;
             const weight = set.weight || 0;
             totalReps += reps;
-            totalWeight += reps * weight; // Calculate weight for the set
+            totalWeight += reps * weight; 
         });
     });
 
@@ -127,7 +125,6 @@ const completeRoutine = async (req, res) => {
     console.log(`Total Reps: ${totalReps}`);
     console.log(`Total Weight: ${totalWeight}`);
 
-    // Update routine completionStats with calculated values
     routine.completionStats.push({
         date: new Date().toISOString(),
         totalTime,
