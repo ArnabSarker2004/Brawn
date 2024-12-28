@@ -121,10 +121,6 @@ const completeRoutine = async (req, res) => {
         });
     });
 
-    console.log(`Total Time: ${totalTime}`);
-    console.log(`Total Reps: ${totalReps}`);
-    console.log(`Total Weight: ${totalWeight}`);
-
     routine.completionStats.push({
         date: new Date().toISOString(),
         totalTime,
