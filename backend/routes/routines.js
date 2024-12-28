@@ -4,7 +4,8 @@ const {
   getRoutine,
   createRoutine,
   deleteRoutine,
-  updateRoutine
+  updateRoutine,
+  completeRoutine
 } = require('../controllers/routineController');
 
 const router = express.Router();
@@ -21,5 +22,7 @@ router.post('/', createRoutine);
 router.delete('/:id', deleteRoutine);
 
 router.patch('/:id', updateRoutine);
+
+router.get('/:id/complete', completeRoutine);
 
 module.exports = router;
