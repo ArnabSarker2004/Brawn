@@ -7,18 +7,19 @@ const config = require('../config');
 const User = require('../models/User');
 
 const register = async (req, res) => {
-    const { username, password } = req.body;
-
+    const { username, password, MemberSince } = req.body;
     try {
         let user = await User.findOne({ username });
         if (user) {
             return res.status(400).json({ msg: 'User already exists' });
         }
+        
 
-        user = new User({ username, password });
+        user = new User({ username, password, MemberSince });
 
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(password, salt);
+
         await user.save();
 
         const payload = {

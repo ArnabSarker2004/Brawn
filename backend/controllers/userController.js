@@ -1,5 +1,4 @@
 const User = require('../models/User');
-const mongoose = require('mongoose');
 
 const getBodyInfo = async (req, res) =>{
     const userID = req.body.username;
@@ -16,7 +15,9 @@ const getBodyInfo = async (req, res) =>{
         Weight: body.Weight,
         BMR: body.BMR,
         YearsOfWorkoutExperience: body.YearsOfWorkoutExperience,
-        Bio: body.Bio
+        Bio: body.Bio,
+        MemberSince: body.MemberSince,
+        TotalWorkouts: body.TotalWorkouts,
     });   
 };
 

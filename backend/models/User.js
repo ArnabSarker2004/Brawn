@@ -59,9 +59,15 @@ const userSchema = new Schema({
         type: String, 
         required: false
     },
-    IsNewUser:{
-        type: Boolean,
-        required: false
+    TotalWorkouts:{
+        type: Number,
+        required: false,
+        default: 0
+    },
+    MemberSince:{
+        type: String,
+        required: false,
+        default: null
     }
 });
 

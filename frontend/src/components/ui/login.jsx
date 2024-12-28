@@ -13,6 +13,7 @@ export function Login() {
     const [formData, setFormData] = useState({ username: '', password: '' });
     const [message, setMessage] = useState('');
     const { username, password } = formData;
+    const MemberSince = new Date().toISOString();
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
     const URL = process.env.NODE_ENV === 'production' ? 'https://brawn-tedx.onrender.com' : 'http://localhost:4000';
@@ -36,7 +37,7 @@ export function Login() {
     const onSubmitSignUp = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post(`${URL}/api/auth/register`, { username, password },{withCredentials: true});
+            const res = await axios.post(`${URL}/api/auth/register`, { username, password, MemberSince },{withCredentials: true});
             if (res){
                 setMessage('Registered successfully, redirecting...');
                 navigate('/dashboard');
