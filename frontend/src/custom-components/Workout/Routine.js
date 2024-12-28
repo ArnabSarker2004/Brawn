@@ -9,7 +9,7 @@ const Routine = ({ routine, onDelete, workouts = [] }) => {
   const navigate = useNavigate();
 
   return (
-    <div  className="routine-details">
+    <div  className="routine-details mt-3">
       <div className='routine-title-actions'>
         <h4 onClick={() => navigate(`/routines/${routine._id}`)}>{routine.name}</h4>
 
