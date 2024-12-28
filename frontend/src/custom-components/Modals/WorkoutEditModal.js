@@ -143,10 +143,10 @@ return (
 
         <div className="modal-buttons">
             <Button variant="secondary"onClick={handleAddSet}>
-            Add Set
+                Add Set
             </Button>
             <Button variant="default">
-            Save Workout
+                Save Workout
             </Button>
         </div>
 
