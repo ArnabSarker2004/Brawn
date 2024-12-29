@@ -68,6 +68,11 @@ const userSchema = new Schema({
         type: String,
         required: false,
         default: ""
+    },
+    LongestWorkoutStreak:{
+        type: Number,
+        required: false,
+        default: 0
     }
 });
 

@@ -19,6 +19,7 @@ const getBodyInfo = async (req, res) =>{
     
     const body = await User.findOne({username: userID});
     if (!body) return res.status(404).json({error: 'Body doesn\'t exist'});
+
     const dayPriorExists = (isoSet, isoString) =>{
         const givenDate = new Date(isoString);
         const dayPrior = new Date(givenDate);
@@ -53,7 +54,7 @@ const getBodyInfo = async (req, res) =>{
             longestStreak = Math.max(longestStreak, length);
         }
     });
-    
+
     res.status(200).json({
         Name: body.Name,
         Email:body.Email,
@@ -67,6 +68,8 @@ const getBodyInfo = async (req, res) =>{
         Bio: body.Bio,
         MemberSince: body.MemberSince,
         TotalWorkouts: totalWorkouts,
+        LongestWorkoutStreak: longestStreak,
+        
     });   
 };
 
