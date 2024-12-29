@@ -99,7 +99,7 @@
 .routine-details {
     margin-bottom: 15px ;
     background: #fff;
-    border-radius: 8px;
+    border-radius: 0.75rem;
     padding: 20px;
     position: relative;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
