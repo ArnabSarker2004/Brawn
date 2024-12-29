@@ -96,7 +96,7 @@ const Home = () => {
             <div className="fixed bottom-8 right-4 flex items-center cursor-pointer rounded-full overflow-hidden">
                 <DropdownMenu>
                     <DropdownMenuTrigger>
-                        <div className="flex items-center">
+                        <div className="flex items-center cursor-pointer">
                             <span className="material-symbols-outlined text-white flex items-center justify-center w-12 h-12 rounded-full bg-brawn">
                                 fitness_center
                             </span>
@@ -108,25 +108,25 @@ const Home = () => {
                         </div>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="mr-3">
-                        {!isRunning &&  <DropdownMenuItem onClick={() =>handleStart()}>
+                        {!isRunning &&  <DropdownMenuItem className="cursor-pointer"onClick={() =>handleStart()}>
                             <span className="material-symbols-outlined text-brawn items-center justify-center">
                                 play_arrow
                             </span>
                             Start Workout
                         </DropdownMenuItem>}
-                        {isRunning &&  <DropdownMenuItem onClick={() =>handlePause()}>
+                        {isRunning &&  <DropdownMenuItem className="cursor-pointer" onClick={() =>handlePause()}>
                             <span className="material-symbols-outlined text-brawn items-center justify-center">
                                 pause
                             </span>
                             Pause Workout
                         </DropdownMenuItem>}
-                        <DropdownMenuItem onClick={() =>{handleCompleteWorkout();}}>
+                        <DropdownMenuItem className="cursor-pointer" onClick={() =>{handleCompleteWorkout();}}>
                             <span className="material-symbols-outlined text-brawn items-center justify-center">
                                 flag_check
                             </span>
                             Complete Workout
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setShowModal(true)}>
+                        <DropdownMenuItem className="cursor-pointer" onClick={() => setShowModal(true)}>
                             <span className="material-symbols-outlined text-brawn items-center justify-center">
                                 add
                             </span>
