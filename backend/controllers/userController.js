@@ -2,6 +2,7 @@ const User = require('../models/User');
 const Routine = require('../models/routineModel');
 
 const getBodyInfo = async (req, res) =>{
+    //gonna probably have to split this up into a couple of different requests later since this request is getting expensive
     const userID = req.body.username;
     const ID = req.user.id;
     const routines = await Routine.find({user: ID}).sort({ createdAt: -1 }); 
@@ -44,7 +45,6 @@ const getBodyInfo = async (req, res) =>{
             let length = 0;
             let currentDay = _;
             while (dayAfterExists(uniqueDays, currentDay)){
-                console.log(length);
                 length++;
                 const currentDate = new Date(currentDay);
                 currentDate.setDate(currentDate.getDate()+1);
@@ -55,6 +55,8 @@ const getBodyInfo = async (req, res) =>{
         }
     });
 
+    //total workouts and lognest workoutstreak have been added to schema so that means that they don't needa be recomputed every call but we will have this for now 
+    // just to test out the algorithms that we have before we abstract away logic
     res.status(200).json({
         Name: body.Name,
         Email:body.Email,
@@ -69,7 +71,7 @@ const getBodyInfo = async (req, res) =>{
         MemberSince: body.MemberSince,
         TotalWorkouts: totalWorkouts,
         LongestWorkoutStreak: longestStreak,
-        
+
     });   
 };
 
