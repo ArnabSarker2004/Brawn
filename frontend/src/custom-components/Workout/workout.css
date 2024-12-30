@@ -23,7 +23,7 @@
 }
 .workout-details {
     background: #fff;
-    border-radius: 4px;
+    border-radius: 0.75rem;
     padding: 20px;
     position: relative;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
