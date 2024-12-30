@@ -4,7 +4,8 @@ import Overview from "../../custom-components/Overview/Overview";
 import Analytics from "../Analytics/Analytics";
 //NOTE DO NOT MAKE ANY API CALLS FROM HERE, API CALLS SHOULD NOT BE MADE THROUGH COMPONENTS
 //ALSO NO RAW HTML SHOULD BE HERE EITHER
-const Dashboard = ({MemberSince, TotalWorkouts, LongestWorkoutStreak }) =>{
+const Dashboard = ({WeeklyWorkouts, MemberSince, TotalWorkouts, LongestWorkoutStreak }) =>{
+    console.log(WeeklyWorkouts);
     return (
     <Card className="h-full w-full overflow-auto"> 
         <CardHeader className="text-brawn font-bold text-3xl">
@@ -24,7 +25,7 @@ const Dashboard = ({MemberSince, TotalWorkouts, LongestWorkoutStreak }) =>{
                         </TabsTrigger> */}
                     </TabsList>
                     <TabsContent value="Overview">
-                        <Overview MemberSince={MemberSince} TotalWorkouts={TotalWorkouts} LongestWorkoutStreak={LongestWorkoutStreak} />
+                        <Overview WeeklyWorkouts={WeeklyWorkouts} MemberSince={MemberSince} TotalWorkouts={TotalWorkouts} LongestWorkoutStreak={LongestWorkoutStreak} />
                     </TabsContent>
                     <TabsContent value="Analytics">
                         <Analytics/>

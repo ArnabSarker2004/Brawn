@@ -12,7 +12,7 @@ import Activity from "./Activity";
 
 //NO API CALLS HERE EITHER, ALL SHOULD BE MADE IN pages/dashboard.js
 
-const Overview = ({MemberSince, TotalWorkouts, LongestWorkoutStreak}) =>{
+const Overview = ({WeeklyWorkouts, MemberSince, TotalWorkouts, LongestWorkoutStreak}) =>{
 
     return(
         <div>
@@ -64,8 +64,8 @@ const Overview = ({MemberSince, TotalWorkouts, LongestWorkoutStreak}) =>{
                         Workouts This Week
                     </CardHeader>
                     <CardContent>
-                        <div className="max-h-96 overflow-y-scroll">
-                            <Table>
+                        <div className=" max-h-96 overflow-y-scroll">
+                            <Table >
                                 <TableHeader>
                                     <TableHead className="font-medium">
                                         Workout
@@ -77,14 +77,26 @@ const Overview = ({MemberSince, TotalWorkouts, LongestWorkoutStreak}) =>{
                                         Date
                                     </TableHead>
                                 </TableHeader>
-                                <TableBody>
-                                    {Array.from({ length: 20 }).map((_, index) => (
-                                        <TableRow key={index}>
-                                            <TableCell>Push</TableCell>
-                                            <TableCell>1 hour</TableCell>
-                                            <TableCell>Jan</TableCell>
-                                        </TableRow>
-                                    ))}
+                                    <TableBody>
+                                        {WeeklyWorkouts.flatMap((routine) => 
+                                            routine.completionStats.map((stat) => ({
+                                                name: routine.name,
+                                                totalTime: stat.totalTime,
+                                                date: stat.date,
+                                            }))
+                                        )
+                                        .sort((a, b) => new Date(b.date) - new Date(a.date)) 
+                                        .map((workout, index) => (
+                                            <TableRow key={index}>
+                                                <TableCell>{workout.name}</TableCell> 
+                                                <TableCell>
+                                                    {moment.utc(workout.totalTime * 1000).format('H:mm:ss')} 
+                                                </TableCell>
+                                                <TableCell>
+                                                    {moment(workout.date).format('dddd, MM/DD/YYYY')} 
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
                                 </TableBody>
                             </Table>
                         </div>
