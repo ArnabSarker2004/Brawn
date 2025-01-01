@@ -35,14 +35,18 @@ const WorkoutDetails = ({ workout, routineId }) => {
       <div className="workout-table">
         <div className="workout-table-header">
           <span>SET</span>
-          <span>LBS</span>
-          <span>{workout.timeBased ? "TIME (s)" : "REPS"}</span>
+          {!workout.cardio && <span>LBS</span>}
+          <span>{workout.cardio || workout.timeBased ? "TIME (s)" : "REPS"}</span>
         </div>
         {workout.sets.map((set, index) => (
           <div className="workout-table-row" key={index}>
             <span>{index + 1}</span>
-            <span>{set.weight} lbs</span>
-            <span>{workout.timeBased ? `${set.time} sec` : `${set.reps} reps`}</span>
+            {!workout.cardio && <span>{set.weight || 0} lbs</span>}
+            <span>
+              {workout.cardio || workout.timeBased 
+                ? `${set.time || 0} sec` 
+                : `${set.reps || 0} reps`}
+            </span>
           </div>
         ))}
       </div>

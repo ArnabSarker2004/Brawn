@@ -4,10 +4,30 @@ const Schema = mongoose.Schema;
 const setSchema = new Schema({
     weight: {
         type: Number,
-        required: true
+        validate: {
+            validator: function() {
+                const workout = this.parent().parent();
+                // Only validate if this is not a cardio workout
+                if (workout.cardio) {
+                    return true; // Skip validation for cardio workouts
+                }
+                return this.weight !== null && this.weight !== undefined;
+            },
+            message: 'Weight is required for non-cardio workouts'
+        },
+        default: function() {
+            const workout = this.parent().parent();
+            return workout.cardio ? 0 : undefined;
+        }
     },
-        reps: Number,  
-        time: Number   
+    reps: {
+        type: Number,
+        default: 0
+    },
+    time: {
+        type: Number,
+        default: 0
+    }
 });
 
 const workoutSchema = new Schema({
@@ -17,11 +37,15 @@ const workoutSchema = new Schema({
     },
     timeBased: {
         type: Boolean,
-        required: true  
+        default: false
+    },
+    cardio: {
+        type: Boolean,
+        default: false
     },
     sets: {
         type: [setSchema],
-        default: []  
+        default: []
     }
 });
 

@@ -61,12 +61,12 @@ const WorkoutFormModal = ({ setShowModal, routineId }) => {
         const workout = {
             title,
             sets: sets.map(set => ({
-                weight: cardio ? undefined : set.weight,
-                reps: timeBased || cardio ? undefined : set.reps,
-                time: timeBased || cardio ? set.time : undefined,
+                weight: cardio ? 0 : set.weight,
+                reps: timeBased || cardio ? 0 : set.reps,
+                time: timeBased || cardio ? set.time : 0
             })),
             timeBased,
-            cardio,
+            cardio
         };
 
         try {

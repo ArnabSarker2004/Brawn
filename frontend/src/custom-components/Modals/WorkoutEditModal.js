@@ -6,8 +6,8 @@ import { Button } from '../../components/ui/button';
 const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
     const { dispatch: workoutDispatch } = useWorkoutsContext();
     const [title, setTitle] = useState(workout.title);
-    const [timeBased, setTimeBased] = useState(workout.timeBased);
-    const [cardio, setCardio] = useState(workout.cardio || false);
+    const [timeBased, setTimeBased] = useState(!!workout.timeBased);
+    const [cardio, setCardio] = useState(!!workout.cardio);
     const [sets, setSets] = useState(workout.sets);
     const [error, setError] = useState(null);
     const [emptyFields, setEmptyFields] = useState([]);
@@ -18,9 +18,9 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
 
     useEffect(() => {
         setTitle(workout.title);
+        setTimeBased(!!workout.timeBased);
+        setCardio(!!workout.cardio);
         setSets(workout.sets);
-        setTimeBased(workout.timeBased);
-        setCardio(workout.cardio || false);
     }, [workout]);
 
     const handleSetChange = (index, event) => {
@@ -43,15 +43,26 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
         setSets(newSets);
     };
 
+    const clearSetValues = (newSets, isTimeBased, isCardio) => {
+        return newSets.map(set => ({
+            weight: isCardio ? 0 : set.weight,
+            reps: isTimeBased || isCardio ? 0 : set.reps,
+            time: isTimeBased || isCardio ? set.time || '' : 0
+        }));
+    };
+
     const validateFields = () => {
         const emptyFields = [];
         if (!title.trim()) emptyFields.push('title');
 
         sets.forEach((set, index) => {
-            if (!cardio && !set.weight) emptyFields.push(`sets[${index}].weight`);
-            if (timeBased || cardio) {
+            if (cardio) {
+                if (!set.time) emptyFields.push(`sets[${index}].time`);
+            } else if (timeBased) {
+                if (!set.weight) emptyFields.push(`sets[${index}].weight`);
                 if (!set.time) emptyFields.push(`sets[${index}].time`);
             } else {
+                if (!set.weight) emptyFields.push(`sets[${index}].weight`);
                 if (!set.reps) emptyFields.push(`sets[${index}].reps`);
             }
         });
@@ -68,7 +79,18 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
             return;
         }
 
-        const updatedWorkout = { title, sets, timeBased, cardio };
+        const updatedSets = sets.map(set => ({
+            weight: cardio ? 0 : (set.weight || 0),
+            reps: (cardio || timeBased) ? 0 : (set.reps || 0),
+            time: (cardio || timeBased) ? (set.time || 0) : 0
+        }));
+
+        const updatedWorkout = {
+            title,
+            sets: updatedSets,
+            timeBased,
+            cardio
+        };
 
         const response = await fetch(
             `${URL}/api/routines/${routineId}/workouts/${workout._id}`,
@@ -119,11 +141,14 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
                                 checked={timeBased}
                                 onChange={() => {
                                     setTimeBased(!timeBased);
-                                    setCardio(false); // Disable Cardio if Time-Based is checked
+                                    if (!timeBased) {
+                                        setCardio(false);
+                                    }
+                                    setSets(clearSetValues(sets, !timeBased, false));
                                 }}
                             />
                         </div>
-                        <div className="time-based"> {/* Using the same styling */}
+                        <div className="time-based">
                             <label className="time-based-text">Cardio Based:</label>
                             <input
                                 className="checkbox-input"
@@ -131,7 +156,10 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
                                 checked={cardio}
                                 onChange={() => {
                                     setCardio(!cardio);
-                                    setTimeBased(false); // Disable Time-Based if Cardio is checked
+                                    if (!cardio) {
+                                        setTimeBased(false);
+                                    }
+                                    setSets(clearSetValues(sets, false, !cardio));
                                 }}
                             />
                         </div>

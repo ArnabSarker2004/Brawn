@@ -1,4 +1,3 @@
-
 .workout-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -39,6 +38,9 @@
     margin: 0 0 10px 0;
     font-size: 1.2em;
     color: var(--primary);
+    max-width: calc(100% - 90px);
+    word-wrap: break-word;
+    white-space: normal;
 }
 
 .workout-table {
@@ -86,6 +88,7 @@
     right: 20px;
     display: flex;
     gap: 10px;
+    width: 70px;
 }
 
 .workout-details .material-symbols-outlined {

@@ -41,22 +41,7 @@
 
     const createWorkout = async (req, res) => {
         const { routineId } = req.params;
-        const { title, timeBased, sets } = req.body;
-
-        let emptyFields = [];
-        if (!title) emptyFields.push('title');
-
-        if (timeBased) {
-            sets.forEach((set, index) => {
-            if (!set.time) emptyFields.push(`sets[${index}].time`);
-            if (!set.weight) emptyFields.push(`sets[${index}].weight`);
-            });
-        } else {
-            sets.forEach((set, index) => {
-            if (!set.reps) emptyFields.push(`sets[${index}].reps`);
-            if (!set.weight) emptyFields.push(`sets[${index}].weight`);
-            });
-        }
+        const { title, sets, timeBased, cardio } = req.body;
 
         if (!mongoose.Types.ObjectId.isValid(routineId)) {
             return res.status(404).json({ error: 'No such routine' });
@@ -68,7 +53,17 @@
             return res.status(404).json({ error: 'No such routine' });
         }
 
-        const newWorkout = { title, timeBased, sets };
+        const newWorkout = {
+            title,
+            timeBased,
+            cardio,
+            sets: sets.map(set => ({
+                weight: cardio ? 0 : (set.weight || 0),
+                reps: (cardio || timeBased) ? 0 : (set.reps || 0),
+                time: (cardio || timeBased) ? (set.time || 0) : 0
+            }))
+        };
+
         routine.workouts.push(newWorkout);
 
         try {
@@ -81,7 +76,7 @@
 
     const updateWorkout = async (req, res) => {
         const { routineId, workoutId } = req.params;
-        const { title, sets, timeBased } = req.body;
+        const { title, sets, timeBased, cardio } = req.body;
 
         if (!mongoose.Types.ObjectId.isValid(routineId) || !mongoose.Types.ObjectId.isValid(workoutId)) {
             return res.status(404).json({ error: 'No such routine or workout' });
@@ -101,7 +96,12 @@
 
         workout.title = title;
         workout.timeBased = timeBased;
-        workout.sets = sets; 
+        workout.cardio = cardio;
+        workout.sets = sets.map(set => ({
+            weight: cardio ? 0 : (set.weight || 0),
+            reps: (cardio || timeBased) ? 0 : (set.reps || 0),
+            time: (cardio || timeBased) ? (set.time || 0) : 0
+        }));
 
         try {
             await routine.save();
