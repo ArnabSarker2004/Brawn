@@ -18,7 +18,13 @@ const WorkoutFormModal = ({ setShowModal, routineId }) => {
 
     const handleSetChange = (index, event) => {
         const newSets = [...sets];
-        newSets[index][event.target.name] = event.target.value;
+        if (event.target.name === 'time') {
+            // Only allow numbers
+            const timeValue = event.target.value.replace(/\D/g, '').slice(0, 6);
+            newSets[index][event.target.name] = timeValue;
+        } else {
+            newSets[index][event.target.name] = event.target.value;
+        }
         setSets(newSets);
     };
 
@@ -152,15 +158,25 @@ const WorkoutFormModal = ({ setShowModal, routineId }) => {
                                         className={emptyFields.includes(`sets[${index}].weight`) ? 'error' : ''}
                                     />
                                 )}
-                                <input
-                                    type="number"
-                                    name={timeBased || cardio ? 'time' : 'reps'}
-                                    onChange={(e) => handleSetChange(index, e)}
-                                    value={timeBased || cardio ? set.time : set.reps}
-                                    className={emptyFields.includes(
-                                        `sets[${index}].${timeBased || cardio ? 'time' : 'reps'}`
-                                    ) ? 'error' : ''}
-                                />
+                                {(timeBased || cardio) ? (
+                                    <input
+                                        type="text"
+                                        name="time"
+                                        onChange={(e) => handleSetChange(index, e)}
+                                        value={set.time || ''}
+                                        placeholder="HHMMSS"
+                                        maxLength="6"
+                                        className={emptyFields.includes(`sets[${index}].time`) ? 'error' : ''}
+                                    />
+                                ) : (
+                                    <input
+                                        type="number"
+                                        name="reps"
+                                        onChange={(e) => handleSetChange(index, e)}
+                                        value={set.reps}
+                                        className={emptyFields.includes(`sets[${index}].reps`) ? 'error' : ''}
+                                    />
+                                )}
                                 <Button variant="destructive" className="mr-4 ml-5 mb-2.5 flex align-middle items-center" onClick={() => handleRemoveSet(index)}>
                                     Remove Set
                                 </Button>

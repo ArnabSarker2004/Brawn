@@ -29,6 +29,24 @@ const WorkoutDetails = ({ workout, routineId }) => {
     }
   };
 
+  const formatTime = (time) => {
+    if (!time && time !== 0) return '';
+    
+    // Convert to string and pad to 6 digits
+    const timeString = time.toString().padStart(6, '0');
+    
+    const hours = parseInt(timeString.slice(0, 2));
+    const minutes = parseInt(timeString.slice(2, 4));
+    const seconds = parseInt(timeString.slice(4, 6));
+    
+    let result = '';
+    if (hours > 0) result += `${hours}h `;
+    if (minutes > 0) result += `${minutes}m `;
+    if (seconds > 0 || result === '') result += `${seconds}s`;
+    
+    return result.trim();
+  };
+
   return (
     <div className="workout-details">
       <h4>{workout.title}</h4>
@@ -36,16 +54,16 @@ const WorkoutDetails = ({ workout, routineId }) => {
         <div className="workout-table-header">
           <span>SET</span>
           {!workout.cardio && <span>LBS</span>}
-          <span>{workout.cardio || workout.timeBased ? "TIME (s)" : "REPS"}</span>
+          <span>{workout.cardio ? "TIME" : workout.timeBased ? "TIME" : "REPS"}</span>
         </div>
         {workout.sets.map((set, index) => (
           <div className="workout-table-row" key={index}>
             <span>{index + 1}</span>
-            {!workout.cardio && <span>{set.weight || 0} lbs</span>}
+            {!workout.cardio && <span>{set.weight} lbs</span>}
             <span>
               {workout.cardio || workout.timeBased 
-                ? `${set.time || 0} sec` 
-                : `${set.reps || 0} reps`}
+                ? formatTime(set.time)
+                : `${set.reps} reps`}
             </span>
           </div>
         ))}

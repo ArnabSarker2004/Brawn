@@ -25,7 +25,12 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
 
     const handleSetChange = (index, event) => {
         const newSets = [...sets];
-        newSets[index][event.target.name] = event.target.value;
+        if (event.target.name === 'time') {
+            const timeValue = event.target.value.replace(/\D/g, '').slice(0, 6);
+            newSets[index][event.target.name] = timeValue;
+        } else {
+            newSets[index][event.target.name] = event.target.value;
+        }
         setSets(newSets);
     };
 
@@ -72,10 +77,30 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const emptyFields = validateFields();
-        if (emptyFields.length > 0) {
-            setError('Please fill in all fields.');
-            setEmptyFields(emptyFields);
+        const newEmptyFields = [];
+        
+        if (!title.trim()) {
+            newEmptyFields.push('title');
+        }
+
+        sets.forEach((set, index) => {
+            if (cardio || timeBased) {
+                if (!set.time) {
+                    newEmptyFields.push(`sets[${index}].time`);
+                }
+            } else {
+                if (!set.weight) {
+                    newEmptyFields.push(`sets[${index}].weight`);
+                }
+                if (!set.reps) {
+                    newEmptyFields.push(`sets[${index}].reps`);
+                }
+            }
+        });
+
+        if (newEmptyFields.length > 0) {
+            setEmptyFields(newEmptyFields);
+            setError('Please fill in all required fields');
             return;
         }
 
@@ -183,15 +208,27 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
                                         className={emptyFields.includes(`sets[${index}].weight`) ? 'error' : ''}
                                     />
                                 )}
-                                <input
-                                    type="number"
-                                    name={timeBased || cardio ? 'time' : 'reps'}
-                                    onChange={(e) => handleSetChange(index, e)}
-                                    value={timeBased || cardio ? set.time : set.reps}
-                                    className={emptyFields.includes(
-                                        `sets[${index}].${timeBased || cardio ? 'time' : 'reps'}`
-                                    ) ? 'error' : ''}
-                                />
+                                {(timeBased || cardio) ? (
+                                    <input
+                                        type="text"
+                                        name="time"
+                                        onChange={(e) => handleSetChange(index, e)}
+                                        value={set.time || ''}
+                                        placeholder="HHMMSS"
+                                        maxLength="6"
+                                        className={emptyFields.includes(`sets[${index}].time`) ? 'error' : ''}
+                                    />
+                                ) : (
+                                    <input
+                                        type="number"
+                                        name={timeBased || cardio ? 'time' : 'reps'}
+                                        onChange={(e) => handleSetChange(index, e)}
+                                        value={timeBased || cardio ? set.time : set.reps}
+                                        className={emptyFields.includes(
+                                            `sets[${index}].${timeBased || cardio ? 'time' : 'reps'}`
+                                        ) ? 'error' : ''}
+                                    />
+                                )}
                                 <Button
                                     variant="destructive"
                                     className="mr-4 ml-5 mb-2.5 flex align-middle items-center"
