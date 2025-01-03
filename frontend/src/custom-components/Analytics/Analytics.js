@@ -9,33 +9,27 @@ import {
 } from "../../components/ui/table";
 
 //NOTE DO NOT MAKE ANY API CALLS FROM HERE, API CALLS SHOULD NOT BE MADE THROUGH COMPONENTS
-const Analytics = () =>{
+const Analytics = () => {
     return (
         <div>
-            <div className="grid gap-5 grid-cols-1 md:grid-cols-4 w-full mb-4"> 
+            <div className="grid gap-5 grid-cols-1 md:grid-cols-4 w-full mb-4">
                 <Card>
                     <CardHeader className="text-brawn font-medium text-sm">
                         Current Weight
                     </CardHeader>
-                    <CardContent>
-
-                    </CardContent>
+                    <CardContent></CardContent>
                 </Card>
                 <Card>
                     <CardHeader className="text-brawn font-medium text-sm">
                         Best Workout Streak
                     </CardHeader>
-                    <CardContent>
-
-                    </CardContent>
+                    <CardContent></CardContent>
                 </Card>
                 <Card>
                     <CardHeader className="text-brawn font-medium text-sm">
                         Average Step Count
                     </CardHeader>
-                    <CardContent>
-
-                    </CardContent>
+                    <CardContent></CardContent>
                 </Card>
                 <Card>
                     <CardHeader className="text-brawn font-medium text-sm">
@@ -45,8 +39,7 @@ const Analytics = () =>{
             </div>
             <div className="grid gap-5 md:grid-cols-2 grid-cols-1 w-full">
                 <Card>
-                    <CardContent>
-                    </CardContent>
+                    <CardContent></CardContent>
                 </Card>
                 <Card>
                     <CardHeader className="text-brawn font-semibold text-xl">
@@ -67,15 +60,9 @@ const Analytics = () =>{
                             </TableHeader>
                             <TableBody>
                                 <TableRow>
-                                    <TableCell>
-                                        Run
-                                    </TableCell>
-                                    <TableCell>
-                                        10 km
-                                    </TableCell>
-                                    <TableCell>
-                                        Jan-1
-                                    </TableCell>
+                                    <TableCell>Run</TableCell>
+                                    <TableCell>10 km</TableCell>
+                                    <TableCell>Jan-1</TableCell>
                                 </TableRow>
                             </TableBody>
                         </Table>
@@ -84,6 +71,6 @@ const Analytics = () =>{
             </div>
         </div>
     );
-}
+};
 
 export default Analytics;
