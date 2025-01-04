@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useWorkoutsContext } from "../../hooks/useWorkoutsContext";
 import "./modal.css";
 import { Button } from "../../components/ui/button";
-
+import { Label } from "../../components/ui/label";
 const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
     const { dispatch: workoutDispatch } = useWorkoutsContext();
     const [title, setTitle] = useState(workout.title);
@@ -131,7 +131,7 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
                 <form onSubmit={handleSubmit}>
                     <h3>Edit Workout</h3>
 
-                    <label>Exercise Title:</label>
+                    <Label>Exercise Title:</Label>
                     <input
                         type="text"
                         onChange={(e) => setTitle(e.target.value)}
@@ -139,11 +139,8 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
                         className={emptyFields.includes("title") ? "error" : ""}
                     />
 
-                    <div className="checkbox-group">
+                    <div className="checkbox-group flex">
                         <div className="time-based">
-                            <label className="time-based-text">
-                                Time Based:
-                            </label>
                             <input
                                 className="checkbox-input"
                                 type="checkbox"
@@ -158,11 +155,11 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
                                     );
                                 }}
                             />
+                            <Label className="time-based-text">
+                                Time Based
+                            </Label>
                         </div>
                         <div className="time-based">
-                            <label className="time-based-text">
-                                Cardio Based:
-                            </label>
                             <input
                                 className="checkbox-input"
                                 type="checkbox"
@@ -177,6 +174,9 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
                                     );
                                 }}
                             />
+                            <Label className="time-based-text">
+                                Cardio Based
+                            </Label>
                         </div>
                     </div>
 
@@ -229,26 +229,14 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
                                 ) : (
                                     <input
                                         type="number"
-                                        name={
-                                            timeBased || cardio
-                                                ? "time"
-                                                : "reps"
-                                        }
+                                        name="reps"
                                         onChange={(e) =>
                                             handleSetChange(index, e)
                                         }
-                                        value={
-                                            timeBased || cardio
-                                                ? set.time
-                                                : set.reps
-                                        }
+                                        value={set.reps}
                                         className={
                                             emptyFields.includes(
-                                                `sets[${index}].${
-                                                    timeBased || cardio
-                                                        ? "time"
-                                                        : "reps"
-                                                }`
+                                                `sets[${index}].reps`
                                             )
                                                 ? "error"
                                                 : ""
@@ -270,7 +258,9 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
                         <Button variant="secondary" onClick={handleAddSet}>
                             Add Set
                         </Button>
-                        <Button variant="default">Save Changes</Button>
+                        <Button variant="default" type="submit">
+                            Save Changes
+                        </Button>
                     </div>
 
                     {error && <div className="error">{error}</div>}

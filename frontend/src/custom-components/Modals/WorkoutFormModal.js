@@ -142,7 +142,7 @@ const WorkoutFormModal = ({ setShowModal, routineId }) => {
                         className={emptyFields.includes("title") ? "error" : ""}
                     />
 
-                    <div className="checkbox-group">
+                    <div className="checkbox-group flex">
                         <div className="time-based">
                             <label className="time-based-text">
                                 Time Based:
