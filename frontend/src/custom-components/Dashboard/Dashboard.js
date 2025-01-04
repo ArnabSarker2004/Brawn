@@ -19,13 +19,13 @@ const Dashboard = ({
     const capitalizedName = user ? user.charAt(0).toUpperCase() + user.slice(1) : 'Guest';
     
     const greetings = {
-        0: "Strong Sunday", // Sunday
-        1: "Mighty Monday", // Monday
-        2: "Training Tuesday", // Tuesday
-        3: "Warrior Wednesday", // Wednesday
-        4: "Thriving Thursday", // Thursday
-        5: "Flex Friday", // Friday
-        6: "Shredded Saturday" // Saturday
+        0: "Strong Sunday", 
+        1: "Mighty Monday", 
+        2: "Training Tuesday", 
+        3: "Warrior Wednesday",
+        4: "Thriving Thursday",
+        5: "Flex Friday", 
+        6: "Shredded Saturday" 
     };
 
     const currentDay = greetings[new Date().getDay()];
