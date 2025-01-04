@@ -14,12 +14,27 @@ const Dashboard = ({
     MemberSince,
     TotalWorkouts,
     LongestWorkoutStreak,
+    user
 }) => {
+    const capitalizedName = user ? user.charAt(0).toUpperCase() + user.slice(1) : 'Guest';
+    
+    const greetings = {
+        0: "Snappy Sunday", // Sunday
+        1: "Mighty Monday", // Monday
+        2: "Terrific Tuesday", // Tuesday
+        3: "Winning Wednesday", // Wednesday
+        4: "Thriving Thursday", // Thursday
+        5: "Fantastic Friday", // Friday
+        6: "Super Saturday" // Saturday
+    };
+
+    const currentDay = greetings[new Date().getDay()];
+
     console.log(WeeklyWorkouts);
     return (
         <Card className="h-full w-full overflow-auto">
             <CardHeader className="text-brawn font-bold text-3xl">
-                Dashboard
+                {currentDay}, {capitalizedName}
             </CardHeader>
             <CardContent>
                 <Tabs defaultValue="Analytics" className="w-auto">

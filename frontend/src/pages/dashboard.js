@@ -88,6 +88,7 @@ const DashboardPage = () => {
             TotalWorkouts={body?.TotalWorkouts || 0}
             MemberSince={body?.MemberSince || ""}
             LongestWorkoutStreak={body?.LongestWorkoutStreak || ""}
+            user={user}
         />
     );
 };
