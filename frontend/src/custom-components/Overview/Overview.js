@@ -25,7 +25,7 @@ const Overview = ({
                     <CardHeader className="text-brawn font-medium text-sm">
                         Member Since
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="text-xl font-semibold">
                         {moment(MemberSince).format("MMMM Do, YYYY")}
                     </CardContent>
                 </Card>
@@ -33,19 +33,19 @@ const Overview = ({
                     <CardHeader className="text-brawn font-medium text-sm">
                         Total Workouts
                     </CardHeader>
-                    <CardContent>{TotalWorkouts}</CardContent>
+                    <CardContent className="text-xl font-semibold">{TotalWorkouts}</CardContent>
                 </Card>
                 <Card>
                     <CardHeader className="text-brawn font-medium text-sm">
                         Workout Streak
                     </CardHeader>
-                    <CardContent>{LongestWorkoutStreak}</CardContent>
+                    <CardContent className="text-xl font-semibold">{LongestWorkoutStreak}</CardContent>
                 </Card>
                 <Card>
                     <CardHeader className="text-brawn font-medium text-sm">
                         Next Workout On
                     </CardHeader>
-                    <CardContent>Jan 1</CardContent>
+                    <CardContent className="text-xl font-semibold">Jan 1</CardContent>
                 </Card>
             </div>
             <div className="grid gap-5 grid-cols-1 md:grid-cols-2 w-full ">

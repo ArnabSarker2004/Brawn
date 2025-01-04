@@ -9,7 +9,21 @@ import {
 } from "../../components/ui/table";
 
 //NOTE DO NOT MAKE ANY API CALLS FROM HERE, API CALLS SHOULD NOT BE MADE THROUGH COMPONENTS
-const Analytics = () => {
+const Analytics = ({ workouts, user }) => {
+    // Calculate total cardio workouts time
+    const totalCardioTime = workouts
+        ?.filter(w => w.cardio)
+        ?.reduce((total, workout) => {
+            return total + workout.sets.reduce((setTotal, set) => setTotal + (set.time || 0), 0);
+        }, 0) || 0;
+
+    // Calculate total strength workouts time
+    const totalStrengthTime = workouts
+        ?.filter(w => !w.cardio)
+        ?.reduce((total, workout) => {
+            return total + workout.sets.reduce((setTotal, set) => setTotal + (set.time || 0), 0);
+        }, 0) || 0;
+
     return (
         <div>
             <div className="grid gap-5 grid-cols-1 md:grid-cols-4 w-full mb-4">
@@ -17,7 +31,9 @@ const Analytics = () => {
                     <CardHeader className="text-brawn font-medium text-sm">
                         Current Weight
                     </CardHeader>
-                    <CardContent></CardContent>
+                    <CardContent className="text-xl font-semibold">
+                        {user?.weight ? `${user.weight}` : 'Does not exist'}
+                    </CardContent>
                 </Card>
                 <Card>
                     <CardHeader className="text-brawn font-medium text-sm">
@@ -27,14 +43,19 @@ const Analytics = () => {
                 </Card>
                 <Card>
                     <CardHeader className="text-brawn font-medium text-sm">
-                        Average Step Count
+                        Total Cardio Time
                     </CardHeader>
-                    <CardContent></CardContent>
+                    <CardContent className="text-xl font-semibold">
+                        {Math.round(totalCardioTime / 60)} mins
+                    </CardContent>
                 </Card>
                 <Card>
                     <CardHeader className="text-brawn font-medium text-sm">
-                        Distance Ran
+                        Total Strength Time
                     </CardHeader>
+                    <CardContent className="text-xl font-semibold">
+                        {Math.round(totalStrengthTime / 60)} mins
+                    </CardContent>
                 </Card>
             </div>
             <div className="grid gap-5 md:grid-cols-2 grid-cols-1 w-full">
