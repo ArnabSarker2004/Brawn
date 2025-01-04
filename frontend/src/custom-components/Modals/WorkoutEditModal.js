@@ -57,24 +57,6 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
         }));
     };
 
-    const validateFields = () => {
-        const emptyFields = [];
-        if (!title.trim()) emptyFields.push("title");
-
-        sets.forEach((set, index) => {
-            if (cardio) {
-                if (!set.time) emptyFields.push(`sets[${index}].time`);
-            } else if (timeBased) {
-                if (!set.weight) emptyFields.push(`sets[${index}].weight`);
-                if (!set.time) emptyFields.push(`sets[${index}].time`);
-            } else {
-                if (!set.weight) emptyFields.push(`sets[${index}].weight`);
-                if (!set.reps) emptyFields.push(`sets[${index}].reps`);
-            }
-        });
-        return emptyFields;
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -101,7 +83,6 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
 
         if (newEmptyFields.length > 0) {
             setEmptyFields(newEmptyFields);
-            setError("Please fill in all required fields");
             return;
         }
 
@@ -204,7 +185,7 @@ const WorkoutEditModal = ({ workout, setShowEditModal, routineId }) => {
                             <span>SET</span>
                             {!cardio && <span>LBS</span>}
                             <span>
-                                {timeBased || cardio ? "TIME (s)" : "REPS"}
+                                {timeBased || cardio ? "TIME" : "REPS"}
                             </span>
                         </div>
                         {sets.map((set, index) => (
