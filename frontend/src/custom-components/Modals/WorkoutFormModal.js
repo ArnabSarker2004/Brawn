@@ -8,7 +8,11 @@ const WorkoutFormModal = ({ setShowModal, routineId }) => {
     const [title, setTitle] = useState("");
     const [timeBased, setTimeBased] = useState(false);
     const [cardio, setCardio] = useState(false);
-    const [sets, setSets] = useState([{ reps: "", weight: "", time: "" }]);
+    const [sets, setSets] = useState([
+        cardio || timeBased
+            ? { weight: "", time: "" }
+            : { weight: "", reps: "" },
+    ]);
     const [error, setError] = useState(null);
     const [emptyFields, setEmptyFields] = useState([]);
 
@@ -20,40 +24,55 @@ const WorkoutFormModal = ({ setShowModal, routineId }) => {
     const handleSetChange = (index, event) => {
         const newSets = [...sets];
         if (event.target.name === "time") {
-            // Only allow numbers
             const timeValue = event.target.value.replace(/\D/g, "").slice(0, 6);
             newSets[index][event.target.name] = timeValue;
         } else {
             newSets[index][event.target.name] = event.target.value;
         }
         setSets(newSets);
-    };
-
-    const handleAddSet = () => {
-        setSets([...sets, { reps: "", weight: "", time: "" }]);
-        setError(null);
         setEmptyFields([]);
     };
 
+    const handleAddSet = () => {
+        setSets([
+            ...sets,
+            cardio || timeBased
+                ? { weight: "", time: "" }
+                : { weight: "", reps: "" },
+        ]);
+    };
+    const validateFields = () => {
+        const newEmptyFields = [];
+        if (!title.trim()) newEmptyFields.push("title");
+
+        sets.forEach((set, index) => {
+            if (cardio || timeBased) {
+                if (!set.time) {
+                    newEmptyFields.push(`sets[${index}].time`);
+                }
+            } else {
+                if (!set.weight) {
+                    newEmptyFields.push(`sets[${index}].weight`);
+                }
+                if (!set.reps) {
+                    newEmptyFields.push(`sets[${index}].reps`);
+                }
+            }
+        });
+
+        return newEmptyFields;
+    };
+
+    const clearSetValues = (newSets, isTimeBased, isCardio) => {
+        return newSets.map((set) => ({
+            weight: isCardio ? 0 : set.weight,
+            reps: isTimeBased || isCardio ? 0 : set.reps,
+            time: isTimeBased || isCardio ? set.time || "" : 0,
+        }));
+    };
     const handleRemoveSet = (index) => {
         const newSets = sets.filter((_, i) => i !== index);
         setSets(newSets);
-    };
-
-    const validateFields = () => {
-        const emptyFields = [];
-        if (!title.trim()) emptyFields.push("title");
-
-        sets.forEach((set, index) => {
-            if (!cardio && !set.weight)
-                emptyFields.push(`sets[${index}].weight`);
-            if (timeBased || cardio) {
-                if (!set.time) emptyFields.push(`sets[${index}].time`);
-            } else {
-                if (!set.reps) emptyFields.push(`sets[${index}].reps`);
-            }
-        });
-        return emptyFields;
     };
 
     const handleSubmit = async (e) => {
@@ -61,7 +80,7 @@ const WorkoutFormModal = ({ setShowModal, routineId }) => {
 
         const emptyFields = validateFields();
         if (emptyFields.length > 0) {
-            setError("Please fill in all fields.");
+            // setError("Please fill in all fields.");
             setEmptyFields(emptyFields);
             return;
         }
@@ -115,7 +134,10 @@ const WorkoutFormModal = ({ setShowModal, routineId }) => {
                     <label>Exercise Title:</label>
                     <input
                         type="text"
-                        onChange={(e) => setTitle(e.target.value)}
+                        onChange={(e) => {
+                            setTitle(e.target.value);
+                            setEmptyFields([]);
+                        }}
                         value={title}
                         className={emptyFields.includes("title") ? "error" : ""}
                     />
@@ -131,7 +153,13 @@ const WorkoutFormModal = ({ setShowModal, routineId }) => {
                                 checked={timeBased}
                                 onChange={() => {
                                     setTimeBased(!timeBased);
-                                    setCardio(false);
+                                    if (!timeBased) {
+                                        setCardio(false);
+                                    }
+                                    setSets(
+                                        clearSetValues(sets, !timeBased, false)
+                                    );
+                                    setEmptyFields([]);
                                 }}
                             />
                         </div>
@@ -145,7 +173,13 @@ const WorkoutFormModal = ({ setShowModal, routineId }) => {
                                 checked={cardio}
                                 onChange={() => {
                                     setCardio(!cardio);
-                                    setTimeBased(false);
+                                    if (!cardio) {
+                                        setTimeBased(false);
+                                    }
+                                    setSets(
+                                        clearSetValues(sets, false, !cardio)
+                                    );
+                                    setEmptyFields([]);
                                 }}
                             />
                         </div>
@@ -155,9 +189,7 @@ const WorkoutFormModal = ({ setShowModal, routineId }) => {
                         <div className="workout-table-header">
                             <span>SET</span>
                             {!cardio && <span>LBS</span>}
-                            <span>
-                                {timeBased || cardio ? "TIME (s)" : "REPS"}
-                            </span>
+                            <span>{timeBased || cardio ? "TIME" : "REPS"}</span>
                         </div>
                         {sets.map((set, index) => (
                             <div className="workout-table-row" key={index}>
