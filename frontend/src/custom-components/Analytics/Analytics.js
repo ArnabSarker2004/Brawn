@@ -9,7 +9,7 @@ import {
 } from "../../components/ui/table";
 
 //NOTE DO NOT MAKE ANY API CALLS FROM HERE, API CALLS SHOULD NOT BE MADE THROUGH COMPONENTS
-const Analytics = ({ workouts, user }) => {
+const Analytics = ({ workouts, Weight }) => {
     // Calculate total cardio workouts time
     const totalCardioTime = workouts
         ?.filter(w => w.cardio)
@@ -32,7 +32,7 @@ const Analytics = ({ workouts, user }) => {
                         Current Weight
                     </CardHeader>
                     <CardContent className="text-xl font-semibold">
-                        {user?.weight ? `${user.weight}` : 'Does not exist'}
+                        {Weight}
                     </CardContent>
                 </Card>
                 <Card>

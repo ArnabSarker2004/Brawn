@@ -10,6 +10,7 @@ import Analytics from "../Analytics/Analytics";
 //NOTE DO NOT MAKE ANY API CALLS FROM HERE, API CALLS SHOULD NOT BE MADE THROUGH COMPONENTS
 //ALSO NO RAW HTML SHOULD BE HERE EITHER
 const Dashboard = ({
+    Weight,
     WeeklyWorkouts,
     MemberSince,
     TotalWorkouts,
@@ -64,7 +65,7 @@ const Dashboard = ({
                         />
                     </TabsContent>
                     <TabsContent value="Analytics">
-                        <Analytics />
+                        <Analytics Weight={Weight} />
                     </TabsContent>
                     {/* <TabsContent value="Friends">
                         <Friends/>

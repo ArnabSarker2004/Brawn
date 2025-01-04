@@ -84,6 +84,7 @@ const DashboardPage = () => {
     }, [routines]);
     return (
         <Dashboard
+            Weight={body?.Weight || 0}
             WeeklyWorkouts={weeklyWorkouts || []}
             TotalWorkouts={body?.TotalWorkouts || 0}
             MemberSince={body?.MemberSince || ""}
