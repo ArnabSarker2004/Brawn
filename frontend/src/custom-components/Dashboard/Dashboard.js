@@ -10,6 +10,7 @@ import Analytics from "../Analytics/Analytics";
 //NOTE DO NOT MAKE ANY API CALLS FROM HERE, API CALLS SHOULD NOT BE MADE THROUGH COMPONENTS
 //ALSO NO RAW HTML SHOULD BE HERE EITHER
 const Dashboard = ({
+    chartData,
     Weight,
     WeeklyWorkouts,
     MemberSince,
@@ -31,7 +32,6 @@ const Dashboard = ({
 
     const currentDay = greetings[new Date().getDay()];
 
-    console.log(WeeklyWorkouts);
     return (
         <Card className="h-full w-full overflow-auto">
             <CardHeader className="text-brawn font-bold text-3xl">
@@ -62,6 +62,7 @@ const Dashboard = ({
                             MemberSince={MemberSince}
                             TotalWorkouts={TotalWorkouts}
                             LongestWorkoutStreak={LongestWorkoutStreak}
+                            chartData={chartData}
                         />
                     </TabsContent>
                     <TabsContent value="Analytics">

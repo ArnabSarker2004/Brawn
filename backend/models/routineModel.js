@@ -7,9 +7,8 @@ const setSchema = new Schema({
         validate: {
             validator: function() {
                 const workout = this.parent().parent();
-                // Only validate if this is not a cardio workout
                 if (workout.cardio) {
-                    return true; // Skip validation for cardio workouts
+                    return true; 
                 }
                 return this.weight !== null && this.weight !== undefined;
             },

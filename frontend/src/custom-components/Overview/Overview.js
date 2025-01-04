@@ -13,6 +13,7 @@ import Activity from "./Activity";
 //NO API CALLS HERE EITHER, ALL SHOULD BE MADE IN pages/dashboard.js
 
 const Overview = ({
+    chartData,
     WeeklyWorkouts,
     MemberSince,
     TotalWorkouts,
@@ -58,7 +59,7 @@ const Overview = ({
                         <CardHeader className="text-brawn font-semibold text-xl">
                             Your Activity This Month
                         </CardHeader>
-                        <Activity />
+                        <Activity chartData={chartData} />
                     </CardContent>
                 </Card>
                 <Card>
