@@ -43,9 +43,13 @@ const Overview = ({
                 </Card>
                 <Card>
                     <CardHeader className="text-brawn font-medium text-sm">
-                        Next Workout On
+                        Last Workout
                     </CardHeader>
-                    <CardContent className="text-xl font-semibold">Jan 1</CardContent>
+                    <CardContent className="text-xl font-semibold">
+                        {WeeklyWorkouts.length > 0
+                            ? moment(WeeklyWorkouts.flatMap(routine => routine.completionStats.map(stat => stat.date)).sort((a, b) => new Date(b) - new Date(a))[0]).format("MMM D, YYYY")
+                            : "No workouts yet"}
+                    </CardContent>
                 </Card>
             </div>
             <div className="grid gap-5 grid-cols-1 md:grid-cols-2 w-full ">
@@ -97,7 +101,7 @@ const Overview = ({
                                                     {moment
                                                         .utc(
                                                             workout.totalTime *
-                                                                1000
+                                                            1000
                                                         )
                                                         .format("H:mm:ss")}
                                                 </TableCell>
