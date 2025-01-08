@@ -239,8 +239,10 @@ const DashboardPage = () => {
             calculateRoutineDistribution(routines);
         }
     }, [routines]);
+
     return (
         <Dashboard
+            CurrentWorkoutStreak ={body?.CurrentWorkoutStreak || 0}
             Weight={body?.Weight || 0}
             WeeklyWorkouts={weeklyWorkouts || []}
             TotalWorkouts={body?.TotalWorkouts || 0}

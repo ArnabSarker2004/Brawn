@@ -10,6 +10,7 @@ import Analytics from "../Analytics/Analytics";
 //NOTE DO NOT MAKE ANY API CALLS FROM HERE, API CALLS SHOULD NOT BE MADE THROUGH COMPONENTS
 //ALSO NO RAW HTML SHOULD BE HERE EITHER
 const Dashboard = ({
+    CurrentWorkoutStreak,
     chartData,
     Weight,
     WeeklyWorkouts,
@@ -63,8 +64,8 @@ const Dashboard = ({
                             WeeklyWorkouts={WeeklyWorkouts}
                             MemberSince={MemberSince}
                             TotalWorkouts={TotalWorkouts}
-                            LongestWorkoutStreak={LongestWorkoutStreak}
                             chartData={chartData}
+                            CurrentWorkoutStreak={CurrentWorkoutStreak}
                         />
                     </TabsContent>
                     <TabsContent value="Analytics">
@@ -72,6 +73,7 @@ const Dashboard = ({
                             Weight={Weight} 
                             routineDistribution={routineDistribution}
                             routines={routines}
+                            LongestWorkoutStreak={LongestWorkoutStreak}
                         />
                     </TabsContent>
                     {/* <TabsContent value="Friends">

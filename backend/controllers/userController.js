@@ -39,7 +39,6 @@ const getBodyInfo = async (req, res) => {
         return Array.from(isoSet).some((_) => _.startsWith(afterDay));
     };
 
-    // did this using neetcode video on leetcode medium, longest consecutive sequence
     let longestStreak = 0;
     uniqueDays.forEach((_) => {
         if (!dayPriorExists(uniqueDays, _)) {
@@ -55,6 +54,21 @@ const getBodyInfo = async (req, res) => {
             longestStreak = Math.max(longestStreak, length);
         }
     });
+    let sortedDays = uniqueDays.flat().sort((a,b) =>{
+        return (a.toISOString) > (b.toISOString) ? 1 : -1
+    });
+
+    let currentLongestStreak = 0;
+    let flag = false;
+    sortedDays.forEach((_)=>{
+        //basically we are going to take the current date and then go backwards to find when there isn't a day that is the previous day, using the day prior exists function and then just increementing that count 
+        if (dayPriorExists(uniqueDays, _) && !flag){
+            currentLongestStreak++;
+        }else{
+            flag = true;
+        }
+    });
+    console.log(currentLongestStreak);
 
     //total workouts and lognest workoutstreak have been added to schema so that means that they don't needa be recomputed every call but we will have this for now
     // just to test out the algorithms that we have before we abstract away logic
@@ -72,6 +86,7 @@ const getBodyInfo = async (req, res) => {
         MemberSince: body.MemberSince,
         TotalWorkouts: totalWorkouts,
         LongestWorkoutStreak: longestStreak,
+        currentLongestStreak: currentLongestStreak,
     });
 };
 

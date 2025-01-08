@@ -11,7 +11,7 @@ import AnalyticData from "./AnalyticData";
 import RoutineProgress from "./RoutineProgress";
 
 //NOTE DO NOT MAKE ANY API CALLS FROM HERE, API CALLS SHOULD NOT BE MADE THROUGH COMPONENTS
-const Analytics = ({ workouts, Weight, routineDistribution, routines }) => {
+const Analytics = ({ LongestWorkoutStreak,workouts, Weight, routineDistribution, routines }) => {
     // Calculate total cardio workouts time
     const totalCardioTime = workouts
         ?.filter(w => w.cardio)
@@ -41,7 +41,7 @@ const Analytics = ({ workouts, Weight, routineDistribution, routines }) => {
                     <CardHeader className="text-brawn font-medium text-sm">
                         Best Workout Streak
                     </CardHeader>
-                    <CardContent></CardContent>
+                    <CardContent className="text-xl font-semibold">{LongestWorkoutStreak}</CardContent>
                 </Card>
                 <Card>
                     <CardHeader className="text-brawn font-medium text-sm">

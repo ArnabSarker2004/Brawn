@@ -17,7 +17,7 @@ const Overview = ({
     WeeklyWorkouts,
     MemberSince,
     TotalWorkouts,
-    LongestWorkoutStreak,
+    CurrentWorkoutStreak,
 }) => {
     return (
         <div>
@@ -40,7 +40,7 @@ const Overview = ({
                     <CardHeader className="text-brawn font-medium text-sm">
                         Workout Streak
                     </CardHeader>
-                    <CardContent className="text-xl font-semibold">{LongestWorkoutStreak}</CardContent>
+                    <CardContent className="text-xl font-semibold">{CurrentWorkoutStreak}</CardContent>
                 </Card>
                 <Card>
                     <CardHeader className="text-brawn font-medium text-sm">
