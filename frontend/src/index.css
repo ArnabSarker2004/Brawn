@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
 
 :root {
+    overflow: hidden !important;
     --primary: #1aac83;
     --error: #e7195a;
     --navbar-bg: #1aac83;
     --navbar-hover: #117559;
     --navbar-text-color: white;
-    overflow-x: hidden !important;
     font-family: sans-serif;
 }
 

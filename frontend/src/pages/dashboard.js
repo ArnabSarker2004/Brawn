@@ -241,6 +241,7 @@ const DashboardPage = () => {
     }, [routines]);
 
     return (
+        <div className="overflow-y-hidden">
         <Dashboard
             CurrentWorkoutStreak ={body?.CurrentWorkoutStreak || 0}
             Weight={body?.Weight || 0}
@@ -253,6 +254,7 @@ const DashboardPage = () => {
             routineDistribution={routineDistribution}
             routines={routines}
         />
+        </div>
     );
 };
 
