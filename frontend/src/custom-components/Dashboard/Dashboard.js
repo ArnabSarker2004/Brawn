@@ -16,7 +16,9 @@ const Dashboard = ({
     MemberSince,
     TotalWorkouts,
     LongestWorkoutStreak,
-    user
+    user,
+    routineDistribution,
+    routines,
 }) => {
     const capitalizedName = user ? user.charAt(0).toUpperCase() + user.slice(1) : 'Guest';
     
@@ -66,7 +68,11 @@ const Dashboard = ({
                         />
                     </TabsContent>
                     <TabsContent value="Analytics">
-                        <Analytics Weight={Weight} />
+                        <Analytics 
+                            Weight={Weight} 
+                            routineDistribution={routineDistribution}
+                            routines={routines}
+                        />
                     </TabsContent>
                     {/* <TabsContent value="Friends">
                         <Friends/>

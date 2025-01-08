@@ -7,6 +7,10 @@ const DashboardPage = () => {
         process.env.NODE_ENV === "production"
             ? "https://brawn-tedx.onrender.com"
             : "http://localhost:4000";
+    const [routineDistribution, setRoutineDistribution] = useState({
+        weekly: [],
+        monthly: []
+    });
     const [routines, setRoutines] = useState(null);
     const [weeklyWorkouts, setWeeklyWorkouts] = useState(null);
     const [body, setBody] = useState(null);
@@ -164,6 +168,63 @@ const DashboardPage = () => {
         setChartData({ weeklyCardioTime, weeklyStrengthTime });
     }
 
+    const calculateRoutineDistribution = (routines) => {
+        const now = new Date();
+        const weekAgo = new Date(now);
+        const monthAgo = new Date(now);
+        weekAgo.setDate(now.getDate() - 7);
+        monthAgo.setDate(now.getDate() - 30);
+
+        let weeklyRoutines = new Map();
+        let monthlyRoutines = new Map();
+
+        routines.forEach((routine) => {
+            let routineTotalTime = 0;
+            routine.workouts.forEach((workout) => {
+                const workoutTime = workout.sets.reduce(
+                    (acc, set) => acc + (set.time || 0),
+                    0
+                );
+                routineTotalTime += workoutTime;
+            });
+
+            const weeklyStats = routine.completionStats.filter((stat) => {
+                const statDate = new Date(stat.date);
+                return statDate >= weekAgo && statDate <= now;
+            });
+
+            if (weeklyStats.length > 0) {
+                const weeklyTime = Math.floor((routineTotalTime * weeklyStats.length) / 60);
+                weeklyRoutines.set(routine.name, weeklyTime);
+            }
+
+            const monthlyStats = routine.completionStats.filter((stat) => {
+                const statDate = new Date(stat.date);
+                return statDate >= monthAgo && statDate <= now;
+            });
+
+            if (monthlyStats.length > 0) {
+                const monthlyTime = Math.floor((routineTotalTime * monthlyStats.length) / 60);
+                monthlyRoutines.set(routine.name, monthlyTime);
+            }
+        });
+
+        const weeklyData = Array.from(weeklyRoutines, ([name, value]) => ({
+            name,
+            value
+        }));
+
+        const monthlyData = Array.from(monthlyRoutines, ([name, value]) => ({
+            name,
+            value
+        }));
+
+        setRoutineDistribution({
+            weekly: weeklyData,
+            monthly: monthlyData
+        });
+    };
+
     useEffect(() => {
         if (user) {
             getRoutineData();
@@ -175,6 +236,7 @@ const DashboardPage = () => {
         if (routines) {
             getWeeklyWorkouts();
             graphData(routines);
+            calculateRoutineDistribution(routines);
         }
     }, [routines]);
     return (
@@ -186,6 +248,8 @@ const DashboardPage = () => {
             LongestWorkoutStreak={body?.LongestWorkoutStreak || ""}
             user={user}
             chartData={chartData}
+            routineDistribution={routineDistribution}
+            routines={routines}
         />
     );
 };

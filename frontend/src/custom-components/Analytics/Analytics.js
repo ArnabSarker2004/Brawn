@@ -7,9 +7,11 @@ import {
     TableHeader,
     TableRow,
 } from "../../components/ui/table";
+import AnalyticData from "./AnalyticData";
+import RoutineProgress from "./RoutineProgress";
 
 //NOTE DO NOT MAKE ANY API CALLS FROM HERE, API CALLS SHOULD NOT BE MADE THROUGH COMPONENTS
-const Analytics = ({ workouts, Weight }) => {
+const Analytics = ({ workouts, Weight, routineDistribution, routines }) => {
     // Calculate total cardio workouts time
     const totalCardioTime = workouts
         ?.filter(w => w.cardio)
@@ -25,7 +27,7 @@ const Analytics = ({ workouts, Weight }) => {
         }, 0) || 0;
 
     return (
-        <div>
+        <div className="w-full h-full">
             <div className="grid gap-5 grid-cols-1 md:grid-cols-4 w-full mb-4">
                 <Card>
                     <CardHeader className="text-brawn font-medium text-sm">
@@ -59,14 +61,19 @@ const Analytics = ({ workouts, Weight }) => {
                 </Card>
             </div>
             <div className="grid gap-5 md:grid-cols-2 grid-cols-1 w-full">
-                <Card>
-                    <CardContent></CardContent>
-                </Card>
-                <Card>
+                <Card className="h-auto">
                     <CardHeader className="text-brawn font-semibold text-xl">
-                        Personal Records
+                        Routine Distribution
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="h-auto p-0">
+                        <AnalyticData routineDistribution={routineDistribution} />
+                    </CardContent>
+                </Card>
+                <Card className="h-auto">
+                    <CardHeader className="text-brawn font-semibold text-xl">
+                        Routine Progress
+                    </CardHeader>
+                    <CardContent className="h-auto">
                         <Table>
                             <TableHeader>
                                 <TableHead className="font-medium">
@@ -87,6 +94,16 @@ const Analytics = ({ workouts, Weight }) => {
                                 </TableRow>
                             </TableBody>
                         </Table>
+                    </CardContent>
+                </Card>
+            </div>
+            <div className="grid gap-5 mt-5 md:grid-cols-1 grid-cols-1 w-full">
+                <Card className="h-auto">
+                    <CardHeader className="text-brawn font-semibold text-xl">
+                        Routine Progress
+                    </CardHeader>
+                    <CardContent className="h-auto p-0">
+                        <RoutineProgress routines={routines} />
                     </CardContent>
                 </Card>
             </div>

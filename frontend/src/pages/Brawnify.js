@@ -12,6 +12,7 @@ function Brawnify() {
     const [userMessage, setUserMessage] = useState("");
     const [loading, setLoading] = useState(false);
     const messagesEndRef = useRef(null);
+    const [requestType, setRequestType] = useState("");
 
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -68,8 +69,35 @@ function Brawnify() {
         }
     };
 
+    const handleRequestTypeSelect = async (type) => {
+        setRequestType(type);
+        let prompt = "";
+        switch(type) {
+            case "new-routine":
+                prompt = "I want to create a new workout routine.";
+                break;
+            case "add-workout":
+                prompt = "I want to add a workout to my existing routine.";
+                break;
+            case "advice":
+                prompt = "I need general fitness advice.";
+                break;
+            default:
+                return;
+        }
+        
+        setLoading(true);
+        const botResponse = await fetchGPTResponse(prompt);
+        setMessages(prevMessages => [
+            ...prevMessages,
+            { user: "You", content: prompt },
+            { user: "Brawnie", content: botResponse }
+        ]);
+        setLoading(false);
+    };
+
     return (
-        <div className="flex flex-col w-full h-full bg-white rounded-xl">
+        <div className="flex flex-col h-screen bg-gray-50">
             <div className="flex-1 p-4 overflow-y-auto">
                 {messages.map((msg, index) => (
                     <div
@@ -103,29 +131,64 @@ function Brawnify() {
                 <div ref={messagesEndRef} />
             </div>
 
-            <form
-                className="flex items-center p-4 border-t border-gray-300 bg-gray-50 mb-5"
-                onSubmit={handleSendMessage}
-            >
-                <div className="flex-1">
-                    <input
-                        type="text"
-                        value={userMessage}
-                        onChange={(e) => setUserMessage(e.target.value)}
-                        placeholder="Type your message..."
-                        className="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none text-black bg-white"
-                    />
+            <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-gray-50 pt-6">
+                <div className="max-w-3xl mx-auto px-4 pb-6">
+                    <div className="mb-4 flex flex-wrap gap-2 justify-center">
+                        <button
+                            onClick={() => handleRequestTypeSelect("new-routine")}
+                            className={`px-4 py-2 text-sm rounded-lg border transition-colors ${
+                                requestType === "new-routine"
+                                    ? "bg-green-600 text-white"
+                                    : "bg-white hover:bg-gray-50"
+                            }`}
+                        >
+                            Make a new routine
+                        </button>
+                        <button
+                            onClick={() => handleRequestTypeSelect("add-workout")}
+                            className={`px-4 py-2 text-sm rounded-lg border transition-colors ${
+                                requestType === "add-workout"
+                                    ? "bg-green-600 text-white"
+                                    : "bg-white hover:bg-gray-50"
+                            }`}
+                        >
+                            Add to existing routine
+                        </button>
+                        <button
+                            onClick={() => handleRequestTypeSelect("advice")}
+                            className={`px-4 py-2 text-sm rounded-lg border transition-colors ${
+                                requestType === "advice"
+                                    ? "bg-green-600 text-white"
+                                    : "bg-white hover:bg-gray-50"
+                            }`}
+                        >
+                            General advice
+                        </button>
+                    </div>
+
+                    <form
+                        onSubmit={handleSendMessage}
+                        className="relative bg-white rounded-xl shadow-lg border border-gray-200"
+                    >
+                        <input
+                            type="text"
+                            value={userMessage}
+                            onChange={(e) => setUserMessage(e.target.value)}
+                            placeholder="Message Brawnie..."
+                            className="w-full p-4 pr-14 focus:outline-none rounded-xl"
+                        />
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="absolute right-2 top-1/2 pb-0 mb-10 -translate-y-1/2 p-2 text-gray-500 bg-white disabled:opacity-50"
+                        >
+                            <span className="material-symbols-outlined">
+                                send
+                            </span>
+                        </button>
+                    </form>
                 </div>
-                <button
-                    type="submit"
-                    className="ml-4 bg-green-600 w-10 h-10 flex items-center justify-center rounded-full hover:bg-green-700 focus:outline-none"
-                    disabled={loading}
-                >
-                    <span className="material-symbols-outlined text-white">
-                        send
-                    </span>
-                </button>
-            </form>
+            </div>
         </div>
     );
 }
