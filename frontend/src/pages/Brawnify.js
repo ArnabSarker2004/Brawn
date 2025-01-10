@@ -3,12 +3,15 @@ import {
     Select,
     SelectContent,
     SelectItem,
+    SelectScrollUpButton,
     SelectTrigger,
     SelectValue,
 } from "../components/ui/select";
 import { Input } from "../components/ui/input";
+import {Button} from "../components/ui/button";
+import {Form} from "../components/ui/form";
 
-const API_KEY = "";
+const API_KEY = "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";
 
 function Brawnify() {
     const [messages, setMessages] = useState([
@@ -170,8 +173,8 @@ function Brawnify() {
     };
 
     return (
-        <div className="flex flex-col h-screen bg-gray-50 overflow-hidden">
-            <div className="flex-1 p-4 overflow-hidden h-auto">
+        <div className="flex flex-col h-screen relative bg-gray-50 overflow-hidden">
+            <div className="flex p-4 overflow-hidden h-auto">
                 {messages.map((msg, index) => (
                     <div key={index} className={`flex ${msg.user === "You" ? "justify-end" : "justify-start"} my-2`}>
                         <div className={`${
@@ -192,29 +195,30 @@ function Brawnify() {
                     </div>
                 )}
                 <div ref={messagesEndRef} />
-            </div>
-
-            <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-gray-50 pt-6">
+            <div className="flex flex-col absolute inset-x-0 bottom-0 m items-center justify-center">
                 <div className="max-w-3xl mx-auto px-4 pb-6">
-                    <div className="mb-4 flex flex-wrap gap-2 justify-center">
-                        <button
+                    <div className="grid gap-2 md:grid-cols-3 grid-cols-1 w-full mb-4 justify-center">
+                        <Button
+                            variant="secondary"
                             onClick={() => handleButtonClick("new-routine")}
-                            className="px-4 py-2 text-sm rounded-lg border bg-white hover:bg-gray-50"
+                            className=" text-sm rounded-lg border "
                         >
                             Make a new routine
-                        </button>
-                        <button
+                        </Button>
+                        <Button
+                            variant="secondary"
                             onClick={() => handleButtonClick("add-workout")}
-                            className="px-4 py-2 text-sm rounded-lg border bg-white hover:bg-gray-50"
+                            className=""
                         >
                             Add to existing routine
-                        </button>
-                        <button
+                        </Button>
+                        <Button
+                            variant="secondary"
                             onClick={() => handleButtonClick("advice")}
-                            className="px-4 py-2 text-sm rounded-lg border bg-white hover:bg-gray-50"
+                            className=""
                         >
                             General advice
-                        </button>
+                        </Button>
                     </div>
 
                     {showRoutineSelect && (
@@ -223,7 +227,7 @@ function Brawnify() {
                                 <SelectTrigger>
                                     <SelectValue placeholder="Select a routine" />
                                 </SelectTrigger>
-                                <SelectContent>
+                                <SelectContent >
                                     {routines.map((routine) => (
                                         <SelectItem key={routine._id} value={routine._id}>
                                             {routine.name}
@@ -235,25 +239,30 @@ function Brawnify() {
                     )}
 
                     {inputState.show && (
-                        <form onSubmit={handleSubmit} className="relative">
-                            <Input
-                                type="text"
-                                value={userInput}
-                                onChange={(e) => setUserInput(e.target.value)}
-                                placeholder={inputState.placeholder}
-                                className="w-full p-4 pr-14 rounded-xl border shadow-lg"
-                            />
-                            <button
-                                type="submit"
-                                disabled={loading}
-                                className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-transparent	hover:bg-transparent  text-gray-400 hover:text-emerald-600 transition-colors disabled:opacity-50 disabled:hover:text-gray-400"
-                            >
-                                <span className="material-symbols-outlined">send</span>
-                            </button>
-                        </form>
+                        <Form onSubmit={handleSubmit} className="relative">
+                            <div className="inline-flex items-center justify-center w-full">
+                                <Input
+                                    type="text"
+                                    value={userInput}
+                                    onChange={(e) => setUserInput(e.target.value)}
+                                    placeholder={inputState.placeholder}
+                                    className="w-full p-4 pr-14 rounded-xl border shadow-lg"
+                                />
+                                <Button
+                                    type="submit"
+                                    variant="secondary"
+                                    disabled={loading}
+                                    className="mb-2 bg-transparent "
+                                >
+                                    <span className="material-symbols-outlined hover:text-brand">send</span>
+                                </Button>
+                            </div>
+                        </Form>
                     )}
                 </div>
             </div>
+            </div>
+
         </div>
     );
 }
