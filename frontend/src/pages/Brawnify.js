@@ -11,7 +11,7 @@ import { Input } from "../components/ui/input";
 import {Button} from "../components/ui/button";
 import {Form} from "../components/ui/form";
 
-const API_KEY = "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";
+const API_KEY = "";
 
 function Brawnify() {
     const [messages, setMessages] = useState([
