@@ -9,7 +9,6 @@ import {
 } from "../components/ui/select";
 import { Input } from "../components/ui/input";
 import {Button} from "../components/ui/button";
-import {Form} from "../components/ui/form";
 
 const API_KEY = "";
 
@@ -174,7 +173,7 @@ function Brawnify() {
 
     return (
         <div className="flex flex-col h-screen relative bg-gray-50 overflow-hidden">
-            <div className="flex p-4 overflow-hidden h-auto">
+            <div className="flex-1 p-4 overflow-hidden h-auto">
                 {messages.map((msg, index) => (
                     <div key={index} className={`flex ${msg.user === "You" ? "justify-end" : "justify-start"} my-2`}>
                         <div className={`${
@@ -239,7 +238,7 @@ function Brawnify() {
                     )}
 
                     {inputState.show && (
-                        <Form onSubmit={handleSubmit} className="relative">
+                        <form onSubmit={handleSubmit} className="relative">
                             <div className="inline-flex items-center justify-center w-full">
                                 <Input
                                     type="text"
@@ -252,12 +251,12 @@ function Brawnify() {
                                     type="submit"
                                     variant="secondary"
                                     disabled={loading}
-                                    className="mb-2 bg-transparent "
+                                    className="mb-2 bg-transparent hover:bg-transparent"
                                 >
                                     <span className="material-symbols-outlined hover:text-brand">send</span>
                                 </Button>
                             </div>
-                        </Form>
+                        </form>
                     )}
                 </div>
             </div>
