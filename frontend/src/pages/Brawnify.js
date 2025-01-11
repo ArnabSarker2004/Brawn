@@ -18,6 +18,7 @@ import {
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
 
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 const API_KEY =
     "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";
 
@@ -217,13 +218,34 @@ function Brawnify() {
                 )}
                 <div ref={messagesEndRef} />
             </CardContent>
-            <CardFooter className="flex flex-col items-center justify-center space-y-4 border-t mt-2">
-                {/* Button group */}
-                <div className="grid gap-2 md:grid-cols-3 grid-cols-1 w-auto">
+            <CardFooter className="flex flex-col overflow-x-hidden overflow-y-auto p-4">
+                {isMobile && <div className="grid gap-2 md:grid-cols-3 grid-cols-1 w-full">
                     <Button
                         variant="secondary"
                         onClick={() => handleButtonClick("new-routine")}
-                        className="text-sm rounded-lg border"
+                        className="w-full"
+                    >
+                        Make a new routine
+                    </Button>
+                    <Button
+                        variant="secondary"
+                        onClick={() => handleButtonClick("add-workout")}
+                        className="w-full"
+                    >
+                        Add to existing routine
+                    </Button>
+                    <Button
+                        variant="secondary"
+                        onClick={() => handleButtonClick("advice")}
+                        className="w-full"
+                    >
+                        General advice
+                    </Button>
+                </div>}
+                {!isMobile && <div className="grid gap-2 md:grid-cols-3 grid-cols-1 w-auto">
+                    <Button
+                        variant="secondary"
+                        onClick={() => handleButtonClick("new-routine")}
                     >
                         Make a new routine
                     </Button>
@@ -239,7 +261,7 @@ function Brawnify() {
                     >
                         General advice
                     </Button>
-                </div>
+                </div>}
                 {showRoutineSelect && (
                     <Select onValueChange={handleRoutineSelect}>
                         <SelectTrigger>
@@ -258,27 +280,25 @@ function Brawnify() {
                     </Select>
                 )}
                 {inputState.show && (
-                    <form onSubmit={handleSubmit} className="w-full sm:w-auto">
-                        <div className="relative inline-flex items-center w-full">
-                            <Input
-                                type="text"
-                                value={userInput}
-                                onChange={(e) => setUserInput(e.target.value)}
-                                placeholder={inputState.placeholder}
-                                className="w-auto p-4 pr-14 rounded-xl border shadow-lg"
-                            />
-                            <Button
-                                type="submit"
-                                variant="secondary"
-                                disabled={loading}
-                                className="ml-2 mb-2 pb-2"
-                            >
-                                <span className="material-symbols-outlined hover:text-brand">
-                                    send
-                                </span>
-                            </Button>
-                        </div>
-                    </form>
+                    <form onSubmit={handleSubmit} className="w-full mx-10">
+                    <div className="relative flex items-center w-full">
+                        <Input
+                            type="text"
+                            value={userInput}
+                            onChange={(e) => setUserInput(e.target.value)}
+                            placeholder={inputState.placeholder}
+                            className="w-full p-4 pr-14 rounded-xl border shadow-lg mx-2 mt-2"
+                        />
+                        <Button
+                            type="submit"
+                            variant="secondary"
+                            disabled={loading}
+                            className=" mb-2 pb-2"
+                        >
+                            <span className="material-symbols-outlined hover:text-brand">send</span>
+                        </Button>
+                    </div>
+                </form>
                 )}
             </CardFooter>
         </Card>
