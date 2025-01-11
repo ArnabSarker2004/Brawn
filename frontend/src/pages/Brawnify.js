@@ -1,17 +1,16 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
 import {
     Select,
     SelectContent,
     SelectItem,
-    SelectScrollUpButton,
     SelectTrigger,
-    SelectValue,
+    SelectValue
 } from "../components/ui/select";
-import { Input } from "../components/ui/input";
-import {Button} from "../components/ui/button";
 
 const API_KEY = "";
-
+const URL = process.env.NODE_ENV === "production" ? "https://brawn-tedx.onrender.com" : "http://localhost:4000";
 function Brawnify() {
     const [messages, setMessages] = useState([
         { user: "Brawnie", content: "Hey, welcome to Brawnify, how can I assist you?" },
@@ -116,7 +115,7 @@ function Brawnify() {
                 console.error('Error parsing workout data:', error);
             }
         }
-
+        
         // Add messages to chat
         setMessages(prev => [
             ...prev,
@@ -165,6 +164,7 @@ function Brawnify() {
 
     const handleCreateRoutine = async (routineData) => {
         // Implementation of handleCreateRoutine
+
     };
 
     const handleAddWorkout = async (routineId, workoutData) => {
