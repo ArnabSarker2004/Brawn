@@ -7,14 +7,26 @@ import {
     SelectTrigger,
     SelectValue,
 } from "../components/ui/select";
+import {
+    Card,
+    CardHeader,
+    CardTitle,
+    CardDescription,
+    CardContent,
+    CardFooter,
+} from "../components/ui/card";
 import { Input } from "../components/ui/input";
-import {Button} from "../components/ui/button";
+import { Button } from "../components/ui/button";
 
-const API_KEY = "";
+const API_KEY =
+    "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";
 
 function Brawnify() {
     const [messages, setMessages] = useState([
-        { user: "Brawnie", content: "Hey, welcome to Brawnify, how can I assist you?" },
+        {
+            user: "Brawnie",
+            content: "Hey, welcome to Brawnify, how can I assist you?",
+        },
     ]);
     const [loading, setLoading] = useState(false);
     const [routines, setRoutines] = useState([]);
@@ -35,11 +47,11 @@ function Brawnify() {
 
     const fetchRoutines = async () => {
         try {
-            const response = await fetch('/api/routines');
+            const response = await fetch("/api/routines");
             const data = await response.json();
             setRoutines(data);
         } catch (error) {
-            console.error('Error fetching routines:', error);
+            console.error("Error fetching routines:", error);
         }
     };
 
@@ -48,13 +60,13 @@ function Brawnify() {
         setInputState({
             show: type !== "add-workout",
             type: type,
-            placeholder: getPlaceholder(type)
+            placeholder: getPlaceholder(type),
         });
         setUserInput("");
     };
 
     const getPlaceholder = (type) => {
-        switch(type) {
+        switch (type) {
             case "new-routine":
                 return "Describe the routine you want to create...";
             case "add-workout":
@@ -71,7 +83,7 @@ function Brawnify() {
         setInputState({
             show: true,
             type: "add-workout",
-            placeholder: "Describe the workout you want to add..."
+            placeholder: "Describe the workout you want to add...",
         });
     };
 
@@ -82,7 +94,7 @@ function Brawnify() {
         setLoading(true);
         let prompt = "";
 
-        switch(inputState.type) {
+        switch (inputState.type) {
             case "new-routine":
                 prompt = `Create a new workout routine based on this description: ${userInput}. 
                             Return the response as a JSON object with the following schema: 
@@ -99,29 +111,29 @@ function Brawnify() {
         }
 
         const botResponse = await fetchGPTResponse(prompt);
-        
+
         // Handle the response based on the type
         if (inputState.type === "new-routine") {
             try {
                 const routineData = JSON.parse(botResponse);
                 await handleCreateRoutine(routineData);
             } catch (error) {
-                console.error('Error parsing routine data:', error);
+                console.error("Error parsing routine data:", error);
             }
         } else if (inputState.type === "add-workout" && selectedRoutine) {
             try {
                 const workoutData = JSON.parse(botResponse);
                 await handleAddWorkout(selectedRoutine, workoutData);
             } catch (error) {
-                console.error('Error parsing workout data:', error);
+                console.error("Error parsing workout data:", error);
             }
         }
 
         // Add messages to chat
-        setMessages(prev => [
+        setMessages((prev) => [
             ...prev,
             { user: "You", content: userInput },
-            { user: "Brawnie", content: botResponse }
+            { user: "Brawnie", content: botResponse },
         ]);
 
         // Reset state
@@ -172,97 +184,104 @@ function Brawnify() {
     };
 
     return (
-        <div className="flex flex-col h-screen relative bg-gray-50 overflow-hidden">
-            <div className="flex-1 p-4 overflow-hidden h-auto">
+        <Card className="h-full flex flex-col">
+            <CardContent className="flex-1 overflow-y-auto p-4">
                 {messages.map((msg, index) => (
-                    <div key={index} className={`flex ${msg.user === "You" ? "justify-end" : "justify-start"} my-2`}>
-                        <div className={`${
-                            msg.user === "You" 
-                                ? "bg-gray-200 text-black" 
-                                : "bg-green-100 text-green-800"
+                    <div
+                        key={index}
+                        className={`flex ${
+                            msg.user === "You" ? "justify-end" : "justify-start"
+                        } my-2`}
+                    >
+                        <div
+                            className={`${
+                                msg.user === "You"
+                                    ? "bg-gray-200 text-black"
+                                    : "bg-green-100 text-green-800"
                             } max-w-[85%] md:max-w-md p-3 rounded-lg shadow-sm`}
                         >
-                            <span className="block font-medium break-words">{msg.content}</span>
+                            <span className="block font-medium break-words">
+                                {msg.content}
+                            </span>
                         </div>
                     </div>
                 ))}
                 {loading && (
                     <div className="flex justify-start">
                         <div className="bg-green-100 text-green-800 max-w-md w-full p-3 rounded-lg shadow-sm">
-                            <span className="block font-medium">Loading...</span>
+                            <span className="block font-medium">
+                                Loading...
+                            </span>
                         </div>
                     </div>
                 )}
                 <div ref={messagesEndRef} />
-            <div className="flex flex-col absolute inset-x-0 bottom-0 m items-center justify-center">
-                <div className="max-w-3xl mx-auto px-4 pb-6">
-                    <div className="grid gap-2 md:grid-cols-3 grid-cols-1 w-full mb-4 justify-center">
-                        <Button
-                            variant="secondary"
-                            onClick={() => handleButtonClick("new-routine")}
-                            className=" text-sm rounded-lg border "
-                        >
-                            Make a new routine
-                        </Button>
-                        <Button
-                            variant="secondary"
-                            onClick={() => handleButtonClick("add-workout")}
-                            className=""
-                        >
-                            Add to existing routine
-                        </Button>
-                        <Button
-                            variant="secondary"
-                            onClick={() => handleButtonClick("advice")}
-                            className=""
-                        >
-                            General advice
-                        </Button>
-                    </div>
-
-                    {showRoutineSelect && (
-                        <div className="mb-4">
-                            <Select onValueChange={handleRoutineSelect}>
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Select a routine" />
-                                </SelectTrigger>
-                                <SelectContent >
-                                    {routines.map((routine) => (
-                                        <SelectItem key={routine._id} value={routine._id}>
-                                            {routine.name}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                        </div>
-                    )}
-
-                    {inputState.show && (
-                        <form onSubmit={handleSubmit} className="relative">
-                            <div className="inline-flex items-center justify-center w-full">
-                                <Input
-                                    type="text"
-                                    value={userInput}
-                                    onChange={(e) => setUserInput(e.target.value)}
-                                    placeholder={inputState.placeholder}
-                                    className="w-full p-4 pr-14 rounded-xl border shadow-lg"
-                                />
-                                <Button
-                                    type="submit"
-                                    variant="secondary"
-                                    disabled={loading}
-                                    className="mb-2 bg-transparent hover:bg-transparent"
-                                >
-                                    <span className="material-symbols-outlined hover:text-brand">send</span>
-                                </Button>
-                            </div>
-                        </form>
-                    )}
+            </CardContent>
+            <CardFooter className="flex flex-col items-center justify-center space-y-4 border-t mt-2">
+                {/* Button group */}
+                <div className="grid gap-2 md:grid-cols-3 grid-cols-1 w-auto">
+                    <Button
+                        variant="secondary"
+                        onClick={() => handleButtonClick("new-routine")}
+                        className="text-sm rounded-lg border"
+                    >
+                        Make a new routine
+                    </Button>
+                    <Button
+                        variant="secondary"
+                        onClick={() => handleButtonClick("add-workout")}
+                    >
+                        Add to existing routine
+                    </Button>
+                    <Button
+                        variant="secondary"
+                        onClick={() => handleButtonClick("advice")}
+                    >
+                        General advice
+                    </Button>
                 </div>
-            </div>
-            </div>
-
-        </div>
+                {showRoutineSelect && (
+                    <Select onValueChange={handleRoutineSelect}>
+                        <SelectTrigger>
+                            <SelectValue placeholder="Select a routine" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {routines.map((routine) => (
+                                <SelectItem
+                                    key={routine._id}
+                                    value={routine._id}
+                                >
+                                    {routine.name}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                )}
+                {inputState.show && (
+                    <form onSubmit={handleSubmit} className="w-full sm:w-auto">
+                        <div className="relative inline-flex items-center w-full">
+                            <Input
+                                type="text"
+                                value={userInput}
+                                onChange={(e) => setUserInput(e.target.value)}
+                                placeholder={inputState.placeholder}
+                                className="w-auto p-4 pr-14 rounded-xl border shadow-lg"
+                            />
+                            <Button
+                                type="submit"
+                                variant="secondary"
+                                disabled={loading}
+                                className="ml-2 mb-2 pb-2"
+                            >
+                                <span className="material-symbols-outlined hover:text-brand">
+                                    send
+                                </span>
+                            </Button>
+                        </div>
+                    </form>
+                )}
+            </CardFooter>
+        </Card>
     );
 }
 
