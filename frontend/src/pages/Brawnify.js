@@ -20,7 +20,7 @@ import { Button } from "../components/ui/button";
 
 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 const API_KEY =
-    "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";
+    "";
 
 function Brawnify() {
     const [messages, setMessages] = useState([
