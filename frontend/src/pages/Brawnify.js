@@ -125,7 +125,7 @@ function Brawnify() {
                 console.error("Error parsing workout data:", error);
             }
         }
-        
+
         // Add messages to chat
         setMessages((prev) => [
             ...prev,
@@ -174,7 +174,6 @@ function Brawnify() {
 
     const handleCreateRoutine = async (routineData) => {
         // Implementation of handleCreateRoutine
-
     };
 
     const handleAddWorkout = async (routineId, workoutData) => {
