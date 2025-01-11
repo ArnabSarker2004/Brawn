@@ -1,22 +1,18 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Button } from "../components/ui/button";
+import {
+    Card,
+    CardContent,
+    CardFooter
+} from "../components/ui/card";
+import { Input } from "../components/ui/input";
 import {
     Select,
     SelectContent,
     SelectItem,
-    SelectScrollUpButton,
     SelectTrigger,
-    SelectValue,
+    SelectValue
 } from "../components/ui/select";
-import {
-    Card,
-    CardHeader,
-    CardTitle,
-    CardDescription,
-    CardContent,
-    CardFooter,
-} from "../components/ui/card";
-import { Input } from "../components/ui/input";
-import { Button } from "../components/ui/button";
 
 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 const API_KEY =
