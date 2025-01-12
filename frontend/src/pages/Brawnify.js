@@ -15,8 +15,7 @@ import {
 } from "../components/ui/select";
 
 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-const API_KEY =
-    "";
+const API_KEY ="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";
 
 function Brawnify() {
     const [messages, setMessages] = useState([
@@ -93,17 +92,49 @@ function Brawnify() {
 
         switch (inputState.type) {
             case "new-routine":
+                // First, get a name for the routine
+                const routineNamePrompt = `Based on this description: "${userInput}", generate a short, catchy name for this workout routine. Return only the name, nothing else.`;
+                const routineName = await fetchGPTResponse(routineNamePrompt);
+                
+                // Add initial message showing the generated name
+                setMessages(prev => [
+                    ...prev,
+                    { user: "You", content: userInput },
+                    { user: "Brawnie", content: `Creating a new routine called "${routineName}"` }
+                ]);
+
+                // Now get the full routine details
                 prompt = `Create a new workout routine based on this description: ${userInput}. 
-                            Return the response as a JSON object with the following schema: 
-                            { name: string, exercises: [{ name: string, sets: number, reps: number }] }`;
+                         Return the response as a JSON object with the following schema: 
+                         { name: "${routineName}", exercises: [{ name: string, sets: number, reps: number }] }`;
                 break;
+
             case "add-workout":
-                prompt = `Create a new workout for the routine based on this description: ${userInput}. 
-                            Return the response as a JSON object with the following schema:
-                            { name: string, sets: number, reps: number }`;
+                const selectedRoutineName = routines.find(r => r._id === selectedRoutine)?.name || '';
+                
+                // First, get a name for the workout
+                const workoutNamePrompt = `Based on this description: "${userInput}", generate an appropriate name for this exercise with correct gym terminology. Make sure to analyze the user's need and give a workout that is appropriate for them. Return only the name, nothing else. Double check the name is correct and appropriate for the user.`;
+                const workoutName = await fetchGPTResponse(workoutNamePrompt);
+                
+                // Add initial message showing the generated name
+                setMessages(prev => [
+                    ...prev,
+                    { user: "You", content: userInput },
+                    { user: "Brawnie", content: `New workout called "${workoutName}" to the ${selectedRoutineName} routine` }
+                ]);
+
+                // Now get the full workout details
+                prompt = `Create a new workout based on this description: ${userInput}. 
+                         Return the response as a JSON object with the following schema:
+                         { name: "${workoutName}", sets: number, reps: number }`;
                 break;
+
             case "advice":
                 prompt = userInput;
+                setMessages(prev => [
+                    ...prev,
+                    { user: "You", content: userInput }
+                ]);
                 break;
         }
 
@@ -126,12 +157,13 @@ function Brawnify() {
             }
         }
 
-        // Add messages to chat
-        setMessages((prev) => [
-            ...prev,
-            { user: "You", content: userInput },
-            { user: "Brawnie", content: botResponse },
-        ]);
+        // Add the final response to chat if it's advice
+        if (inputState.type === "advice") {
+            setMessages(prev => [
+                ...prev,
+                { user: "Brawnie", content: botResponse }
+            ]);
+        }
 
         // Reset state
         setUserInput("");

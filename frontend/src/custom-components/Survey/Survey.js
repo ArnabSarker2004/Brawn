@@ -26,18 +26,19 @@ function SurveyPage() {
         );
 
         const profileData = {
-            name: data.question1,
-            email: data.question2,
-            height: Number(data.question3),
-            weight: Number(data.question4),
-            age: Number(data.question5),
-            gender: data.question6 === "Item 1" ? "Male" : "Female",
-            bmr: bmr,
-            yearsOfExperience: Number(data.question8)
+            username: "Test", // You might want to get this from user auth
+            Name: data.question1,
+            Email: data.question2,
+            Height: data.question3.toString(),
+            Weight: Number(data.question4),
+            Age: Number(data.question5),
+            Gender: data.question6 === "Item 1" ? "Male" : "Female",
+            BMR: bmr.toString(),
+            YearsOfWorkoutExperience: Number(data.question8),
+            Bio: data.question7 || "No bio provided"
         };
 
         try {
-
             const response = await fetch('/api/profile', {
                 method: 'POST',
                 headers: {
