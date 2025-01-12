@@ -15,7 +15,7 @@ import {
 } from "../components/ui/select";
 
 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-const API_KEY ="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";
+const API_KEY ="";
 
 function Brawnify() {
     const [messages, setMessages] = useState([
