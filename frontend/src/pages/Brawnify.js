@@ -105,8 +105,14 @@ function Brawnify() {
 
                 // Now get the full routine details
                 prompt = `Create a new workout routine based on this description: ${userInput}. 
-                         Return the response as a JSON object with the following schema: 
-                         { name: "${routineName}", exercises: [{ name: string, sets: number, reps: number }] }`;
+                            Return the response as a JSON object with the following schema: 
+                            { name: "${routineName}", workouts: [{ title: string, timeBased: boolean, cardio: boolean, sets: [{ weight: number, reps: number, time: number }] }] }`;
+                
+                const routineResponse = await fetchGPTResponse(prompt);
+                const routineData = JSON.parse(routineResponse);
+
+                // Post the new routine to the backend
+                await handleCreateRoutine(routineData);
                 break;
 
             case "add-workout":
@@ -125,8 +131,14 @@ function Brawnify() {
 
                 // Now get the full workout details
                 prompt = `Create a new workout based on this description: ${userInput}. 
-                         Return the response as a JSON object with the following schema:
-                         { name: "${workoutName}", sets: number, reps: number }`;
+                            Return the response as a JSON object with the following schema:
+                            { title: "${workoutName}", timeBased: boolean, cardio: boolean, sets: [{ weight: number, reps: number, time: number }] }`;
+                
+                const workoutResponse = await fetchGPTResponse(prompt);
+                const workoutData = JSON.parse(workoutResponse);
+
+                // Post the new workout to the existing routine
+                await handleAddWorkout(selectedRoutine, workoutData);
                 break;
 
             case "advice":
@@ -205,11 +217,59 @@ function Brawnify() {
     };
 
     const handleCreateRoutine = async (routineData) => {
-        // Implementation of handleCreateRoutine
+        const URL = process.env.NODE_ENV === "production"
+            ? "https://brawn-tedx.onrender.com"
+            : "http://localhost:4000";
+
+        try {
+            const response = await fetch(`${URL}/api/routines`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(routineData),
+                credentials: "include",
+            });
+
+            if (response.ok) {
+                const newRoutine = await response.json();
+                setRoutines((prevRoutines) => [...prevRoutines, newRoutine]);
+            } else {
+                console.error("Failed to create routine");
+            }
+        } catch (error) {
+            console.error("Error creating routine:", error);
+        }
     };
 
     const handleAddWorkout = async (routineId, workoutData) => {
-        // Implementation of handleAddWorkout
+        const URL = process.env.NODE_ENV === "production"
+            ? "https://brawn-tedx.onrender.com"
+            : "http://localhost:4000";
+
+        try {
+            const response = await fetch(`${URL}/api/routines/${routineId}/workouts`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(workoutData),
+                credentials: "include",
+            });
+
+            if (response.ok) {
+                const updatedRoutine = await response.json();
+                setRoutines((prevRoutines) =>
+                    prevRoutines.map((routine) =>
+                        routine._id === routineId ? updatedRoutine : routine
+                    )
+                );
+            } else {
+                console.error("Failed to add workout");
+            }
+        } catch (error) {
+            console.error("Error adding workout:", error);
+        }
     };
 
     return (
