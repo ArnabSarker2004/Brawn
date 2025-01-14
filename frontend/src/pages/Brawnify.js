@@ -15,7 +15,7 @@ import {
 } from "../components/ui/select";
 
 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-const API_KEY ="";
+const API_KEY ="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";
 
 function Brawnify() {
     const [messages, setMessages] = useState([
@@ -90,99 +90,90 @@ function Brawnify() {
         setLoading(true);
         let prompt = "";
 
-        switch (inputState.type) {
-            case "new-routine":
-                // First, get a name for the routine
-                const routineNamePrompt = `Based on this description: "${userInput}", generate a short, catchy name for this workout routine. Return only the name, nothing else.`;
-                const routineName = await fetchGPTResponse(routineNamePrompt);
-                
-                // Add initial message showing the generated name
-                setMessages(prev => [
-                    ...prev,
-                    { user: "You", content: userInput },
-                    { user: "Brawnie", content: `Creating a new routine called "${routineName}"` }
-                ]);
+        try {
+            switch (inputState.type) {
+                case "new-routine":
+                    // First, get a name for the routine
+                    const routineNamePrompt = `Based on this description: "${userInput}", generate a technical name for this workout routine that describes the series of workouts and the muscles it develops. Avoid using adjectives like "Blast" or "Strong". Return only the name, nothing else.`;
+                    const routineName = await fetchGPTResponse(routineNamePrompt);
+                    
+                    // Add initial message showing the generated name
+                    setMessages(prev => [
+                        ...prev,
+                        { user: "You", content: userInput },
+                        { user: "Brawnie", content: `Creating a new routine called "${routineName}"` }
+                    ]);
 
-                // Now get the full routine details
-                prompt = `Create a new workout routine based on this description: ${userInput}. 
-                            Return the response as a JSON object with the following schema: 
-                            { name: "${routineName}", workouts: [{ title: string, timeBased: boolean, cardio: boolean, sets: [{ weight: number, reps: number, time: number }] }] }`;
-                
-                const routineResponse = await fetchGPTResponse(prompt);
-                const routineData = JSON.parse(routineResponse);
+                    // Now get the full routine details
+                    prompt = `Create a new workout routine based on this description: ${userInput}. 
+                                Ensure the routine is in-depth and takes 1hr 30mins to 2hrs to complete unless the user specifies a faster completion time or a quick routine. 
+                                Use technical fitness terminology for the names of the workouts. 
+                                Avoid workouts like "warm up". 
+                                Ensure all workouts have 3 sets. 
+                                If the workout involves heavy weight, set reps to 6-8. 
+                                If the workout involves light weight, set reps to 10-12. 
+                                Include 8 popular workouts in the routine. 
+                                Make it sound like Jeff Nippard or Hussein Farhat named it.
+                                Return the response as a JSON object with the following schema: 
+                                { name: "${routineName}", workouts: [{ title: string, timeBased: boolean, cardio: boolean, sets: [{ weight: number, reps: number, time: number }] }] }`;
+                    
+                    const routineResponse = await fetchGPTResponse(prompt);
+                    const routineData = JSON.parse(routineResponse);
 
-                // Post the new routine to the backend
-                await handleCreateRoutine(routineData);
-                break;
+                    // Post the new routine to the backend
+                    await handleCreateRoutine(routineData);
+                    break;
 
-            case "add-workout":
-                const selectedRoutineName = routines.find(r => r._id === selectedRoutine)?.name || '';
-                
-                // First, get a name for the workout
-                const workoutNamePrompt = `Based on this description: "${userInput}", generate an appropriate name for this exercise with correct gym terminology. Make sure to analyze the user's need and give a workout that is appropriate for them. Return only the name, nothing else. Double check the name is correct and appropriate for the user.`;
-                const workoutName = await fetchGPTResponse(workoutNamePrompt);
-                
-                // Add initial message showing the generated name
-                setMessages(prev => [
-                    ...prev,
-                    { user: "You", content: userInput },
-                    { user: "Brawnie", content: `New workout called "${workoutName}" to the ${selectedRoutineName} routine` }
-                ]);
+                case "add-workout":
+                    const selectedRoutineName = routines.find(r => r._id === selectedRoutine)?.name || '';
+                    
+                    // First, get a name for the workout
+                    const workoutNamePrompt = `Based on this description: "${userInput}", generate an appropriate name for this exercise using technical fitness terminology. 
+                                                Ensure the name is correct and appropriate for the user. Return only the name, nothing else.`;
+                    const workoutName = await fetchGPTResponse(workoutNamePrompt);
+                    
+                    // Add initial message showing the generated name
+                    setMessages(prev => [
+                        ...prev,
+                        { user: "You", content: userInput },
+                        { user: "Brawnie", content: `New workout called "${workoutName}" to the ${selectedRoutineName} routine` }
+                    ]);
 
-                // Now get the full workout details
-                prompt = `Create a new workout based on this description: ${userInput}. 
-                            Return the response as a JSON object with the following schema:
-                            { title: "${workoutName}", timeBased: boolean, cardio: boolean, sets: [{ weight: number, reps: number, time: number }] }`;
-                
-                const workoutResponse = await fetchGPTResponse(prompt);
-                const workoutData = JSON.parse(workoutResponse);
+                    // Now get the full workout details
+                    prompt = `Create a new workout based on this description: ${userInput}. 
+                                Use technical fitness terminology for the name of the workout. 
+                                Ensure the workout has 3 sets. 
+                                Make sure to check if the workouts in the routine are cardio or time-based. Workouts that stress your cardiovascular system are usually cardio workouts. Workouts that are isometric or involve holding a position for a certain amount of time are time-based workouts.
+                                If the workout involves heavy weight, set reps to 6-8. 
+                                If the workout involves light weight, set reps to 10-12. 
+                                Make it sound like Jeff Nippard or Hussein Farhat named it.
+                                Return the response as a JSON object with the following schema:
+                                { title: "${workoutName}", timeBased: boolean, cardio: boolean, sets: [{ weight: number, reps: number, time: number }] }`;
+                    
+                    const workoutResponse = await fetchGPTResponse(prompt);
+                    const workoutData = JSON.parse(workoutResponse);
 
-                // Post the new workout to the existing routine
-                await handleAddWorkout(selectedRoutine, workoutData);
-                break;
+                    // Post the new workout to the existing routine
+                    await handleAddWorkout(selectedRoutine, workoutData);
+                    break;
 
-            case "advice":
-                prompt = userInput;
-                setMessages(prev => [
-                    ...prev,
-                    { user: "You", content: userInput }
-                ]);
-                break;
-        }
-
-        const botResponse = await fetchGPTResponse(prompt);
-
-        // Handle the response based on the type
-        if (inputState.type === "new-routine") {
-            try {
-                const routineData = JSON.parse(botResponse);
-                await handleCreateRoutine(routineData);
-            } catch (error) {
-                console.error("Error parsing routine data:", error);
+                case "advice":
+                    prompt = userInput;
+                    setMessages(prev => [
+                        ...prev,
+                        { user: "You", content: userInput }
+                    ]);
+                    break;
             }
-        } else if (inputState.type === "add-workout" && selectedRoutine) {
-            try {
-                const workoutData = JSON.parse(botResponse);
-                await handleAddWorkout(selectedRoutine, workoutData);
-            } catch (error) {
-                console.error("Error parsing workout data:", error);
-            }
-        }
-
-        // Add the final response to chat if it's advice
-        if (inputState.type === "advice") {
+        } catch (error) {
+            console.error("Error processing request:", error);
             setMessages(prev => [
                 ...prev,
-                { user: "Brawnie", content: botResponse }
+                { user: "Brawnie", content: "Sorry, there was an error processing your request." }
             ]);
+        } finally {
+            setLoading(false);
         }
-
-        // Reset state
-        setUserInput("");
-        setInputState({ show: false, type: null, placeholder: "" });
-        setShowRoutineSelect(false);
-        setSelectedRoutine("");
-        setLoading(false);
     };
 
     const fetchGPTResponse = async (message) => {
