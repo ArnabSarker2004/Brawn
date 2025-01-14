@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState} from "react";
 import { Button } from "../components/ui/button";
 import {
     Card,
@@ -13,11 +13,37 @@ import {
     SelectTrigger,
     SelectValue
 } from "../components/ui/select";
+import { useAuth } from "../context/AuthContext";
 
 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-const API_KEY ="";
-
+const API_KEY ="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";
+const URL =
+    process.env.NODE_ENV === "production"
+        ? "https://brawn-tedx.onrender.com"
+        : "http://localhost:4000";
 function Brawnify() {
+    const {user} = useAuth();
+    const [body, setBody] = useState(null);
+    const getUserdata = async () => {
+        try {
+            const response = await fetch(`${URL}/api/user/getbodyinfo`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    username: user,
+                }),
+                credentials: "include",
+            });
+            if (response.ok) {
+                const data = await response.json();
+                setBody(data);
+            }
+        } catch {
+            console.log("no information found");
+        }
+    };
     const [messages, setMessages] = useState([
         {
             user: "Brawnie",
@@ -38,6 +64,7 @@ function Brawnify() {
 
     useEffect(() => {
         fetchRoutines();
+        getUserdata();
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
 
@@ -90,7 +117,6 @@ function Brawnify() {
         setLoading(true);
         let prompt = "";
 
-        try {
             switch (inputState.type) {
                 case "new-routine":
                     // First, get a name for the routine
@@ -112,6 +138,11 @@ function Brawnify() {
                                 Ensure all workouts have 3 sets. 
                                 If the workout involves heavy weight, set reps to 6-8. 
                                 If the workout involves light weight, set reps to 10-12. 
+                                Also make sure that the workout matches the following user stats
+                                gender: ${body.Gender}
+                                weight: ${body.Weight}
+                                YearsOfWorkoutExperience: ${body.YearsOfWorkoutExperience}
+                                height: ${body.Height}
                                 Include 8 popular workouts in the routine. 
                                 Make it sound like Jeff Nippard or Hussein Farhat named it.
                                 Return the response as a JSON object with the following schema: 
@@ -146,6 +177,7 @@ function Brawnify() {
                                 Make sure to check if the workouts in the routine are cardio or time-based. Workouts that stress your cardiovascular system are usually cardio workouts. Workouts that are isometric or involve holding a position for a certain amount of time are time-based workouts.
                                 If the workout involves heavy weight, set reps to 6-8. 
                                 If the workout involves light weight, set reps to 10-12. 
+                                Make the name with less than or equal to three words
                                 Make it sound like Jeff Nippard or Hussein Farhat named it.
                                 Return the response as a JSON object with the following schema:
                                 { title: "${workoutName}", timeBased: boolean, cardio: boolean, sets: [{ weight: number, reps: number, time: number }] }`;
@@ -165,15 +197,39 @@ function Brawnify() {
                     ]);
                     break;
             }
-        } catch (error) {
-            console.error("Error processing request:", error);
-            setMessages(prev => [
-                ...prev,
-                { user: "Brawnie", content: "Sorry, there was an error processing your request." }
-            ]);
-        } finally {
+            const botResponse = await fetchGPTResponse(prompt);
+
+            // Handle the response based on the type
+            if (inputState.type === "new-routine") {
+                try {
+                    const routineData = JSON.parse(botResponse);
+                    await handleCreateRoutine(routineData);
+                } catch (error) {
+                    console.error("Error parsing routine data:", error);
+                }
+            } else if (inputState.type === "add-workout" && selectedRoutine) {
+                try {
+                    const workoutData = JSON.parse(botResponse);
+                    await handleAddWorkout(selectedRoutine, workoutData);
+                } catch (error) {
+                    console.error("Error parsing workout data:", error);
+                }
+            }
+    
+            // Add the final response to chat if it's advice
+            if (inputState.type === "advice") {
+                setMessages(prev => [
+                    ...prev,
+                    { user: "Brawnie", content: botResponse }
+                ]);
+            }
+    
+            // Reset state
+            setUserInput("");
+            setInputState({ show: false, type: null, placeholder: "" });
+            setShowRoutineSelect(false);
+            setSelectedRoutine("");
             setLoading(false);
-        }
     };
 
     const fetchGPTResponse = async (message) => {
