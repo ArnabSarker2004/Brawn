@@ -97,7 +97,7 @@ const Analytics = ({ LongestWorkoutStreak,workouts, Weight, routineDistribution,
                     </CardContent>
                 </Card>
             </div>
-            <div className="grid gap-5 mt-5 md:grid-cols-1 grid-cols-1 w-full">
+            {/* <div className="grid gap-5 mt-5 md:grid-cols-1 grid-cols-1 w-full">
                 <Card className="h-auto">
                     <CardHeader className="text-brawn font-semibold text-xl">
                         Routine Progress
@@ -106,7 +106,7 @@ const Analytics = ({ LongestWorkoutStreak,workouts, Weight, routineDistribution,
                         <RoutineProgress routines={routines} />
                     </CardContent>
                 </Card>
-            </div>
+            </div> */}
         </div>
     );
 };

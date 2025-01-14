@@ -16,7 +16,7 @@ import {
 import { useAuth } from "../context/AuthContext";
 
 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-const API_KEY ="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";
+const API_KEY =process.env.REACT_APP_OPEN_AI;
 const URL =
     process.env.NODE_ENV === "production"
         ? "https://brawn-tedx.onrender.com"
