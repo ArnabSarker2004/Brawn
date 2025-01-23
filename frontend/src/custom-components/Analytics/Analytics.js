@@ -87,11 +87,12 @@ const Analytics = ({ LongestWorkoutStreak,workouts, Weight, routineDistribution,
                                 </TableHead>
                             </TableHeader>
                             <TableBody>
-                                <TableRow>
+                                Coming Soon....
+                                {/* <TableRow>
                                     <TableCell>Run</TableCell>
                                     <TableCell>10 km</TableCell>
                                     <TableCell>Jan-1</TableCell>
-                                </TableRow>
+                                </TableRow> */}
                             </TableBody>
                         </Table>
                     </CardContent>
