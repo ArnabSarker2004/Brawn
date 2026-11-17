@@ -1,0 +1,772 @@
+.brawnify-page.brawnify-studio {
+    --bf-page: #f7f8fb;
+    --bf-surface: #ffffff;
+    --bf-soft: #f1f5f3;
+    --bf-border: #dde6eb;
+    --bf-title: #101828;
+    --bf-body: #475569;
+    --bf-muted: #718096;
+    --bf-green: #1aac83;
+    --bf-danger: #e7195a;
+    display: block;
+    grid-template-columns: none;
+    grid-template-rows: none;
+    gap: 0;
+    width: 100%;
+    max-width: none;
+    height: 100vh;
+    min-height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    background: var(--bf-page);
+    color: var(--bf-title);
+}
+
+.pages-full-bleed .brawnify-page.brawnify-studio {
+    padding: 10px 12px 10px var(--app-compact-nav-safe);
+}
+
+.app-shell-dark .brawnify-page.brawnify-studio {
+    --bf-page: #07080a;
+    --bf-surface: #101114;
+    --bf-soft: #181a1f;
+    --bf-border: rgba(148, 163, 184, 0.22);
+    --bf-title: #edf4fb;
+    --bf-body: #bac7d5;
+    --bf-muted: #91a0b4;
+    --bf-green: #6ee7b7;
+}
+
+.brawnify-page.brawnify-studio *,
+.brawnify-page.brawnify-studio *::before,
+.brawnify-page.brawnify-studio *::after {
+    min-width: 0;
+}
+
+.brawnify-page.brawnify-studio button,
+.brawnify-page.brawnify-studio input,
+.brawnify-page.brawnify-studio textarea,
+.brawnify-page.brawnify-studio select {
+    font-family: inherit;
+}
+
+.brawnify-studio .brawnify-shell {
+    display: grid;
+    grid-template-columns: clamp(210px, 15vw, 270px) minmax(0, 1fr) clamp(390px, 29vw, 520px);
+    gap: 12px;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.brawnify-studio .brawnify-action-rail,
+.brawnify-studio .brawnify-workspace,
+.brawnify-studio .brawnify-context-card {
+    border: 1px solid var(--bf-border);
+    border-radius: 8px;
+    background: var(--bf-surface);
+}
+
+.brawnify-studio .brawnify-action-rail {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 12px;
+    min-height: 0;
+    padding: 14px;
+}
+
+.brawnify-studio .brawnify-brand-block {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--bf-border);
+}
+
+.brawnify-studio .brawnify-ai-mark,
+.brawnify-studio .brawnify-current-icon {
+    display: grid;
+    flex: 0 0 auto;
+    place-items: center;
+    border-radius: 999px;
+    background: rgba(26, 172, 131, 0.12);
+    color: var(--bf-green);
+}
+
+.brawnify-studio .brawnify-ai-mark {
+    height: 42px;
+    width: 42px;
+}
+
+.brawnify-studio .brawnify-current-icon {
+    height: 38px;
+    width: 38px;
+}
+
+.brawnify-studio .brawnify-current-icon.danger {
+    background: rgba(231, 25, 90, 0.1);
+    color: var(--bf-danger);
+}
+
+.brawnify-studio .brawnify-eyebrow {
+    margin: 0;
+    color: var(--bf-green);
+    font-size: 0.68rem;
+    font-weight: 950;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.brawnify-studio .brawnify-brand-block h1 {
+    margin: 2px 0 0;
+    color: var(--bf-title);
+    font-size: 1.15rem;
+    font-weight: 950;
+    letter-spacing: 0;
+    line-height: 1.1;
+}
+
+.brawnify-studio .brawnify-mode-strip {
+    display: grid;
+    align-content: start;
+    gap: 9px;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 0;
+    scrollbar-width: none;
+}
+
+.brawnify-studio .brawnify-mode-strip::-webkit-scrollbar {
+    display: none;
+}
+
+.brawnify-studio .brawnify-mode-strip button {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
+    min-height: 46px;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--bf-muted);
+    font-size: 0.84rem;
+    font-weight: 900;
+    padding: 4px 8px 4px 4px;
+    text-align: left;
+}
+
+.brawnify-studio .brawnify-mode-strip button svg {
+    justify-self: center;
+}
+
+.brawnify-studio .brawnify-mode-strip button:hover {
+    background: var(--bf-soft);
+    color: var(--bf-title);
+}
+
+.brawnify-studio .brawnify-mode-strip button.active {
+    border-color: rgba(26, 172, 131, 0.42);
+    background: rgba(26, 172, 131, 0.1);
+    color: var(--bf-title);
+}
+
+.brawnify-studio .brawnify-mode-strip button.danger.active {
+    border-color: rgba(231, 25, 90, 0.42);
+    background: rgba(231, 25, 90, 0.1);
+    color: var(--bf-danger);
+}
+
+.brawnify-studio .brawnify-workspace {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.brawnify-studio .brawnify-workspace-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
+    gap: 12px;
+    align-items: center;
+    border-bottom: 1px solid var(--bf-border);
+    padding: 14px 16px;
+}
+
+.brawnify-studio .brawnify-active-action {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.brawnify-studio .brawnify-active-action h2,
+.brawnify-studio .brawnify-panel-heading h2 {
+    margin: 2px 0 0;
+    overflow: hidden;
+    color: var(--bf-title);
+    font-size: 1.18rem;
+    font-weight: 950;
+    letter-spacing: 0;
+    line-height: 1.15;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.brawnify-studio .brawnify-routine-picker {
+    display: grid;
+    gap: 6px;
+}
+
+.brawnify-studio .brawnify-routine-picker span {
+    color: var(--bf-muted);
+    font-size: 0.68rem;
+    font-weight: 950;
+    text-transform: uppercase;
+}
+
+.brawnify-studio .brawnify-routine-picker select,
+.brawnify-studio .brawnify-routine-search {
+    min-height: 40px;
+    border: 1px solid var(--bf-border);
+    border-radius: 8px;
+    background: var(--bf-surface);
+    color: var(--bf-title);
+}
+
+.brawnify-studio .brawnify-routine-picker select {
+    width: 100%;
+    appearance: none;
+    font-size: 0.84rem;
+    font-weight: 850;
+    padding: 0 10px;
+}
+
+.brawnify-studio .brawnify-routine-picker select:focus,
+.brawnify-studio .brawnify-routine-search:focus-within,
+.brawnify-studio .brawnify-composer > div:focus-within {
+    border-color: rgba(26, 172, 131, 0.68);
+    box-shadow: 0 0 0 3px rgba(26, 172, 131, 0.12);
+    outline: 0;
+}
+
+.brawnify-studio .brawnify-messages {
+    display: grid;
+    align-content: start;
+    gap: 10px;
+    min-height: 0;
+    overflow-y: auto;
+    background: var(--bf-page);
+    padding: 18px;
+}
+
+.brawnify-studio .brawnify-message {
+    display: grid;
+    justify-items: start;
+    gap: 4px;
+}
+
+.brawnify-studio .brawnify-message.mine {
+    justify-items: end;
+}
+
+.brawnify-studio .brawnify-message span {
+    color: var(--bf-muted);
+    font-size: 0.66rem;
+    font-weight: 950;
+    text-transform: uppercase;
+}
+
+.brawnify-studio .brawnify-message p {
+    display: inline-flex;
+    max-width: min(880px, 88%);
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    border: 1px solid var(--bf-border);
+    border-radius: 8px;
+    background: var(--bf-surface);
+    color: var(--bf-body);
+    font-size: 0.9rem;
+    font-weight: 650;
+    line-height: 1.55;
+    padding: 10px 12px;
+    white-space: pre-wrap;
+}
+
+.brawnify-studio .brawnify-message.mine p {
+    border-color: transparent;
+    background: var(--bf-green);
+    color: #ffffff;
+}
+
+.brawnify-studio .brawnify-composer {
+    display: grid;
+    gap: 8px;
+    border-top: 1px solid var(--bf-border);
+    background: var(--bf-surface);
+    padding: 12px;
+}
+
+.brawnify-studio .brawnify-composer > div {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 46px;
+    gap: 8px;
+    align-items: end;
+    border: 1px solid var(--bf-border);
+    border-radius: 8px;
+    background: var(--bf-surface);
+    padding: 8px;
+}
+
+.brawnify-studio .brawnify-composer textarea {
+    width: 100%;
+    min-height: 54px;
+    max-height: 132px;
+    resize: none;
+    border: 0;
+    background: transparent;
+    color: var(--bf-title);
+    font-size: 0.95rem;
+    font-weight: 800;
+    line-height: 1.45;
+    outline: 0;
+    padding: 3px 4px;
+}
+
+.brawnify-studio .brawnify-composer textarea::placeholder {
+    color: var(--bf-muted);
+    font-weight: 750;
+}
+
+.brawnify-studio .brawnify-composer button {
+    display: grid;
+    width: 46px;
+    height: 46px;
+    place-items: center;
+    border: 0;
+    border-radius: 8px;
+    background: var(--bf-green);
+    color: #ffffff;
+}
+
+.brawnify-studio .brawnify-composer button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.brawnify-studio .brawnify-error {
+    margin: 0;
+    color: var(--bf-danger);
+    font-size: 0.78rem;
+    font-weight: 850;
+}
+
+.brawnify-studio .brawnify-side-panel {
+    display: grid;
+    align-content: start;
+    gap: 12px;
+    min-height: 0;
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+.brawnify-studio .brawnify-context-card {
+    display: grid;
+    gap: 10px;
+    padding: 14px;
+}
+
+.brawnify-studio .brawnify-panel-heading {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.brawnify-studio .brawnify-panel-heading svg {
+    flex: 0 0 auto;
+    color: var(--bf-green);
+}
+
+.brawnify-studio .brawnify-mini-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.brawnify-studio .brawnify-competition-card {
+    background:
+        linear-gradient(135deg, rgba(26, 172, 131, 0.08), transparent 48%),
+        var(--bf-surface);
+}
+
+.brawnify-studio .brawnify-competition-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.brawnify-studio .brawnify-competition-grid button {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 5px 8px;
+    align-items: center;
+    min-height: 94px;
+    border: 1px solid var(--bf-border);
+    border-radius: 8px;
+    background: var(--bf-surface);
+    color: var(--bf-title);
+    padding: 10px;
+    text-align: left;
+}
+
+.brawnify-studio .brawnify-competition-grid button:hover {
+    border-color: rgba(26, 172, 131, 0.46);
+    background: rgba(26, 172, 131, 0.07);
+}
+
+.brawnify-studio .brawnify-competition-grid button > span {
+    display: grid;
+    grid-row: span 3;
+    height: 34px;
+    width: 34px;
+    place-items: center;
+    border-radius: 999px;
+    background: rgba(26, 172, 131, 0.12);
+    color: var(--bf-green);
+}
+
+.brawnify-studio .brawnify-competition-grid button.tone-cut > span {
+    background: rgba(231, 25, 90, 0.1);
+    color: var(--bf-danger);
+}
+
+.brawnify-studio .brawnify-competition-grid button.tone-gain > span {
+    background: rgba(217, 154, 22, 0.14);
+    color: #d99a16;
+}
+
+.brawnify-studio .brawnify-competition-grid button.tone-streak > span {
+    background: rgba(249, 115, 22, 0.13);
+    color: #f97316;
+}
+
+.brawnify-studio .brawnify-competition-grid strong,
+.brawnify-studio .brawnify-competition-grid small,
+.brawnify-studio .brawnify-competition-grid em {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.brawnify-studio .brawnify-competition-grid strong {
+    font-size: 0.86rem;
+    font-weight: 950;
+}
+
+.brawnify-studio .brawnify-competition-grid small {
+    color: var(--bf-title);
+    font-size: 0.75rem;
+    font-weight: 850;
+}
+
+.brawnify-studio .brawnify-competition-grid em {
+    color: var(--bf-muted);
+    font-size: 0.7rem;
+    font-style: normal;
+    font-weight: 750;
+}
+
+.brawnify-studio .brawnify-mini-stat-grid div {
+    display: grid;
+    gap: 3px;
+    border-radius: 8px;
+    background: var(--bf-soft);
+    padding: 9px;
+}
+
+.brawnify-studio .brawnify-mini-stat-grid svg {
+    color: var(--bf-green);
+}
+
+.brawnify-studio .brawnify-mini-stat-grid small,
+.brawnify-studio .brawnify-profile-grid small {
+    color: var(--bf-muted);
+    font-size: 0.66rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.brawnify-studio .brawnify-mini-stat-grid b,
+.brawnify-studio .brawnify-profile-grid b {
+    overflow: hidden;
+    color: var(--bf-title);
+    font-size: 0.82rem;
+    font-weight: 900;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.brawnify-studio .brawnify-routine-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.brawnify-studio .brawnify-routine-preview span {
+    display: inline-flex;
+    min-height: 24px;
+    align-items: center;
+    border-radius: 999px;
+    background: var(--bf-soft);
+    color: var(--bf-body);
+    font-size: 0.72rem;
+    font-weight: 850;
+    padding: 0 8px;
+}
+
+.brawnify-studio .brawnify-routine-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--bf-muted);
+    padding: 0 10px;
+}
+
+.brawnify-studio .brawnify-routine-search input {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--bf-title);
+    font-size: 0.84rem;
+    font-weight: 800;
+}
+
+.brawnify-studio .brawnify-routine-list {
+    display: grid;
+    align-content: start;
+    gap: 8px;
+    max-height: 24vh;
+    overflow-y: auto;
+    padding-right: 2px;
+}
+
+.brawnify-studio .brawnify-routine-list button,
+.brawnify-studio .brawnify-starters button {
+    border: 1px solid var(--bf-border);
+    border-radius: 8px;
+    background: var(--bf-surface);
+    color: var(--bf-title);
+    text-align: left;
+}
+
+.brawnify-studio .brawnify-routine-list button {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 10px;
+    padding: 9px;
+}
+
+.brawnify-studio .brawnify-routine-list button.active {
+    border-color: rgba(26, 172, 131, 0.58);
+    background: rgba(26, 172, 131, 0.1);
+    box-shadow: none;
+}
+
+.brawnify-studio .brawnify-routine-mark {
+    display: grid;
+    height: 34px;
+    width: 34px;
+    place-items: center;
+    border-radius: 999px;
+    background: var(--bf-soft);
+    color: var(--bf-green);
+    font-size: 0.7rem;
+    font-weight: 950;
+}
+
+.brawnify-studio .brawnify-routine-list button.active .brawnify-routine-mark {
+    background: var(--bf-green);
+    color: #ffffff;
+}
+
+.brawnify-studio .brawnify-routine-copy {
+    display: grid;
+    gap: 5px;
+}
+
+.brawnify-studio .brawnify-routine-list strong {
+    overflow: hidden;
+    color: var(--bf-title);
+    font-size: 0.86rem;
+    font-weight: 950;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.brawnify-studio .brawnify-routine-copy > span {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.brawnify-studio .brawnify-routine-copy b {
+    display: inline-flex;
+    min-height: 19px;
+    align-items: center;
+    border-radius: 999px;
+    background: var(--bf-soft);
+    color: var(--bf-muted);
+    font-size: 0.64rem;
+    font-weight: 850;
+    padding: 0 7px;
+}
+
+.brawnify-studio .brawnify-empty-context {
+    display: grid;
+    gap: 8px;
+    border: 1px dashed var(--bf-border);
+    border-radius: 8px;
+    color: var(--bf-muted);
+    padding: 12px;
+}
+
+.brawnify-studio .brawnify-empty-context p {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 750;
+    line-height: 1.45;
+}
+
+.brawnify-studio .brawnify-starters {
+    align-content: start;
+    overflow: visible;
+    border-top: 0;
+    padding-top: 12px;
+}
+
+.brawnify-studio .brawnify-starters button {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: 8px;
+    color: var(--bf-body);
+    font-size: 0.76rem;
+    font-weight: 800;
+    line-height: 1.35;
+    padding: 9px;
+}
+
+.brawnify-studio .brawnify-starters svg {
+    color: var(--bf-green);
+}
+
+.brawnify-studio .brawnify-profile-grid {
+    display: grid;
+    gap: 0;
+    border-top: 1px solid var(--bf-border);
+}
+
+.brawnify-studio .brawnify-profile-grid span {
+    display: flex;
+    min-height: 30px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    border-bottom: 1px solid var(--bf-border);
+    padding: 6px 0;
+}
+
+@media (max-width: 1180px) {
+    .brawnify-studio .brawnify-shell {
+        grid-template-columns: 82px minmax(0, 1fr) minmax(320px, 380px);
+    }
+
+    .brawnify-studio .brawnify-action-rail {
+        padding: 10px;
+    }
+
+    .brawnify-studio .brawnify-brand-block {
+        justify-content: center;
+    }
+
+    .brawnify-studio .brawnify-brand-block div,
+    .brawnify-studio .brawnify-mode-strip button span {
+        display: none;
+    }
+
+    .brawnify-studio .brawnify-mode-strip button {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 4px;
+    }
+}
+
+@media (max-width: 900px) {
+    .brawnify-page.brawnify-studio {
+        height: auto;
+        min-height: 100vh;
+        overflow: visible;
+    }
+
+    .brawnify-studio .brawnify-shell {
+        grid-template-columns: 70px minmax(0, 1fr);
+        overflow: visible;
+    }
+
+    .brawnify-studio .brawnify-workspace {
+        min-height: 620px;
+    }
+
+    .brawnify-studio .brawnify-side-panel {
+        grid-column: 1 / -1;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        overflow: visible;
+    }
+}
+
+@media (max-width: 760px) {
+    .pages-full-bleed .brawnify-page.brawnify-studio {
+        padding-left: 82px;
+        padding-right: 10px;
+    }
+
+    .brawnify-studio .brawnify-shell,
+    .brawnify-studio .brawnify-workspace-header,
+    .brawnify-studio .brawnify-side-panel,
+    .brawnify-studio .brawnify-mini-stat-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .brawnify-studio .brawnify-action-rail {
+        grid-template-rows: auto;
+    }
+
+    .brawnify-studio .brawnify-brand-block {
+        justify-content: flex-start;
+    }
+
+    .brawnify-studio .brawnify-brand-block div,
+    .brawnify-studio .brawnify-mode-strip button span {
+        display: block;
+    }
+
+    .brawnify-studio .brawnify-mode-strip {
+        display: flex;
+        overflow-x: auto;
+    }
+
+    .brawnify-studio .brawnify-mode-strip button {
+        display: inline-flex;
+        flex: 0 0 auto;
+        padding: 4px 10px;
+    }
+
+    .brawnify-studio .brawnify-workspace {
+        min-height: 560px;
+    }
+
+    .brawnify-studio .brawnify-competition-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}

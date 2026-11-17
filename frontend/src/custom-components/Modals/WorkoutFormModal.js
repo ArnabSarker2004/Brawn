@@ -1,272 +1,305 @@
-import { useState } from "react";
-import "./modal.css";
-import { Button } from "../../components/ui/button";
+import { useMemo, useState } from "react";
+import { Check, Clock3, Dumbbell, Search, Target, X } from "lucide-react";
+import {
+    exerciseCategories,
+    getExerciseSearchResults,
+    muscleGroups,
+} from "../../data/exerciseDatabase";
 import { useWorkoutsContext } from "../../hooks/useWorkoutsContext";
+import "./modal.css";
+
+const URL =
+    process.env.NODE_ENV === "production"
+        ? "https://brawn-tedx.onrender.com"
+        : "http://localhost:4000";
+
+const makeEmptySet = (isTimed, isCardio) =>
+    isTimed || isCardio ? { weight: isCardio ? 0 : "", reps: 0, time: "" } : { weight: "", reps: "", time: 0 };
+
+const getDefaultSets = (isTimed, isCardio, count = 3) =>
+    Array.from({ length: count }, () => makeEmptySet(isTimed, isCardio));
 
 const WorkoutFormModal = ({ setShowModal, routineId }) => {
     const { dispatch } = useWorkoutsContext();
+    const [query, setQuery] = useState("");
+    const [category, setCategory] = useState("All");
+    const [muscle, setMuscle] = useState("All");
+    const [selectedExercise, setSelectedExercise] = useState(null);
     const [title, setTitle] = useState("");
     const [timeBased, setTimeBased] = useState(false);
     const [cardio, setCardio] = useState(false);
-    const [sets, setSets] = useState([
-        cardio || timeBased
-            ? { weight: "", time: "" }
-            : { weight: "", reps: "" },
-    ]);
+    const [sets, setSets] = useState(getDefaultSets(false, false));
     const [error, setError] = useState(null);
     const [emptyFields, setEmptyFields] = useState([]);
 
-    const URL =
-        process.env.NODE_ENV === "production"
-            ? "https://brawn-tedx.onrender.com"
-            : "http://localhost:4000";
+    const searchResults = useMemo(
+        () => getExerciseSearchResults(query, category, muscle).slice(0, 14),
+        [query, category, muscle]
+    );
+
+    const updateSetMode = (nextTimeBased, nextCardio) => {
+        setTimeBased(nextTimeBased);
+        setCardio(nextCardio);
+        setSets((currentSets) =>
+            (currentSets.length ? currentSets : getDefaultSets(nextTimeBased, nextCardio)).map((set) => ({
+                weight: nextCardio ? 0 : nextTimeBased ? set.weight || "" : set.weight || "",
+                reps: nextTimeBased || nextCardio ? 0 : set.reps || "",
+                time: nextTimeBased || nextCardio ? set.time || "" : 0,
+            }))
+        );
+        setEmptyFields([]);
+    };
+
+    const selectExercise = (exercise) => {
+        const nextCardio = exercise.category === "Cardio";
+
+        setSelectedExercise(exercise);
+        setTitle(exercise.name);
+        setQuery(exercise.name);
+        setTimeBased(false);
+        setCardio(nextCardio);
+        setSets(getDefaultSets(false, nextCardio));
+        setEmptyFields([]);
+        setError(null);
+    };
 
     const handleSetChange = (index, event) => {
         const newSets = [...sets];
-        if (event.target.name === "time") {
-            const timeValue = event.target.value.replace(/\D/g, "").slice(0, 6);
-            newSets[index][event.target.name] = timeValue;
-        } else {
-            newSets[index][event.target.name] = event.target.value;
-        }
+        const { name, value } = event.target;
+
+        newSets[index] = {
+            ...newSets[index],
+            [name]: name === "time" ? value.replace(/\D/g, "").slice(0, 6) : value,
+        };
+
         setSets(newSets);
         setEmptyFields([]);
     };
 
     const handleAddSet = () => {
-        setSets([
-            ...sets,
-            cardio || timeBased
-                ? { weight: "", time: "" }
-                : { weight: "", reps: "" },
-        ]);
+        setSets([...sets, makeEmptySet(timeBased, cardio)]);
     };
+
+    const handleRemoveSet = (index) => {
+        setSets((currentSets) =>
+            currentSets.length > 1 ? currentSets.filter((_, currentIndex) => currentIndex !== index) : currentSets
+        );
+    };
+
     const validateFields = () => {
         const newEmptyFields = [];
         if (!title.trim()) newEmptyFields.push("title");
 
         sets.forEach((set, index) => {
             if (cardio || timeBased) {
-                if (!set.time) {
-                    newEmptyFields.push(`sets[${index}].time`);
-                }
+                if (!set.time) newEmptyFields.push(`sets[${index}].time`);
             } else {
-                if (!set.weight) {
-                    newEmptyFields.push(`sets[${index}].weight`);
-                }
-                if (!set.reps) {
-                    newEmptyFields.push(`sets[${index}].reps`);
-                }
+                if (!set.weight) newEmptyFields.push(`sets[${index}].weight`);
+                if (!set.reps) newEmptyFields.push(`sets[${index}].reps`);
             }
         });
 
         return newEmptyFields;
     };
 
-    const clearSetValues = (newSets, isTimeBased, isCardio) => {
-        return newSets.map((set) => ({
-            weight: isCardio ? 0 : set.weight,
-            reps: isTimeBased || isCardio ? 0 : set.reps,
-            time: isTimeBased || isCardio ? set.time || "" : 0,
-        }));
-    };
-    const handleRemoveSet = (index) => {
-        const newSets = sets.filter((_, i) => i !== index);
-        setSets(newSets);
-    };
+    const handleSubmit = async (event) => {
+        event.preventDefault();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        const emptyFields = validateFields();
-        if (emptyFields.length > 0) {
-            // setError("Please fill in all fields.");
-            setEmptyFields(emptyFields);
+        const newEmptyFields = validateFields();
+        if (newEmptyFields.length > 0) {
+            setEmptyFields(newEmptyFields);
             return;
         }
 
         const workout = {
-            title,
+            title: title.trim(),
             sets: sets.map((set) => ({
-                weight: cardio ? 0 : set.weight,
-                reps: timeBased || cardio ? 0 : set.reps,
-                time: timeBased || cardio ? set.time : 0,
+                weight: cardio ? 0 : Number(set.weight || 0),
+                reps: timeBased || cardio ? 0 : Number(set.reps || 0),
+                time: timeBased || cardio ? Number(set.time || 0) : 0,
             })),
             timeBased,
             cardio,
         };
 
         try {
-            const response = await fetch(
-                `${URL}/api/routines/${routineId}/workouts`,
-                {
-                    method: "POST",
-                    body: JSON.stringify(workout),
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    credentials: "include",
-                }
-            );
+            const response = await fetch(`${URL}/api/routines/${routineId}/workouts`, {
+                method: "POST",
+                body: JSON.stringify(workout),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+            });
 
             if (response.ok) {
                 const newWorkout = await response.json();
                 dispatch({ type: "CREATE_WORKOUT", payload: newWorkout });
                 setShowModal(false);
             } else {
-                setError("Something went wrong.");
+                setError("Could not add this exercise.");
             }
-        } catch (error) {
-            console.error("Error adding workout:", error);
-            setError("Something went wrong.");
+        } catch (submitError) {
+            console.error("Error adding workout:", submitError);
+            setError("Could not reach the server.");
         }
     };
 
     return (
-        <div className="modal">
-            <div className="modal-content">
-                <span className="close" onClick={() => setShowModal(false)}>
-                    &times;
-                </span>
-                <form onSubmit={handleSubmit}>
-                    <h3>Add a New Workout</h3>
+        <div className="modal add-exercise-backdrop" role="dialog" aria-modal="true">
+            <form className="modal-content add-exercise-modal" onSubmit={handleSubmit}>
+                <button type="button" className="add-exercise-close" onClick={() => setShowModal(false)} aria-label="Close add exercise">
+                    <X className="h-5 w-5" />
+                </button>
 
-                    <label>Exercise Title:</label>
-                    <input
-                        type="text"
-                        onChange={(e) => {
-                            setTitle(e.target.value);
-                            setEmptyFields([]);
-                        }}
-                        value={title}
-                        className={emptyFields.includes("title") ? "error" : ""}
-                    />
-
-                    <div className="checkbox-group flex">
-                        <div className="time-based">
-                            <label className="time-based-text">
-                                Time Based:
-                            </label>
-                            <input
-                                className="checkbox-input"
-                                type="checkbox"
-                                checked={timeBased}
-                                onChange={() => {
-                                    setTimeBased(!timeBased);
-                                    if (!timeBased) {
-                                        setCardio(false);
-                                    }
-                                    setSets(
-                                        clearSetValues(sets, !timeBased, false)
-                                    );
-                                    setEmptyFields([]);
-                                }}
-                            />
-                        </div>
-                        <div className="time-based">
-                            <label className="time-based-text">
-                                Cardio Based:
-                            </label>
-                            <input
-                                className="checkbox-input"
-                                type="checkbox"
-                                checked={cardio}
-                                onChange={() => {
-                                    setCardio(!cardio);
-                                    if (!cardio) {
-                                        setTimeBased(false);
-                                    }
-                                    setSets(
-                                        clearSetValues(sets, false, !cardio)
-                                    );
-                                    setEmptyFields([]);
-                                }}
-                            />
-                        </div>
+                <div className="add-exercise-header">
+                    <div>
+                        <p>Add exercise</p>
+                        <h3>Choose from the database</h3>
                     </div>
+                    <span>{selectedExercise ? selectedExercise.category : "Custom ready"}</span>
+                </div>
 
-                    <div className="workout-table">
-                        <div className="workout-table-header">
-                            <span>SET</span>
-                            {!cardio && <span>LBS</span>}
-                            <span>{timeBased || cardio ? "TIME" : "REPS"}</span>
+                <div className="add-exercise-layout">
+                    <section className="exercise-picker-panel">
+                        <div className="exercise-picker-search">
+                            <Search className="h-5 w-5" />
+                            <input
+                                value={query}
+                                onChange={(event) => {
+                                    setQuery(event.target.value);
+                                    setTitle(event.target.value);
+                                    setSelectedExercise(null);
+                                    setEmptyFields([]);
+                                }}
+                                placeholder="Search bench, glutes, low impact cardio..."
+                            />
                         </div>
-                        {sets.map((set, index) => (
-                            <div className="workout-table-row" key={index}>
-                                <span>{index + 1}</span>
-                                {!cardio && (
-                                    <input
-                                        type="number"
-                                        name="weight"
-                                        onChange={(e) =>
-                                            handleSetChange(index, e)
-                                        }
-                                        value={set.weight}
-                                        className={
-                                            emptyFields.includes(
-                                                `sets[${index}].weight`
-                                            )
-                                                ? "error"
-                                                : ""
-                                        }
-                                    />
-                                )}
-                                {timeBased || cardio ? (
-                                    <input
-                                        type="text"
-                                        name="time"
-                                        onChange={(e) =>
-                                            handleSetChange(index, e)
-                                        }
-                                        value={set.time || ""}
-                                        placeholder="HHMMSS"
-                                        maxLength="6"
-                                        className={
-                                            emptyFields.includes(
-                                                `sets[${index}].time`
-                                            )
-                                                ? "error"
-                                                : ""
-                                        }
-                                    />
-                                ) : (
-                                    <input
-                                        type="number"
-                                        name="reps"
-                                        onChange={(e) =>
-                                            handleSetChange(index, e)
-                                        }
-                                        value={set.reps}
-                                        className={
-                                            emptyFields.includes(
-                                                `sets[${index}].reps`
-                                            )
-                                                ? "error"
-                                                : ""
-                                        }
-                                    />
-                                )}
-                                <Button
-                                    variant="destructive"
-                                    className="mr-4 ml-5 mb-2.5 flex align-middle items-center"
-                                    onClick={() => handleRemoveSet(index)}
+
+                        <div className="exercise-picker-filters">
+                            <select value={category} onChange={(event) => setCategory(event.target.value)}>
+                                {exerciseCategories.map((item) => <option key={item}>{item}</option>)}
+                            </select>
+                            <select value={muscle} onChange={(event) => setMuscle(event.target.value)}>
+                                {muscleGroups.map((item) => <option key={item}>{item}</option>)}
+                            </select>
+                        </div>
+
+                        <div className="exercise-picker-results">
+                            {searchResults.map((exercise) => (
+                                <button
+                                    type="button"
+                                    key={exercise.id}
+                                    className={selectedExercise?.id === exercise.id ? "selected" : ""}
+                                    onClick={() => selectExercise(exercise)}
                                 >
-                                    Remove Set
-                                </Button>
+                                    <span className="exercise-result-icon">
+                                        {selectedExercise?.id === exercise.id ? <Check className="h-4 w-4" /> : <Dumbbell className="h-4 w-4" />}
+                                    </span>
+                                    <span>
+                                        <strong>{exercise.name}</strong>
+                                        <small>{exercise.primaryMuscles.join(", ")} | {exercise.equipment}</small>
+                                    </span>
+                                    <em>{exercise.category}</em>
+                                </button>
+                            ))}
+                        </div>
+                    </section>
+
+                    <section className="exercise-builder-panel">
+                        <label className="builder-label" htmlFor="exercise-title">Exercise name</label>
+                        <input
+                            id="exercise-title"
+                            value={title}
+                            onChange={(event) => {
+                                setTitle(event.target.value);
+                                setSelectedExercise(null);
+                                setEmptyFields([]);
+                            }}
+                            className={emptyFields.includes("title") ? "error" : ""}
+                            placeholder="Custom exercise name"
+                        />
+
+                        {selectedExercise && (
+                            <div className="selected-exercise-summary">
+                                <Target className="h-5 w-5" />
+                                <div>
+                                    <strong>{selectedExercise.primaryMuscles.join(", ")}</strong>
+                                    <span>{selectedExercise.secondaryMuscles.slice(0, 3).join(", ") || "No secondary muscles listed"}</span>
+                                </div>
                             </div>
-                        ))}
-                    </div>
+                        )}
 
-                    <div className="modal-buttons">
-                        <Button variant="secondary" onClick={handleAddSet}>
-                            Add Set
-                        </Button>
-                        <Button variant="default">Save Workout</Button>
-                    </div>
+                        <div className="exercise-mode-toggle" aria-label="Exercise tracking mode">
+                            <button type="button" className={!timeBased && !cardio ? "active" : ""} onClick={() => updateSetMode(false, false)}>
+                                <Dumbbell className="h-4 w-4" />
+                                Weight + reps
+                            </button>
+                            <button type="button" className={timeBased ? "active" : ""} onClick={() => updateSetMode(true, false)}>
+                                <Clock3 className="h-4 w-4" />
+                                Time
+                            </button>
+                            <button type="button" className={cardio ? "active" : ""} onClick={() => updateSetMode(false, true)}>
+                                <Clock3 className="h-4 w-4" />
+                                Cardio
+                            </button>
+                        </div>
 
-                    {error && <div className="error">{error}</div>}
-                </form>
-            </div>
+                        <div className={`builder-set-table ${cardio ? "two-col" : ""}`}>
+                            <div className="builder-set-row head">
+                                <span>Set</span>
+                                {!cardio && <span>Lb</span>}
+                                <span>{timeBased || cardio ? "Time" : "Reps"}</span>
+                                <span></span>
+                            </div>
+                            {sets.map((set, index) => (
+                                <div className="builder-set-row" key={index}>
+                                    <span>{index + 1}</span>
+                                    {!cardio && (
+                                        <input
+                                            type="number"
+                                            name="weight"
+                                            min="0"
+                                            value={set.weight}
+                                            onChange={(event) => handleSetChange(index, event)}
+                                            className={emptyFields.includes(`sets[${index}].weight`) ? "error" : ""}
+                                        />
+                                    )}
+                                    {timeBased || cardio ? (
+                                        <input
+                                            type="text"
+                                            name="time"
+                                            value={set.time || ""}
+                                            placeholder="MMSS"
+                                            maxLength="6"
+                                            onChange={(event) => handleSetChange(index, event)}
+                                            className={emptyFields.includes(`sets[${index}].time`) ? "error" : ""}
+                                        />
+                                    ) : (
+                                        <input
+                                            type="number"
+                                            name="reps"
+                                            min="0"
+                                            value={set.reps}
+                                            onChange={(event) => handleSetChange(index, event)}
+                                            className={emptyFields.includes(`sets[${index}].reps`) ? "error" : ""}
+                                        />
+                                    )}
+                                    <button type="button" onClick={() => handleRemoveSet(index)} aria-label={`Remove set ${index + 1}`}>
+                                        <X className="h-4 w-4" />
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="add-exercise-actions">
+                            <button type="button" className="secondary" onClick={handleAddSet}>Add set</button>
+                            <button type="submit" className="primary">Add to routine</button>
+                        </div>
+                        {error && <div className="error">{error}</div>}
+                    </section>
+                </div>
+            </form>
         </div>
     );
 };

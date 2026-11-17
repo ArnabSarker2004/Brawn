@@ -1,46 +1,57 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 const AuthContext = React.createContext();
 
 export const AuthProvider = ({ children }) => {
-    let [isAuthenticated, setAuthentication] = useState(false);
+    const [isAuthenticated, setAuthentication] = useState(false);
     const [user, setUser] = useState(null);
-    const [isLoading, setLoading] = useState(false);
+    const [isLoading, setLoading] = useState(true);
     const navigate = useNavigate();
     const URL =
         process.env.NODE_ENV === "production"
             ? "https://brawn-tedx.onrender.com"
             : "http://localhost:4000";
 
-    const verify = () => {
+    const verify = useCallback(async () => {
         setLoading(true);
         try {
-            axios
-                .get(`${URL}/api/auth/verify`, { withCredentials: true })
-                .then((res) => {
-                    setAuthentication(res.data.isAuthenticated);
-                })
-                .catch(() => {
-                    setAuthentication(false);
-                });
+            const res = await axios.get(`${URL}/api/auth/verify`, {
+                withCredentials: true,
+            });
+            const authenticated = Boolean(res.data.isAuthenticated);
+            setAuthentication(authenticated);
+            return authenticated;
+        } catch {
+            setAuthentication(false);
+            setUser(null);
+            return false;
         } finally {
             setLoading(false);
         }
-    };
+    }, [URL]);
 
     useEffect(() => {
         verify();
-    });
+    }, [verify]);
 
     const logout = async () => {
-        await axios.post(`${URL}/api/auth/logout`, { withCredentials: true });
-        navigate("/");
-        setAuthentication(false);
-        setUser(null);
+        try {
+            await axios.post(`${URL}/api/auth/logout`, {}, { withCredentials: true });
+        } catch (error) {
+            if (process.env.NODE_ENV !== "production") {
+                console.warn("Logout request failed; clearing local session anyway.", error);
+            }
+        } finally {
+            setAuthentication(false);
+            setUser(null);
+            navigate("/", { replace: true });
+        }
     };
-    const login = (userData) => {
-        setUser(userData);
+
+    const login = (username) => {
+        setAuthentication(true);
+        setUser(username);
     };
 
     return (

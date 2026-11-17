@@ -1,20 +1,19 @@
-import { Link } from "react-router-dom";
+import { LogOut } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
-export function Logout({ isExpanded }) {
+export function Logout({ isExpanded = true }) {
     const { logout } = useAuth();
 
     const handleLogout = () => {
         logout();
     };
     return (
-        <Link
+        <button
             onClick={handleLogout}
-            className="navbar-item absolute bottom-0 w-full"
+            className="navbar-item logout-item"
+            type="button"
         >
-            <span className="material-symbols-outlined navbar-logo">
-                logout
-            </span>
+            <LogOut className="navbar-logo" />
             {isExpanded && <span className="navbar-text">Logout</span>}
-        </Link>
+        </button>
     );
 }

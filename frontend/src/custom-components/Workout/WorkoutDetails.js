@@ -1,10 +1,17 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
+import { Edit3, Trash2 } from 'lucide-react';
 import { useWorkoutsContext } from '../../hooks/useWorkoutsContext';
+import ExerciseInfoModal from '../Exercise/ExerciseInfoModal';
 import WorkoutEditModal from '../Modals/WorkoutEditModal';
+import { formatLargeNumber, formatWorkoutTime, getWorkoutVolume } from '../../utils/exerciseInsights';
 import './workout.css';
-const WorkoutDetails = ({ workout, routineId }) => {
+const WorkoutDetails = ({ workout, routineId, workouts = [], routineName }) => {
   const { dispatch } = useWorkoutsContext();
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showExerciseModal, setShowExerciseModal] = useState(false);
+  const sets = workout.sets || [];
+  const modalRoot = typeof document === "undefined" ? null : document.body;
 
   const URL = process.env.NODE_ENV === 'production'
   ? 'https://brawn-tedx.onrender.com'
@@ -29,40 +36,42 @@ const WorkoutDetails = ({ workout, routineId }) => {
     }
   };
 
-  const formatTime = (time) => {
-    if (!time && time !== 0) return '';
-    
-    // Convert to string and pad to 6 digits
-    const timeString = time.toString().padStart(6, '0');
-    
-    const hours = parseInt(timeString.slice(0, 2));
-    const minutes = parseInt(timeString.slice(2, 4));
-    const seconds = parseInt(timeString.slice(4, 6));
-    
-    let result = '';
-    if (hours > 0) result += `${hours}h `;
-    if (minutes > 0) result += `${minutes}m `;
-    if (seconds > 0 || result === '') result += `${seconds}s`;
-    
-    return result.trim();
-  };
+  const totalVolume = getWorkoutVolume(workout);
+  const isTimed = workout.cardio || workout.timeBased;
 
   return (
-    <div className="workout-details">
-      <h4>{workout.title}</h4>
-      <div className="workout-table">
-        <div className="workout-table-header">
-          <span>SET</span>
-          {!workout.cardio && <span>LBS</span>}
-          <span>{workout.cardio ? "TIME" : workout.timeBased ? "TIME" : "REPS"}</span>
+    <div className="workout-details hevy-exercise-card">
+      <div className="workout-card-header">
+        <div>
+          <h4>
+            <button
+              type="button"
+              className="workout-title-button"
+              onClick={() => setShowExerciseModal(true)}
+              aria-label={`Open ${workout.title} exercise details`}
+            >
+              {workout.title}
+            </button>
+          </h4>
+          <div className="workout-card-meta">
+            <span>{workout.sets?.length || 0} sets</span>
+            <span>{isTimed ? "Timed" : `${formatLargeNumber(totalVolume)} lb`}</span>
+          </div>
         </div>
-        {workout.sets.map((set, index) => (
+      </div>
+      <div className={`workout-table ${workout.cardio ? "two-col" : ""}`}>
+        <div className="workout-table-header">
+            <span>SET</span>
+            {!workout.cardio && <span>LBS</span>}
+            <span>{workout.cardio ? "TIME" : workout.timeBased ? "TIME" : "REPS"}</span>
+        </div>
+        {sets.map((set, index) => (
           <div className="workout-table-row" key={index}>
             <span>{index + 1}</span>
             {!workout.cardio && <span>{set.weight} lbs</span>}
             <span>
               {workout.cardio || workout.timeBased 
-                ? formatTime(set.time)
+                ? formatWorkoutTime(set.time)
                 : `${set.reps} reps`}
             </span>
           </div>
@@ -70,11 +79,29 @@ const WorkoutDetails = ({ workout, routineId }) => {
       </div>
 
       <div className="workout-actions">
-        <span className="material-symbols-outlined edit" onClick={() => setShowEditModal(true)}>edit</span>
-        <span className="material-symbols-outlined close" onClick={handleDelete}>delete</span>
+        <button type="button" onClick={() => setShowEditModal(true)} aria-label={`Edit ${workout.title}`}>
+          <Edit3 className="h-4 w-4" />
+          Edit
+        </button>
+        <button type="button" className="danger" onClick={handleDelete} aria-label={`Delete ${workout.title}`}>
+          <Trash2 className="h-4 w-4" />
+          Delete
+        </button>
       </div>
 
-      {showEditModal && <WorkoutEditModal workout={workout} setShowEditModal={setShowEditModal} routineId={routineId} />}
+      {modalRoot && showEditModal && createPortal(
+        <WorkoutEditModal workout={workout} setShowEditModal={setShowEditModal} routineId={routineId} />,
+        modalRoot
+      )}
+      {modalRoot && showExerciseModal && createPortal(
+        <ExerciseInfoModal
+          workout={workout}
+          workouts={workouts}
+          routineName={routineName}
+          onClose={() => setShowExerciseModal(false)}
+        />,
+        modalRoot
+      )}
     </div>
   );
 };

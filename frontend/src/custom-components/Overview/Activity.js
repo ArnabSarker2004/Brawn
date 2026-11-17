@@ -13,26 +13,31 @@ const chartConfig = {
 };
 
 const Activity = ({ chartData }) => {
+    const safeChartData = {
+        weeklyCardioTime: chartData?.weeklyCardioTime || [0, 0, 0, 0],
+        weeklyStrengthTime: chartData?.weeklyStrengthTime || [0, 0, 0, 0],
+    };
+
     const finalChartData = [
         {
             week: "Week 1",
-            cardio: chartData.weeklyCardioTime[0],
-            strength: chartData.weeklyStrengthTime[0],
+            cardio: safeChartData.weeklyCardioTime[0] || 0,
+            strength: safeChartData.weeklyStrengthTime[0] || 0,
         },
         {
             week: "Week 2",
-            cardio: chartData.weeklyCardioTime[1],
-            strength: chartData.weeklyStrengthTime[1],
+            cardio: safeChartData.weeklyCardioTime[1] || 0,
+            strength: safeChartData.weeklyStrengthTime[1] || 0,
         },
         {
             week: "Week 3",
-            cardio: chartData.weeklyCardioTime[2],
-            strength: chartData.weeklyStrengthTime[2],
+            cardio: safeChartData.weeklyCardioTime[2] || 0,
+            strength: safeChartData.weeklyStrengthTime[2] || 0,
         },
         {
             week: "Week 4",
-            cardio: chartData.weeklyCardioTime[3],
-            strength: chartData.weeklyStrengthTime[3],
+            cardio: safeChartData.weeklyCardioTime[3] || 0,
+            strength: safeChartData.weeklyStrengthTime[3] || 0,
         },
     ];
 

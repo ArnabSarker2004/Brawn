@@ -54,7 +54,7 @@ const RoutineFormModal = ({ onClose }) => {
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Routine Name"
+                    placeholder="Upper Hypertrophy A"
                 />
                 <div className="modal-buttons">
                     <Button variant="default" onClick={handleSubmit}>

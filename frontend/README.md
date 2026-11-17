@@ -1,70 +1,59 @@
-# Getting Started with Create React App
+# Brawn frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The React application for Brawn's routine planner, live workout interface, activity/profile views, Brawnify, and social fitness prototype.
 
-## Available Scripts
+For a product walkthrough, architecture diagram, backend setup, and project status, start with the [main Brawn README](../README.md). The [technical guide](../docs/technical-guide.md) contains the full route and configuration reference.
 
-In the project directory, you can run:
+## Run locally
 
-### `npm start`
+The frontend needs the Express API on `http://localhost:4000` for account and training workflows. Follow the root README to configure MongoDB and start that API first.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Run these commands inside `frontend/`:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```sh
+npm install
+npm start
+```
 
-### `npm test`
+Open **http://localhost:3000**. The backend's allowed origins include this exact address; changing the frontend port requires matching CORS configuration. The current secure-cookie settings can also affect local HTTP login; see [the setup caveat](../README.md#getting-started).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Commands
 
-### `npm run build`
+| Command | Purpose |
+| --- | --- |
+| `npm start` | Run the Create React App development server |
+| `npm test -- --watchAll=false --runInBand` | Run component interaction tests once |
+| `npm run build` | Compile the frontend into `build/` |
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The build command does not deploy the application or start the backend.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Source map
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+| Location | Responsibility |
+| --- | --- |
+| [src/App.js](src/App.js) | Page routes, authenticated app shell, and Context providers |
+| [src/context](src/context/) | Shared authentication, training, timing, and social state |
+| [src/pages/WorkoutPage.js](src/pages/WorkoutPage.js) | Routine details, editable sets, live session, and rest timers |
+| [src/pages/Routines.js](src/pages/Routines.js) | Routine browsing, management, and exercise references |
+| [src/pages/Brawnify.js](src/pages/Brawnify.js) | Optional model-generated routine/exercise workflow |
+| [src/components/ui](src/components/ui/) | Reusable buttons, cards, inputs, tabs, dialogs, and chart helpers |
+| [src/custom-components](src/custom-components/) | Feature-specific workout, timer, analytics, and social UI |
+| [src/data/exerciseDatabase.js](src/data/exerciseDatabase.js) | Bundled exercise catalog and instruction content |
+| [src/utils/exerciseInsights.js](src/utils/exerciseInsights.js) | Title matching and exercise/set summary helpers |
 
-### `npm run eject`
+## State and storage
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- **Training/profile data:** requested from the Express API and saved in MongoDB.
+- **Session UI:** React state manages the current timer, rest countdown, and checked-off sets.
+- **Social prototype:** browser-local storage remembers posts, stories, interactions, and message threads. It is not an account-isolated server database or real-time messaging system.
+- **Sample content:** profiles, engagement counts, and some media provide demonstration content.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+React Context is the mechanism used to share state between components without passing every value through each intervening component.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Brawnify configuration boundary
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+The current implementation recognizes `REACT_APP_OPEN_AI` and makes model calls directly from the browser. Create React App embeds `REACT_APP_*` values in the frontend bundle. Move the integration behind a server endpoint before using real credentials in a shared deployment. The manual workout interface works independently of this optional feature.
 
-## Learn More
+## Verification
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The November 16, 2026 recorded component test run passed 9 tests and failed 2, across 3 suites. Failures concern feed likes/comments and reel sharing into messages. See the [root project status](../README.md#testing-and-project-status) for the dated result and limitations.

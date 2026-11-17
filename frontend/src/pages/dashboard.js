@@ -14,23 +14,34 @@ const DashboardPage = () => {
     const [routines, setRoutines] = useState(null);
     const [weeklyWorkouts, setWeeklyWorkouts] = useState(null);
     const [body, setBody] = useState(null);
-    const [chartData, setChartData] = useState(null);
+    const [chartData, setChartData] = useState({
+        weeklyCardioTime: [0, 0, 0, 0],
+        weeklyStrengthTime: [0, 0, 0, 0],
+    });
     const { user } = useAuth();
 
     const getRoutineData = async () => {
-        const response = await fetch(`${URL}/api/routines`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            credentials: "include",
-        });
+        try {
+            const response = await fetch(`${URL}/api/routines`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+            });
 
-        const routinesData = await response.json();
-        if (response.ok) {
-            setRoutines(routinesData);
-        } else {
-            console.error("Failed to fetch routines");
+            if (response.ok) {
+                const routinesData = await response.json();
+                setRoutines(Array.isArray(routinesData) ? routinesData : []);
+            } else {
+                setRoutines([]);
+                setWeeklyWorkouts([]);
+                console.error("Failed to fetch routines");
+            }
+        } catch (error) {
+            setRoutines([]);
+            setWeeklyWorkouts([]);
+            console.error("Failed to fetch routines", error);
         }
     };
 
@@ -155,16 +166,6 @@ const DashboardPage = () => {
         totalCardioTime = Math.floor(totalCardioTime / 60);
         totalStrengthTime = Math.floor(totalStrengthTime / 60);
 
-        console.log(
-            "weeklyCardioTime:",
-            weeklyCardioTime,
-            "weeklyStrengthTime:",
-            weeklyStrengthTime,
-            "totalCardioTime:",
-            totalCardioTime,
-            "totalStrengthTime:",
-            totalStrengthTime
-        );
         setChartData({ weeklyCardioTime, weeklyStrengthTime });
     }
 
@@ -241,7 +242,6 @@ const DashboardPage = () => {
     }, [routines]);
 
     return (
-        <div className="overflow-y-hidden">
         <Dashboard
             CurrentWorkoutStreak ={body?.CurrentWorkoutStreak || 0}
             Weight={body?.Weight || 0}
@@ -252,9 +252,8 @@ const DashboardPage = () => {
             user={user}
             chartData={chartData}
             routineDistribution={routineDistribution}
-            routines={routines}
+            routines={routines || []}
         />
-        </div>
     );
 };
 

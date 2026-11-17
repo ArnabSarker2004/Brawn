@@ -54,100 +54,108 @@ export function Profile({ error, data, onSave }) {
         <div>
             <form
                 onSubmit={handleSubmit}
-                className="w-full max-w-8xl mx-auto gap-10"
+                className="profile-edit-form"
             >
-                <Card>
-                    <CardHeader>
+                <Card className="profile-edit-card">
+                    <CardHeader className="profile-edit-header">
                         <CardTitle>Profile Settings</CardTitle>
                         <CardDescription>
                             Update your account details and preferences.
                         </CardDescription>
                     </CardHeader>
-                    <CardContent className="space-y-6">
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="space-y-2">
+                    <CardContent className="profile-edit-content">
+                        <div className="profile-edit-grid">
+                            <div className="profile-edit-field">
                                 <Label htmlFor="Name">Name</Label>
                                 <Input
                                     id="Name"
                                     type="text"
+                                    placeholder="Your display name"
                                     value={formData.Name}
                                     onChange={handleChange}
                                 />
                             </div>
-                            <div className="space-y-2">
+                            <div className="profile-edit-field">
                                 <Label htmlFor="Email">Email</Label>
                                 <Input
                                     id="Email"
                                     type="email"
+                                    placeholder="you@example.com"
                                     value={formData.Email}
                                     onChange={handleChange}
                                 />
                             </div>
                         </div>
-                        <CardDescription>Your Body</CardDescription>
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="space-y-2">
+                        <CardDescription className="profile-edit-subtitle">Your Body</CardDescription>
+                        <div className="profile-edit-grid">
+                            <div className="profile-edit-field">
                                 <Label htmlFor="Height">Height (cm)</Label>
                                 <Input
                                     id="Height"
                                     type="number"
+                                    placeholder="178"
                                     value={formData.Height}
                                     onChange={handleChange}
                                 />
                             </div>
-                            <div className="space-y-2">
+                            <div className="profile-edit-field">
                                 <Label htmlFor="Weight">Weight (kg/lbs)</Label>
                                 <Input
                                     id="Weight"
                                     type="number"
+                                    placeholder="175"
                                     value={formData.Weight}
                                     onChange={handleChange}
                                 />
                             </div>
                         </div>
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="space-y-2">
+                        <div className="profile-edit-grid">
+                            <div className="profile-edit-field">
                                 <Label htmlFor="Age">Age</Label>
                                 <Input
                                     id="Age"
                                     type="number"
+                                    placeholder="28"
                                     value={formData.Age}
                                     onChange={handleChange}
                                 />
                             </div>
-                            <div className="space-y-2">
+                            <div className="profile-edit-field">
                                 <Label htmlFor="Gender">Gender</Label>
                                 <Input
                                     id="Gender"
                                     type="text"
+                                    placeholder="Male, female, non-binary..."
                                     value={formData.Gender}
                                     onChange={handleChange}
                                 />
                             </div>
                         </div>
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="space-y-2">
+                        <div className="profile-edit-grid">
+                            <div className="profile-edit-field">
                                 <Label htmlFor="BMR">
                                     Basal Metabolic Rate
                                 </Label>
                                 <Input
                                     id="BMR"
+                                    placeholder="1800"
                                     value={formData.BMR}
                                     onChange={handleChange}
                                 />
                             </div>
-                            <div className="space-y-2">
+                            <div className="profile-edit-field">
                                 <Label htmlFor="YearsOfWorkoutExperience">
                                     Years of Working Out
                                 </Label>
                                 <Input
                                     id="YearsOfWorkoutExperience"
+                                    placeholder="3"
                                     value={formData.YearsOfWorkoutExperience}
                                     onChange={handleChange}
                                 />
                             </div>
                         </div>
-                        <div className="space-y-2">
+                        <div className="profile-edit-field">
                             <Label htmlFor="Bio" type="text">
                                 Bio
                             </Label>
@@ -158,7 +166,7 @@ export function Profile({ error, data, onSave }) {
                                 onChange={handleChange}
                             />
                         </div>
-                        <Button className="w-full" size="lg" type="submit">
+                        <Button className="profile-edit-submit" size="lg" type="submit">
                             Save Changes
                         </Button>
                     </CardContent>

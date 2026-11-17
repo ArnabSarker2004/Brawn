@@ -1,0 +1,470 @@
+.exercise-info-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1600;
+    display: grid;
+    place-items: center;
+    background: rgba(2, 6, 23, 0.62);
+    padding: 20px;
+    overflow: auto;
+}
+
+.exercise-info-modal {
+    --exercise-bg: rgba(255, 255, 255, 0.98);
+    --exercise-card: #ffffff;
+    --exercise-soft: #eef5f3;
+    --exercise-border: rgba(203, 213, 225, 0.84);
+    --exercise-title: #0f172a;
+    --exercise-body: #475569;
+    --exercise-muted: #64748b;
+    --exercise-accent: #1aac83;
+    width: min(980px, 100%);
+    max-height: min(88vh, 880px);
+    box-sizing: border-box;
+    overflow: auto;
+    overscroll-behavior: contain;
+    border: 1px solid var(--exercise-border);
+    border-radius: 16px;
+    background: var(--exercise-bg);
+    color: var(--exercise-title);
+    padding: 18px;
+    box-shadow: 0 28px 70px rgba(2, 6, 23, 0.32);
+}
+
+.app-shell-dark .exercise-info-modal {
+    --exercise-bg: rgba(15, 23, 42, 0.98);
+    --exercise-card: rgba(255, 255, 255, 0.065);
+    --exercise-soft: rgba(255, 255, 255, 0.055);
+    --exercise-border: rgba(148, 163, 184, 0.2);
+    --exercise-title: #e5eef7;
+    --exercise-body: #b9c6d6;
+    --exercise-muted: #94a3b8;
+    --exercise-accent: #6ee7b7;
+}
+
+.exercise-info-header {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.exercise-info-eyebrow {
+    margin: 0;
+    color: var(--exercise-accent);
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.exercise-info-title-block h2 {
+    margin: 5px 0 0;
+    color: var(--exercise-title);
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 900;
+    letter-spacing: 0;
+}
+
+.exercise-info-title-block p:last-child {
+    margin: 6px 0 0;
+    color: var(--exercise-muted);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.exercise-info-close {
+    display: grid;
+    height: 40px;
+    width: 40px;
+    flex: 0 0 auto;
+    place-items: center;
+    border: 1px solid var(--exercise-border);
+    border-radius: 11px;
+    background: var(--exercise-soft);
+    color: var(--exercise-title);
+}
+
+.exercise-info-tabs {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 6px;
+    margin-top: 18px;
+    border-radius: 13px;
+    background: var(--exercise-soft);
+    padding: 5px;
+}
+
+.exercise-info-tabs button {
+    display: inline-flex;
+    min-height: 40px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--exercise-muted);
+    font-size: 0.83rem;
+    font-weight: 850;
+}
+
+.exercise-info-tabs button.active {
+    background: var(--exercise-bg);
+    color: var(--exercise-title);
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+}
+
+.app-shell-dark .exercise-info-tabs button.active {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.exercise-info-panel {
+    display: grid;
+    gap: 14px;
+    margin-top: 16px;
+}
+
+.exercise-summary-grid {
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr);
+    gap: 12px;
+}
+
+.exercise-hero-tile,
+.exercise-current-workout,
+.exercise-info-insight,
+.exercise-history-card,
+.exercise-coach-grid > div,
+.exercise-body-diagram,
+.exercise-muscle-card,
+.exercise-program-grid > div,
+.exercise-info-empty {
+    border: 1px solid var(--exercise-border);
+    border-radius: 14px;
+    background: var(--exercise-card);
+}
+
+.exercise-hero-tile {
+    display: grid;
+    min-height: 178px;
+    place-items: center;
+    align-content: center;
+    gap: 12px;
+    background:
+        radial-gradient(circle at 50% 35%, rgba(26, 172, 131, 0.18), transparent 8rem),
+        var(--exercise-card);
+    color: var(--exercise-accent);
+    text-align: center;
+}
+
+.exercise-hero-tile span {
+    max-width: 190px;
+    color: var(--exercise-muted);
+    font-size: 0.76rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.exercise-stat-grid,
+.exercise-program-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.exercise-stat-grid div {
+    min-height: 82px;
+    border: 1px solid var(--exercise-border);
+    border-radius: 14px;
+    background: var(--exercise-soft);
+    padding: 14px;
+}
+
+.exercise-stat-grid span {
+    display: block;
+    color: var(--exercise-muted);
+    font-size: 0.76rem;
+    font-weight: 850;
+}
+
+.exercise-stat-grid strong {
+    display: block;
+    margin-top: 8px;
+    color: var(--exercise-title);
+    font-size: 1.5rem;
+    font-weight: 900;
+}
+
+.exercise-info-insight {
+    display: flex;
+    gap: 12px;
+    padding: 14px;
+}
+
+.exercise-info-insight svg,
+.exercise-program-grid svg {
+    flex: 0 0 auto;
+    color: var(--exercise-accent);
+}
+
+.exercise-info-insight h3,
+.exercise-info-section-title h3,
+.exercise-history-card h3,
+.exercise-coach-grid h3,
+.exercise-muscle-card h3,
+.exercise-program-grid h3,
+.exercise-info-empty h3 {
+    margin: 0;
+    color: var(--exercise-title);
+    font-size: 0.95rem;
+    font-weight: 900;
+}
+
+.exercise-info-insight p,
+.exercise-history-card p,
+.exercise-coach-grid p,
+.exercise-program-grid p,
+.exercise-info-empty p,
+.exercise-info-muted {
+    margin: 7px 0 0;
+    color: var(--exercise-body);
+    font-size: 0.88rem;
+    line-height: 1.55;
+}
+
+.exercise-current-workout {
+    padding: 14px;
+}
+
+.exercise-info-section-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.exercise-info-section-title span,
+.exercise-history-metrics span {
+    color: var(--exercise-muted);
+    font-size: 0.78rem;
+    font-weight: 850;
+}
+
+.exercise-set-table {
+    display: grid;
+    overflow: hidden;
+    border: 1px solid var(--exercise-border);
+    border-radius: 12px;
+}
+
+.exercise-set-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    padding: 10px 12px;
+    color: var(--exercise-body);
+    font-size: 0.86rem;
+    font-weight: 750;
+    text-align: center;
+}
+
+.exercise-set-row:nth-child(even) {
+    background: var(--exercise-soft);
+}
+
+.exercise-set-row.head {
+    background: rgba(26, 172, 131, 0.12);
+    color: var(--exercise-accent);
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.exercise-history-list,
+.exercise-step-list,
+.exercise-coach-grid,
+.exercise-program-grid {
+    display: grid;
+    gap: 12px;
+}
+
+.exercise-history-card {
+    display: grid;
+    gap: 12px;
+    padding: 14px;
+}
+
+.exercise-history-card > div:first-child,
+.exercise-history-metrics {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.exercise-history-metrics {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.exercise-howto-layout,
+.exercise-muscle-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.7fr);
+    gap: 12px;
+}
+
+.exercise-step {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 10px;
+    align-items: start;
+    border: 1px solid var(--exercise-border);
+    border-radius: 14px;
+    background: var(--exercise-card);
+    padding: 12px;
+}
+
+.exercise-step span {
+    display: grid;
+    height: 28px;
+    width: 28px;
+    place-items: center;
+    border-radius: 999px;
+    background: rgba(26, 172, 131, 0.14);
+    color: var(--exercise-accent);
+    font-size: 0.78rem;
+    font-weight: 900;
+}
+
+.exercise-step p {
+    margin: 4px 0 0;
+    color: var(--exercise-body);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.exercise-coach-grid > div,
+.exercise-program-grid > div {
+    padding: 14px;
+}
+
+.exercise-body-diagram {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    background: var(--exercise-soft);
+    padding: 12px;
+}
+
+.exercise-body-figure {
+    display: grid;
+    justify-items: center;
+}
+
+.exercise-body-figure p {
+    margin: 0 0 8px;
+    color: var(--exercise-muted);
+    font-size: 0.78rem;
+    font-weight: 850;
+}
+
+.exercise-body-svg {
+    width: min(160px, 100%);
+    height: 240px;
+    fill: rgba(148, 163, 184, 0.2);
+    stroke: rgba(148, 163, 184, 0.42);
+    stroke-width: 1.2;
+}
+
+.exercise-body-dot {
+    stroke: #ffffff;
+    stroke-width: 1.5;
+}
+
+.exercise-body-dot.primary {
+    fill: #1aac83;
+}
+
+.exercise-body-dot.secondary {
+    fill: #6ee7b7;
+}
+
+.exercise-muscle-card {
+    display: grid;
+    align-content: start;
+    gap: 12px;
+    padding: 14px;
+}
+
+.exercise-muscle-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.exercise-muscle-chips span {
+    border-radius: 999px;
+    background: var(--exercise-soft);
+    color: var(--exercise-muted);
+    padding: 7px 9px;
+    font-size: 0.78rem;
+    font-weight: 850;
+}
+
+.exercise-muscle-chips span.primary {
+    background: rgba(26, 172, 131, 0.14);
+    color: var(--exercise-accent);
+}
+
+.exercise-info-empty {
+    display: grid;
+    justify-items: start;
+    padding: 18px;
+}
+
+.exercise-info-empty svg {
+    color: var(--exercise-accent);
+}
+
+@media (max-width: 820px) {
+    .exercise-summary-grid,
+    .exercise-howto-layout,
+    .exercise-muscle-layout,
+    .exercise-info-tabs {
+        grid-template-columns: 1fr;
+    }
+
+    .exercise-info-tabs button {
+        justify-content: flex-start;
+        padding: 0 12px;
+    }
+}
+
+@media (max-width: 560px) {
+    .exercise-info-backdrop {
+        padding: 10px;
+    }
+
+    .exercise-info-modal {
+        max-height: 92vh;
+        padding: 14px;
+    }
+
+    .exercise-info-header,
+    .exercise-info-section-title,
+    .exercise-history-card > div:first-child {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .exercise-stat-grid,
+    .exercise-body-diagram,
+    .exercise-program-grid {
+        grid-template-columns: 1fr;
+    }
+}

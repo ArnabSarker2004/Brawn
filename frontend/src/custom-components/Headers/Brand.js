@@ -7,10 +7,13 @@ import TimerHeader from './TimerHeader';
         return (
             <div className="brand-container">
                 {!completed &&<TimerHeader/>}  
-                <img src={BrawnLogo} alt="Brawn Logo" /> 
-                <h1 className="text-xl font-bold">
-                    Brawn
-                </h1>
+                <div className="brand-shell">
+                    <img src={BrawnLogo} alt="Brawn Logo" /> 
+                    <div>
+                        <h1>Brawn</h1>
+                        <p>Training Workspace</p>
+                    </div>
+                </div>
         </div>
     );
 };

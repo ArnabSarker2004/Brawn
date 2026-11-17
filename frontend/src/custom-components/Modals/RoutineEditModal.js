@@ -51,7 +51,7 @@ const RoutineEditModal = ({ routine, onClose }) => {
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Routine Name"
+                    placeholder="Lower Strength + Posterior Chain"
                 />
                 {error && <div className="error">{error}</div>}
                 <div className="modal-buttons">
